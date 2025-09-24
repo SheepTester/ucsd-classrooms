@@ -1,0 +1,24 @@
+{
+  "name": "ucsd-classrooms",
+  "version": "0.1.0",
+  "author": "SheepTester",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SheepTester/ucsd-classrooms.git"
+  },
+  "scripts": {
+    "build": "cp -a static/. dist/ && esbuild --bundle src/index.tsx --loader:.webp=file --loader:.svg=file --outdir=dist --minify && find dist/ -type f | sed 's/dist\\//https:\\/\\/sheeptester.github.io\\/ucsd-classrooms\\//' > dist/sitemap.txt",
+    "clean": "rm -rf dist/",
+    "dev": "esbuild --bundle src/index.tsx --loader:.webp=file --loader:.svg=file --outdir=static --servedir=static --sourcemap"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "esbuild": "^0.25.10"
+  }
+}

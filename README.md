@@ -44,6 +44,13 @@ Features to add:
 
 ## Development
 
+```shell
+# Builds to dist/
+$ npm run build
+
+$ npm run dev
+```
+
 Map image was made with [this tool](https://sheeptester.github.io/words-go-here/misc/ucsd-map.html) (zoom 17, x: -6 to 5, y: -6 to 5).
 
 <!-- Because the map is now HD, please scale the image down to 3072 by 2816. -->
