@@ -1,0 +1,9 @@
+{
+  "prettier.prettierPath": "./node_modules/prettierx",
+  "deno.enable": true,
+  "deno.lint": false,
+  "deno.config": "./deno.jsonc",
+  "deno.suggest.imports.hosts": {
+    "https://deno.land": true
+  }
+}
