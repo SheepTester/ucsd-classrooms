@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import { Course } from "../../../scheduleofclasses/group-sections";
-import { termName } from "../../../terms/index";
 import { buildings } from "../../lib/buildings";
+import { Course } from "../../lib/section-types";
 import { Term } from "../../lib/TermCache";
+import { termName } from "../../lib/terms";
 import { SearchResult } from "./SearchResult";
 
 export type SearchData = {

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Day } from "../../../util/Day";
-import { Time } from "../../../util/Time";
+import { Day } from "../../lib/Day";
+import { Time } from "../../lib/Time";
 import { inPT } from "../../lib/now";
 import { Calendar, ScrollMode } from "./Calendar";
 

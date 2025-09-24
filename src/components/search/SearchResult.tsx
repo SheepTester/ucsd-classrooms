@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { View } from "../../View";
+import { View } from "../../lib/View";
 import { Link } from "../Link";
 
 export type SearchResultProps = {

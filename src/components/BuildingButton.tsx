@@ -7,7 +7,7 @@ import {
   northeast,
   southwest,
 } from "../lib/locations";
-import { isMeetingOngoing, useMoment } from "../moment-context";
+import { isMeetingOngoing, useMoment } from "../lib/moment-context";
 import { Link } from "./Link";
 
 type BuildingButtonProps = {

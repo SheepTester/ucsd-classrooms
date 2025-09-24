@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
-import { getHolidays } from "../../../terms/holidays";
-import { Season, termCode, TermDays, termName } from "../../../terms/index";
-import { Day, DAY_NUMS } from "../../../util/Day";
+import { Day, DAY_NUMS } from "../../lib/Day";
+import { getHolidays } from "../../lib/holidays";
+import { Season, termCode, TermDays, termName } from "../../lib/terms";
 import { AbbrevHeading } from "../AbbrevHeading";
 
 export type CalendarRowProps = {

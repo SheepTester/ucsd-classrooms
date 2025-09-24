@@ -2,7 +2,7 @@
  * Copied from https://github.com/SheepTester/uxdy/blob/main/terms/holidays.ts
  */
 
-import { Day } from "../util/Day";
+import { Day } from "./Day";
 
 const holidayCache: Record<number, Record<number, string>> = {};
 

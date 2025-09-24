@@ -1,6 +1,6 @@
-import { BaseMeeting, Course } from "../../scheduleofclasses/group-sections";
-import { Day } from "../../util/Day";
-import { Time } from "../../util/Time";
+import { Day } from "./Day";
+import { BaseMeeting, Course } from "./section-types";
+import { Time } from "./Time";
 
 class StringTaker {
   #string: string;

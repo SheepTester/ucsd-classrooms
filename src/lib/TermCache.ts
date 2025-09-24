@@ -1,9 +1,9 @@
-import { Quarter, termCode } from "../../terms/index";
 import {
   CourseFormatError,
   coursesFromFile,
   TermCourses,
 } from "./coursesFromFile";
+import { Quarter, termCode } from "./terms";
 
 export type Term = {
   year: number;

@@ -1,6 +1,6 @@
-import { termCode } from "../../terms/index";
-import { useLast } from "../../util/useLast";
 import { Term } from "../lib/TermCache";
+import { termCode } from "../lib/terms";
+import { useLast } from "../lib/useLast";
 
 export type TermStatus = [Term, "unavailable" | "offline" | Date];
 

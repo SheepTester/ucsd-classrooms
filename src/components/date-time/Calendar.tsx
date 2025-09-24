@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { getTermDays, Season, TermDays } from "../../../terms/index";
-import { Day } from "../../../util/Day";
+import { Day } from "../../lib/Day";
+import { getTermDays, Season, TermDays } from "../../lib/terms";
 import {
   CalendarHeaderRow,
   CalendarMonthHeadingRow,

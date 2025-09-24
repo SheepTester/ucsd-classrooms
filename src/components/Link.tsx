@@ -7,8 +7,8 @@ import {
   ViewHandler,
   viewToUrl,
   ViewWithTerm,
-} from "../View";
-import { useMoment } from "../moment-context";
+} from "../lib/View";
+import { useMoment } from "../lib/moment-context";
 
 export type NavigateOptions = {
   view: ViewWithTerm;

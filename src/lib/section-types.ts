@@ -3,8 +3,8 @@
  * https://github.com/SheepTester/uxdy/blob/main/scheduleofclasses/group-sections.ts
  */
 
-import { Day } from "../util/Day";
-import { Time } from "../util/Time";
+import { Day } from "./Day";
+import { Time } from "./Time";
 
 export type MeetingTime = {
   /**

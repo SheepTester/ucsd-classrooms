@@ -1,22 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import { Course } from "../../scheduleofclasses/group-sections";
-import { getHolidays } from "../../terms/holidays";
-import {
-  CurrentTerm,
-  getTerm,
-  Season,
-  termCode,
-  termName,
-} from "../../terms/index";
-import { Day } from "../../util/Day";
-import { useLast } from "../../util/useLast";
 import { buildings } from "../lib/buildings";
 import { coursesToClassrooms, TermBuildings } from "../lib/coursesToClassrooms";
+import { Day } from "../lib/Day";
+import { getHolidays } from "../lib/holidays";
 import { mapPosition, northeast, PADDING, southwest } from "../lib/locations";
+import { fromMoment, MomentContext } from "../lib/moment-context";
 import { now } from "../lib/now";
+import { Course } from "../lib/section-types";
 import { Term, TermCache, TermError } from "../lib/TermCache";
-import { fromMoment, MomentContext } from "../moment-context";
-import { OnView, viewFromUrl, viewToUrl, ViewWithTerm } from "../View";
+import { CurrentTerm, getTerm, Season, termCode, termName } from "../lib/terms";
+import { useLast } from "../lib/useLast";
+import { OnView, viewFromUrl, viewToUrl, ViewWithTerm } from "../lib/View";
 import { BuildingPanel } from "./building/BuildingPanel";
 import { BuildingButton } from "./BuildingButton";
 import { DateTimeButton } from "./date-time/DateTimeButton";

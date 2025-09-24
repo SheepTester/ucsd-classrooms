@@ -1,5 +1,5 @@
-import { termCode } from "../../../terms/index";
-import { useMoment } from "../../moment-context";
+import { useMoment } from "../../lib/moment-context";
+import { termCode } from "../../lib/terms";
 
 const dateFormat = new Intl.DateTimeFormat([], {
   dateStyle: "short",

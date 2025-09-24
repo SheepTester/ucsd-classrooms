@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef } from "react";
-import { Course } from "../../../scheduleofclasses/group-sections";
-import { useMoment } from "../../moment-context";
-import { OnView } from "../../View";
+import { useMoment } from "../../lib/moment-context";
+import { Course } from "../../lib/section-types";
+import { OnView } from "../../lib/View";
 import { AbbrevHeading } from "../AbbrevHeading";
 import { CloseIcon } from "../icons/CloseIcon";
 import { navigate } from "../Link";

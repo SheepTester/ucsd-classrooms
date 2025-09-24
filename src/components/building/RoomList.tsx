@@ -1,7 +1,7 @@
-import { meetingTypes } from "../../../webreg-scraping/meeting-types";
 import { compareRoomNums } from "../../lib/compareRoomNums";
 import { RoomMeeting } from "../../lib/coursesToClassrooms";
-import { isMeetingOngoing, useMoment } from "../../moment-context";
+import { meetingTypes } from "../../lib/meeting-types";
+import { isMeetingOngoing, useMoment } from "../../lib/moment-context";
 import { Link } from "../Link";
 
 export type RoomListProps = {

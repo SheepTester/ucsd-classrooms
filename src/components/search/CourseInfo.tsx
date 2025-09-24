@@ -1,12 +1,7 @@
-import {
-  Course,
-  Exam,
-  Meeting,
-  Section,
-} from "../../../scheduleofclasses/group-sections";
-import { Day } from "../../../util/Day";
-import { meetingTypes } from "../../../webreg-scraping/meeting-types";
-import { useMoment } from "../../moment-context";
+import { Day } from "../../lib/Day";
+import { meetingTypes } from "../../lib/meeting-types";
+import { useMoment } from "../../lib/moment-context";
+import { Course, Exam, Meeting, Section } from "../../lib/section-types";
 import { Link } from "../Link";
 
 const webregDays = ["Sun", "M", "Tu", "W", "Th", "F", "S", "Sun"];

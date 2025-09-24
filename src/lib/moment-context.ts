@@ -1,10 +1,10 @@
 import { createContext, useContext } from "react";
-import { Exam, Meeting, Section } from "../scheduleofclasses/group-sections";
-import { getHolidays } from "../terms/holidays";
-import { CurrentTerm, getTerm } from "../terms/index";
-import { Day } from "../util/Day";
-import { Time } from "../util/Time";
-import { Moment } from "./lib/now";
+import { Day } from "./Day";
+import { Time } from "./Time";
+import { getHolidays } from "./holidays";
+import { Moment } from "./now";
+import { Exam, Meeting, Section } from "./section-types";
+import { CurrentTerm, getTerm } from "./terms";
 
 export type TermMoment = Moment & {
   currentTerm: CurrentTerm;

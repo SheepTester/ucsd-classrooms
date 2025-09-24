@@ -1,4 +1,4 @@
-import { Course } from "../../../scheduleofclasses/group-sections";
+import { Course } from "../../lib/section-types";
 import { Link } from "../Link";
 import { MeetingCard } from "./CourseInfo";
 

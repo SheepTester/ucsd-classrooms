@@ -1,10 +1,4 @@
-import {
-  Course,
-  Exam,
-  Meeting,
-  MeetingTime,
-  Section,
-} from "../../scheduleofclasses/group-sections";
+import { Course, Exam, Meeting, MeetingTime, Section } from "./section-types";
 
 export type RoomMeeting = (
   | Omit<Section, "location">

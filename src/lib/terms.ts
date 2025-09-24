@@ -2,7 +2,7 @@
  * Copied from https://github.com/SheepTester/uxdy/blob/main/terms/index.ts
  */
 
-import { Day } from "../util/Day";
+import { Day } from "./Day";
 
 export type Season = "FA" | "WI" | "SP" | "S1" | "S2";
 export type Quarter = Season | "S3" | "SU";

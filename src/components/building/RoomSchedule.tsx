@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Day } from "../../../util/Day";
-import { meetingTypes } from "../../../webreg-scraping/meeting-types";
 import { RoomMeeting } from "../../lib/coursesToClassrooms";
+import { Day } from "../../lib/Day";
+import { meetingTypes } from "../../lib/meeting-types";
 import {
   doesMeetingHappen,
   isMeetingOngoing,
   useMoment,
-} from "../../moment-context";
+} from "../../lib/moment-context";
 import { Link } from "../Link";
 
 const DAYS = [1, 2, 3, 4, 5, 6, 7];

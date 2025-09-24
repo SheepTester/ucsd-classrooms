@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { Meeting, Section } from "../../../scheduleofclasses/group-sections";
+import { isMeetingOngoing, useMoment } from "../../lib/moment-context";
+import { Meeting, Section } from "../../lib/section-types";
 import { Term } from "../../lib/TermCache";
-import { isMeetingOngoing, useMoment } from "../../moment-context";
 import { ClearIcon } from "../icons/CloseIcon";
 import { SearchIcon } from "../icons/SearchIcon";
 import { SearchData, SearchResults } from "./SearchResults";
