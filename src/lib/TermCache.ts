@@ -1,7 +1,7 @@
 import { Quarter, termCode } from "../../terms/index";
 import {
-  coursesFromFile,
   CourseFormatError,
+  coursesFromFile,
   TermCourses,
 } from "./coursesFromFile";
 
@@ -35,7 +35,9 @@ export class TermCache {
     term: string,
     summer: boolean
   ): Promise<TermCourses | "unavailable"> {
-    const response = await fetch(`../data/classrooms-${term}.txt`);
+    const response = await fetch(
+      `https://sheeptester.github.io/uxdy/data/classrooms-${term}.txt`
+    );
     if (response.ok) {
       try {
         return coursesFromFile(await response.text(), summer);

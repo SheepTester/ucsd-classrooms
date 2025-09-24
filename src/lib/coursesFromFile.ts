@@ -1,4 +1,4 @@
-import { Course, BaseMeeting } from "../../scheduleofclasses/group-sections";
+import { BaseMeeting, Course } from "../../scheduleofclasses/group-sections";
 import { Day } from "../../util/Day";
 import { Time } from "../../util/Time";
 
@@ -192,10 +192,4 @@ export function coursesFromFile(
     }
   }
   return { scraped, courses };
-}
-
-if (import.meta.main) {
-  console.log(
-    coursesFromFile(await Deno.readTextFile(Deno.args[0])).courses[100]
-  );
 }

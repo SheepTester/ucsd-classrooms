@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { Day } from "../../../util/Day";
-import { Time } from "../../../util/Time";
 import { meetingTypes } from "../../../webreg-scraping/meeting-types";
 import { RoomMeeting } from "../../lib/coursesToClassrooms";
-import { Link } from "../Link";
 import {
   doesMeetingHappen,
   isMeetingOngoing,
   useMoment,
 } from "../../moment-context";
+import { Link } from "../Link";
 
 const DAYS = [1, 2, 3, 4, 5, 6, 7];
 const WEEKDAYS = [1, 2, 3, 4, 5];

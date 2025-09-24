@@ -1,5 +1,8 @@
-// From https://act.ucsd.edu/webreg2/js/webreg/webreg-main.js `convInstType`
-// See also, https://registrar.ucsd.edu/StudentLink/instr_codes.html
+/**
+ * From https://act.ucsd.edu/webreg2/js/webreg/webreg-main.js `convInstType`
+ *
+ * See also, https://registrar.ucsd.edu/StudentLink/instr_codes.html
+ */
 
 export const exams = {
   FI: "Final Exam",

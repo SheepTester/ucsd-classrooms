@@ -1,7 +1,7 @@
 // I kept a Git repository of the cached WebReg responses over time
 // deno run --allow-all track-wi22.ts
 
-import { main } from "./track-classes.ts";
+import { main } from "./track-classes";
 
 const QUARTER = "WI22";
 const DIRECTORY = "cache-wi22";
@@ -36,7 +36,7 @@ const commits = await run(["git", "log", "--format=%H %s"]).then((lines) =>
       const match = message.match(/\d\d(\d\d)-(\d\d)-(\d\d)/);
       return { hash, date: match ? match.slice(1) : [] };
     })
-    .filter(({ date }) => date.length !== 0),
+    .filter(({ date }) => date.length !== 0)
 );
 
 for (const { hash, date } of commits.reverse()) {

@@ -1,11 +1,11 @@
 // Create a Git-friendly set of files summarizing WebReg data
 // deno run --allow-all track-classes.ts <cookie>
 
-import { ensureDir } from "std/fs/ensure_dir.ts";
-import { writeAll } from "std/streams/write_all.ts";
-import { exams, instructionTypes } from "./meeting-types.ts";
-import { Scraper } from "./scrape.ts";
-import { displayProgress } from "../util/displayProgress.ts";
+import { ensureDir } from "std/fs/ensure_dir";
+import { writeAll } from "std/streams/write_all";
+import { exams, instructionTypes } from "./meeting-types";
+import { Scraper } from "./scrape";
+import { displayProgress } from "../util/displayProgress";
 
 await ensureDir("./webreg-data2/courses/");
 
@@ -47,7 +47,7 @@ class CourseHistory {
                 return "N/A";
               }
             })
-            .join("\t")}`,
+            .join("\t")}`
       ),
     ]
       .map((line) => line + "\n")
@@ -70,7 +70,7 @@ class CourseHistory {
             const match = cell.match(/(\d+)(?:\/(\d+))?(?: WL(\d+))?/);
             if (!match) {
               throw new SyntaxError(
-                `Couldn't parse enrollment numbers from '${cell}'`,
+                `Couldn't parse enrollment numbers from '${cell}'`
               );
             }
             const [, enrolled, capacity = Infinity, waitlist = 0] = match;
@@ -78,10 +78,10 @@ class CourseHistory {
               sectionCodes[i],
               { enrolled: +enrolled, capacity: +capacity, waitlist: +waitlist },
             ];
-          }),
+          })
         ),
       })),
-      sectionCodes,
+      sectionCodes
     );
   }
 }
@@ -110,7 +110,7 @@ export async function main(
     | {
         type: "cache";
         cachePath: string;
-      },
+      }
 ) {
   await displayProgress(0);
   const getter = new Scraper(quarter, source);
@@ -127,7 +127,7 @@ export async function main(
         course.unit.from === course.unit.to
           ? `${course.unit.to} units`
           : `${course.unit.from}–${course.unit.to} units, by ${course.unit.step}`
-      })\n`,
+      })\n`
     );
 
     await Deno.writeTextFile(
@@ -145,7 +145,7 @@ export async function main(
             (a, b) =>
               a.code.localeCompare(b.code) ||
               +a.isExam() - +b.isExam() ||
-              a.type.localeCompare(b.type),
+              a.type.localeCompare(b.type)
           )
           .map(
             (group) =>
@@ -168,16 +168,16 @@ export async function main(
                 group.instructors.length > 0
                   ? group.instructors.map(
                       (instructor) =>
-                        `${instructor.lastFirst} (${instructor.pid})`,
+                        `${instructor.lastFirst} (${instructor.pid})`
                     )
                   : "staff"
-              }`,
+              }`
           ),
         "",
         `[Enrollment numbers over time](./${course.subject}${course.course}.tsv)`,
       ]
         .map((line) => line + "\n")
-        .join(""),
+        .join("")
     );
 
     const filePath = `./webreg-data2/courses/${course.subject}${course.course}.tsv`;
@@ -186,7 +186,7 @@ export async function main(
       .catch((error) =>
         error instanceof Deno.errors.NotFound
           ? new CourseHistory()
-          : Promise.reject(error),
+          : Promise.reject(error)
       );
     // Only add a new entry if there was a change
     const sectionEnrollments = course.groups
@@ -200,7 +200,7 @@ export async function main(
               capacity: group.capacity,
               waitlist: group.waitlist,
             },
-          ] as const,
+          ] as const
       );
     const lastEntry =
       history.entries[history.entries.length - 1]?.sectionEnrollments;
@@ -209,8 +209,8 @@ export async function main(
       !lastEntry ||
       sectionEnrollments.some(([code, enrollment]) =>
         (["enrolled", "capacity", "waitlist"] as const).some(
-          (prop) => lastEntry[code]?.[prop] !== enrollment[prop],
-        ),
+          (prop) => lastEntry[code]?.[prop] !== enrollment[prop]
+        )
       )
     ) {
       history.entries.push({
@@ -230,12 +230,12 @@ export async function main(
               .filter((group) => group.plannable)
               .map((group) => group.code),
           ]),
-        ].sort(),
-      ),
+        ].sort()
+      )
     );
 
     const remote = course.groups.filter(
-      (group) => group.plannable && group.time?.location?.building === "RCLAS",
+      (group) => group.plannable && group.time?.location?.building === "RCLAS"
     );
     if (remote.length > 0) {
       await remoteList.write(
@@ -243,19 +243,20 @@ export async function main(
           course.course
         }.md): ${course.title}\n${remote
           .map((group) => `- ${group.code}\n`)
-          .join("")}`,
+          .join("")}`
       );
     }
 
     const enrollable = course.groups.filter(
-      (group) => group.plannable && group.enrollable,
+      (group) => group.plannable && group.enrollable
     );
     if (enrollable.length > 0) {
       // Determine whether the course is lower division (i.e. 0xx)
       const division = Math.floor(parseInt(course.course) / 100);
       enrollables[division] ??= `\n## ${division}xx courses\n\n`;
-      enrollables[division] +=
-        `- [**${course.code}**](./courses/${course.subject}${course.course}.md) ([numbers](./courses/${course.subject}${course.course}.tsv)): ${course.title}\n`;
+      enrollables[
+        division
+      ] += `- [**${course.code}**](./courses/${course.subject}${course.course}.md) ([numbers](./courses/${course.subject}${course.course}.tsv)): ${course.title}\n`;
     }
 
     await displayProgress(progress, { label: course.code });
@@ -267,7 +268,7 @@ export async function main(
     `# Non-full sections\n${Object.entries(enrollables)
       .sort(([a], [b]) => +a - +b)
       .map(([, text]) => text)
-      .join("")}`,
+      .join("")}`
   );
   console.log();
 }
@@ -282,6 +283,6 @@ if (import.meta.main) {
       (today.getMonth() + 1).toString().padStart(2, "0"),
       today.getDate().toString().padStart(2, "0"),
     ].join(""),
-    { type: "fetch", cookie },
+    { type: "fetch", cookie }
   );
 }

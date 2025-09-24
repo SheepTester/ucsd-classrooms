@@ -1,15 +1,14 @@
 import { useCallback } from "react";
-import { Time } from "../../util/Time";
 import { BuildingDatum } from "../lib/buildings";
 import { RoomMeeting } from "../lib/coursesToClassrooms";
 import {
-  latLongToPixel,
-  southwest,
   PADDING,
+  latLongToPixel,
   northeast,
+  southwest,
 } from "../lib/locations";
-import { Link } from "./Link";
 import { isMeetingOngoing, useMoment } from "../moment-context";
+import { Link } from "./Link";
 
 type BuildingButtonProps = {
   building: BuildingDatum;

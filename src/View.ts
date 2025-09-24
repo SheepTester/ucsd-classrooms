@@ -1,7 +1,7 @@
 import { createContext } from "react";
-import { Moment } from "./lib/now";
 import { Day } from "../util/Day";
 import { Time } from "../util/Time";
+import { Moment } from "./lib/now";
 
 export type View = {
   searching?: boolean;

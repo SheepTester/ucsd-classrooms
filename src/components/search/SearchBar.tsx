@@ -82,9 +82,9 @@ export function SearchBar({
         <input
           type="text"
           id="search"
-          autocomplete="off"
-          autocapitalize="none"
-          autocorrect="off"
+          autoComplete="off"
+          autoCapitalize="none"
+          autoCorrect="off"
           aria-label="Search courses, people, and buildings."
           title="Press '/' to jump to the search box."
           placeholder="Search courses, people, buildings..."

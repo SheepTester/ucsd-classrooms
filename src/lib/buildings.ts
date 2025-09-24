@@ -1,4 +1,4 @@
-import buildingData from "./buildings.json" assert { type: "json" };
+import buildingData from "./buildings.json";
 import { Location } from "./locations";
 
 export type BuildingDatum = {

@@ -1,6 +1,4 @@
-import { getTerm, termCode } from "../../../terms/index";
-import { Day } from "../../../util/Day";
-import { Time } from "../../../util/Time";
+import { termCode } from "../../../terms/index";
 import { useMoment } from "../../moment-context";
 
 const dateFormat = new Intl.DateTimeFormat([], {

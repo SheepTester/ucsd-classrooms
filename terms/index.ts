@@ -1,4 +1,8 @@
-import { Day } from "../util/Day.ts";
+/**
+ * Copied from https://github.com/SheepTester/uxdy/blob/main/terms/index.ts
+ */
+
+import { Day } from "../util/Day";
 
 export type Season = "FA" | "WI" | "SP" | "S1" | "S2";
 export type Quarter = Season | "S3" | "SU";
@@ -88,9 +92,9 @@ export function getTermDays(year: number, season: Season): TermDays {
         (year <= 1995 && season === "SP"
           ? 1
           : // Summer session in the 20th century ended on a Friday
-            year < 2000 && (season === "S1" || season === "S2")
-            ? -1
-            : 0),
+          year < 2000 && (season === "S1" || season === "S2")
+          ? -1
+          : 0)
     ),
   };
 }
@@ -159,18 +163,4 @@ export function termCode(year: number, quarter: Quarter): string {
 
 export function termName(year: number, quarter: Quarter): string {
   return `${names[quarter]} ${year}`;
-}
-
-if (import.meta.main) {
-  console.log(
-    ["Start year", "Fall start", "Fall end", "Winter start", "Spring end"].join(
-      "\t",
-    ),
-  );
-  for (let year = 2005; year <= 2028; year++) {
-    const { end: springEnd } = getTermDays(year, "SP");
-    const { start: fallStart, end: fallEnd } = getTermDays(year, "FA");
-    const { start: winterStart } = getTermDays(year + 1, "WI");
-    console.log([+fallStart - +springEnd, +winterStart - +fallEnd].join("\t"));
-  }
 }

@@ -1,4 +1,4 @@
-import { HTMLAttributes, useState } from "react";
+import { ImgHTMLAttributes, useState } from "react";
 
 /**
  * Fades in when the image loads.
@@ -9,7 +9,7 @@ import { HTMLAttributes, useState } from "react";
 export function Image({
   className = "",
   ...props
-}: HTMLAttributes<HTMLImageElement>) {
+}: ImgHTMLAttributes<HTMLImageElement>) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (

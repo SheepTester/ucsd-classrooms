@@ -25,16 +25,14 @@
   --active: #41cf46;
   --soon: #f3d500;
   --highlight: rgba(255, 255, 255, 0.5);
-  --dropdown: url("./material-arrow-drop-down-white.svg");
+  --dropdown: url("./assets/material-arrow-drop-down-white.svg");
   --link: #9acfff;
 
   --icon-button-hover: rgba(255, 255, 255, 0.05);
-  --normal:
-    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  --normal: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
-  --narrow:
-    "Oswald", Impact, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+  --narrow: "Oswald", Impact, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
 }
 @media (prefers-color-scheme: light) {
@@ -59,7 +57,7 @@
     --active: #09880d;
     --soon: #966f01;
     --highlight: rgba(0, 142, 255, 0.5);
-    --dropdown: url("./material-arrow-drop-down-black.svg");
+    --dropdown: url("./assets/material-arrow-drop-down-black.svg");
     --link: #2597ff;
   }
 }
@@ -127,7 +125,7 @@ input[type="checkbox"]:hover {
 input[type="checkbox"]:checked {
   border-color: transparent;
   background-color: var(--button);
-  background-image: url("./material-check-white.svg");
+  background-image: url("./assets/material-check-white.svg");
   background-position: center;
   background-size: cover;
 }
@@ -162,10 +160,7 @@ input[type="checkbox"]:checked:hover {
   backdrop-filter: grayscale(1) blur(5px);
   opacity: 0;
   visibility: hidden;
-  transition:
-    opacity 0.5s,
-    visibility 0.5s,
-    padding-right 0.2s;
+  transition: opacity 0.5s, visibility 0.5s, padding-right 0.2s;
   font-family: var(--normal);
 }
 .notice-visible {
@@ -198,7 +193,7 @@ input[type="checkbox"]:checked:hover {
   -webkit-overflow-scrolling: touch;
 }
 .scroll-area {
-  background-image: url("./map.webp");
+  background-image: url("./assets/map.webp");
   background-repeat: no-repeat;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
@@ -212,10 +207,7 @@ input[type="checkbox"]:checked:hover {
   color: #ffcd00;
   box-shadow: var(--card-shadow-hover);
   white-space: nowrap;
-  transition:
-    box-shadow 0.2s,
-    visibility 0.2s,
-    opacity 0.2s;
+  transition: box-shadow 0.2s, visibility 0.2s, opacity 0.2s;
 }
 .building-btn:active {
   box-shadow: var(--card-shadow-active);
@@ -321,9 +313,7 @@ input[type="checkbox"]:checked:hover {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  transition:
-    opacity 0.2s,
-    visibility 0.2s;
+  transition: opacity 0.2s, visibility 0.2s;
 }
 @media (max-width: 690px) {
   .corner {
@@ -374,7 +364,7 @@ input[type="checkbox"]:checked:hover {
   font-family: var(--normal);
 }
 .edit-icon {
-  background-image: url("./material-edit-white.svg");
+  background-image: url("./assets/material-edit-white.svg");
 }
 
 .date-time-panel {
@@ -391,10 +381,7 @@ input[type="checkbox"]:checked:hover {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  transition:
-    transform 0.2s,
-    opacity 0.2s,
-    visibility 0.2s;
+  transition: transform 0.2s, opacity 0.2s, visibility 0.2s;
   overflow: hidden;
 }
 .date-time-panel-hidden {
@@ -627,7 +614,7 @@ input[type="checkbox"]:checked:hover {
   background-repeat: no-repeat;
 }
 .close-date-btn {
-  background-image: url("./material-done-white.svg");
+  background-image: url("./assets/material-done-white.svg");
 }
 
 .building-panel {
@@ -644,11 +631,7 @@ input[type="checkbox"]:checked:hover {
   background-color: var(--modal);
   box-shadow: var(--modal-shadow);
   border-radius: 15px;
-  transition:
-    transform 0.2s,
-    opacity 0.2s,
-    visibility 0.2s,
-    right 0.2s;
+  transition: transform 0.2s, opacity 0.2s, visibility 0.2s, right 0.2s;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -717,9 +700,7 @@ input[type="checkbox"]:checked:hover {
 }
 .building-name .abbrev,
 .building-name .long {
-  transition:
-    opacity 0.5s,
-    visibility 0.5s;
+  transition: opacity 0.5s, visibility 0.5s;
 }
 .building-name .abbrev {
   opacity: 0.3;
@@ -772,10 +753,7 @@ input[type="checkbox"]:checked:hover {
   border-bottom-left-radius: 15px;
 }
 .back {
-  transition:
-    opacity 0.5s,
-    margin-left 0.5s,
-    visibility 0.5s;
+  transition: opacity 0.5s, margin-left 0.5s, visibility 0.5s;
 }
 .list-view .back {
   visibility: hidden;
@@ -806,9 +784,7 @@ input[type="checkbox"]:checked:hover {
   width: 100%;
   height: auto;
   border-radius: 10px;
-  transition:
-    box-shadow 0.2s,
-    opacity 0.2s;
+  transition: box-shadow 0.2s, opacity 0.2s;
 }
 .building-image-link:hover .building-image {
   box-shadow: var(--card-shadow-hover);
@@ -1018,10 +994,7 @@ input[type="checkbox"]:checked:hover {
   align-items: flex-end;
   font-family: var(--normal);
   color: var(--secondary);
-  transition:
-    opacity 0.2s,
-    visibility 0.2s,
-    transform 0.2s;
+  transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
 }
 .hide-status {
   opacity: 0;
@@ -1060,9 +1033,7 @@ input[type="checkbox"]:checked:hover {
   box-shadow: var(--modal-shadow);
   border-radius: 10px;
   width: 360px;
-  transition:
-    opacity 0.4s,
-    visibility 0.4s;
+  transition: opacity 0.4s, visibility 0.4s;
   max-height: calc(100% - 40px);
   display: flex;
   flex-direction: column;
@@ -1201,9 +1172,7 @@ input[type="checkbox"]:checked:hover {
   opacity: 0;
   pointer-events: none;
   user-select: none;
-  transition:
-    visibility 0.2s,
-    opacity 0.2s;
+  transition: visibility 0.2s, opacity 0.2s;
 }
 .modal[open] {
   visibility: visible;
@@ -1231,9 +1200,7 @@ input[type="checkbox"]:checked:hover {
   box-shadow: var(--modal-shadow);
   border-radius: 20px;
   transform: scale(0.95);
-  transition:
-    transform 0.2s,
-    border-radius 0.2s;
+  transition: transform 0.2s, border-radius 0.2s;
 }
 .modal[open] .modal-body {
   transform: none;

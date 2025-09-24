@@ -1,12 +1,12 @@
 import { useContext, useEffect, useRef } from "react";
 import { Course } from "../../../scheduleofclasses/group-sections";
+import { useMoment } from "../../moment-context";
 import { OnView } from "../../View";
 import { AbbrevHeading } from "../AbbrevHeading";
 import { CloseIcon } from "../icons/CloseIcon";
 import { navigate } from "../Link";
 import { CourseInfo } from "./CourseInfo";
 import { Professor, ProfInfo } from "./ProfInfo";
-import { useMoment } from "../../moment-context";
 
 export type ModalView =
   | { type: "course"; course: Course }

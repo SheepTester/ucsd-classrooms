@@ -1,14 +1,13 @@
-import { useState } from "react";
 import { useLast } from "../../../util/useLast";
-import { BuildingDatum, buildings } from "../../lib/buildings";
+import { BuildingDatum } from "../../lib/buildings";
 import { RoomMeeting } from "../../lib/coursesToClassrooms";
 import { AbbrevHeading } from "../AbbrevHeading";
 import { BackIcon } from "../icons/BackIcon";
 import { CloseIcon } from "../icons/CloseIcon";
+import { Image } from "../Image";
 import { Link } from "../Link";
 import { RoomList } from "./RoomList";
 import { RoomSchedule } from "./RoomSchedule";
-import { Image } from "../Image";
 
 type BuildingPanelContentProps = {
   building: BuildingDatum;

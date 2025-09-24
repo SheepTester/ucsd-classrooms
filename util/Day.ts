@@ -1,4 +1,6 @@
-// Based on https://github.com/Orbiit/gunn-web-app/blob/master/js/date.js
+/**
+ * Based on https://github.com/Orbiit/gunn-web-app/blob/master/js/date.js
+ */
 
 export const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
@@ -31,7 +33,7 @@ export class Day {
   /** @param length - Defaults to `long`. */
   monthName(
     length: Intl.DateTimeFormatOptions["month"] = "long",
-    locales?: string | string[],
+    locales?: string | string[]
   ): string {
     return new Intl.DateTimeFormat(locales, {
       timeZone: "UTC",
@@ -51,7 +53,7 @@ export class Day {
   /** @param length - Defaults to `long`. */
   dayName(
     length: Intl.DateTimeFormatOptions["weekday"] = "long",
-    locales?: string | string[],
+    locales?: string | string[]
   ): string {
     return new Intl.DateTimeFormat(locales, {
       timeZone: "UTC",
@@ -133,12 +135,12 @@ export class Day {
     return args.length > 0
       ? this.#date.toLocaleDateString(args[0], { ...args[1], timeZone: "UTC" })
       : this.valid
-        ? [
-            this.year.toString().padStart(4, "0"),
-            this.month.toString().padStart(2, "0"),
-            this.date.toString().padStart(2, "0"),
-          ].join("-")
-        : "Invalid date";
+      ? [
+          this.year.toString().padStart(4, "0"),
+          this.month.toString().padStart(2, "0"),
+          this.date.toString().padStart(2, "0"),
+        ].join("-")
+      : "Invalid date";
   }
 
   /**
@@ -197,7 +199,7 @@ export class Day {
   static monthName(
     month: number,
     length: Intl.DateTimeFormatOptions["month"] = "long",
-    locales?: string | string[],
+    locales?: string | string[]
   ): string {
     return this.from(1970, month, 1).monthName(length, locales);
   }
@@ -208,7 +210,7 @@ export class Day {
   static dayName(
     day: number,
     length: Intl.DateTimeFormatOptions["weekday"] = "long",
-    locales?: string | string[],
+    locales?: string | string[]
   ): string {
     // 1970-01-04 is a Sunday
     return this.from(1970, 1, 4 + day).dayName(length, locales);
@@ -217,14 +219,14 @@ export class Day {
   static min(first: Day | Day[], ...rest: Day[]) {
     const days = Array.isArray(first) ? [...first, ...rest] : [first, ...rest];
     return this.fromId(
-      days.reduce((cum, curr) => Math.min(cum, curr.id), Infinity),
+      days.reduce((cum, curr) => Math.min(cum, curr.id), Infinity)
     );
   }
 
   static max(first: Day | Day[], ...rest: Day[]) {
     const days = Array.isArray(first) ? [...first, ...rest] : [first, ...rest];
     return this.fromId(
-      days.reduce((cum, curr) => Math.max(cum, curr.id), -Infinity),
+      days.reduce((cum, curr) => Math.max(cum, curr.id), -Infinity)
     );
   }
 }

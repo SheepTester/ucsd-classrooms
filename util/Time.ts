@@ -1,4 +1,4 @@
-import { Day } from "./Day.ts";
+import { Day } from "./Day";
 
 /**
  * A time during a day. Only stores hours and minutes. The represented time may
@@ -60,10 +60,10 @@ export class Time {
           timeZone: "UTC",
         })
       : locales
-        ? `${this.hour.toString().padStart(2, "0")}:${minute}`
-        : `${((this.hour + 11) % 12) + 1}:${minute} ${
-            this.hour < 12 ? "a" : "p"
-          }m`;
+      ? `${this.hour.toString().padStart(2, "0")}:${minute}`
+      : `${((this.hour + 11) % 12) + 1}:${minute} ${
+          this.hour < 12 ? "a" : "p"
+        }m`;
   }
 
   /**

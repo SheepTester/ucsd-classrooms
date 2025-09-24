@@ -1,5 +1,3 @@
-/** @jsxImportSource preact */
-
 /** The Material Design "search" icon. */
 export function SearchIcon() {
   return (

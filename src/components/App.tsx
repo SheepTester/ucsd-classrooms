@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Course } from "../../scheduleofclasses/group-sections";
 import { getHolidays } from "../../terms/holidays";
 import {
@@ -11,10 +11,11 @@ import {
 import { Day } from "../../util/Day";
 import { useLast } from "../../util/useLast";
 import { buildings } from "../lib/buildings";
-import { TermBuildings, coursesToClassrooms } from "../lib/coursesToClassrooms";
-import { northeast, southwest, PADDING, mapPosition } from "../lib/locations";
+import { coursesToClassrooms, TermBuildings } from "../lib/coursesToClassrooms";
+import { mapPosition, northeast, PADDING, southwest } from "../lib/locations";
 import { now } from "../lib/now";
 import { Term, TermCache, TermError } from "../lib/TermCache";
+import { fromMoment, MomentContext } from "../moment-context";
 import { OnView, viewFromUrl, viewToUrl, ViewWithTerm } from "../View";
 import { BuildingPanel } from "./building/BuildingPanel";
 import { BuildingButton } from "./BuildingButton";
@@ -24,7 +25,6 @@ import { navigate } from "./Link";
 import { ModalView, ResultModal } from "./search/ResultModal";
 import { SearchBar, State } from "./search/SearchBar";
 import { TermStatus } from "./TermStatus";
-import { fromMoment, MomentContext } from "../moment-context";
 
 /**
  * Represents the state of the app:

@@ -6,11 +6,12 @@ export function useAsyncEffect(
 ): void {
   useEffect(() => {
     const promise = effect();
-    return async () => {
-      const cleanup = await promise;
-      if (typeof cleanup === "function") {
-        cleanup();
-      }
+    return () => {
+      promise.then((cleanup) => {
+        if (typeof cleanup === "function") {
+          cleanup();
+        }
+      });
     };
   }, inputs);
 }

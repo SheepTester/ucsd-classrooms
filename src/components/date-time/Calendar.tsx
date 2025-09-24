@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { getTerm, getTermDays, Season, TermDays } from "../../../terms/index";
+import { getTermDays, Season, TermDays } from "../../../terms/index";
 import { Day } from "../../../util/Day";
 import {
   CalendarHeaderRow,
@@ -89,7 +89,7 @@ type TermCalendarProps = {
 };
 function TermCalendar(props: TermCalendarProps) {
   const { start, end } = props;
-  const months: JSX.Element[] = [];
+  const months: ReactNode[] = [];
   for (let month = start.month; month <= end.month; month++) {
     months.push(<MonthCalendar month={month} key={month} {...props} />);
   }
@@ -136,7 +136,7 @@ export function Calendar({ freeScroll, ...props }: CalendarProps) {
     }
   }, [date.id]);
 
-  const calendars: JSX.Element[] = [];
+  const calendars: ReactNode[] = [];
   for (let year = start; year <= end; year++) {
     const yearTermDays = seasons.map((season) => getTermDays(year, season));
     for (const [i, season] of seasons.entries()) {

@@ -1,5 +1,3 @@
-/** @jsxImportSource preact */
-
 /** The Material Design "close" icon. */
 export function CloseIcon() {
   return (

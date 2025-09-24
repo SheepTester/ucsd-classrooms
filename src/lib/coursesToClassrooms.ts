@@ -1,9 +1,9 @@
 import {
-  Meeting,
-  Exam,
   Course,
-  Section,
+  Exam,
+  Meeting,
   MeetingTime,
+  Section,
 } from "../../scheduleofclasses/group-sections";
 
 export type RoomMeeting = (

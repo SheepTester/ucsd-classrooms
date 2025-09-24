@@ -1,5 +1,3 @@
-/** @jsxImportSource preact */
-
 /** The Material Design "arrow back" icon. */
 export function BackIcon() {
   return (
