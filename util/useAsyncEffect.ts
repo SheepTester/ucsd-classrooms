@@ -1,16 +1,16 @@
-import { useEffect } from 'preact/hooks'
+import { useEffect } from "preact/hooks";
 
-export function useAsyncEffect (
+export function useAsyncEffect(
   effect: () => Promise<void | (() => void)>,
-  inputs?: ReadonlyArray<unknown>
+  inputs?: ReadonlyArray<unknown>,
 ): void {
   useEffect(() => {
-    const promise = effect()
+    const promise = effect();
     return async () => {
-      const cleanup = await promise
-      if (typeof cleanup === 'function') {
-        cleanup()
+      const cleanup = await promise;
+      if (typeof cleanup === "function") {
+        cleanup();
       }
-    }
-  }, inputs)
+    };
+  }, inputs);
 }

@@ -1,4 +1,4 @@
-import { useRef } from 'preact/hooks'
+import { useRef } from "preact/hooks";
 
 /**
  * Stores and returns the last non-nullish value of `value`. This is mostly
@@ -6,10 +6,10 @@ import { useRef } from 'preact/hooks'
  * message that slides away when set to `null`, then you'll still want to render
  * the previous message while it's transitioning out.
  */
-export function useLast<T> (init: T, value: T | null | undefined): T {
-  const ref = useRef(init)
+export function useLast<T>(init: T, value: T | null | undefined): T {
+  const ref = useRef(init);
   if (value !== null && value !== undefined) {
-    ref.current = value
+    ref.current = value;
   }
-  return ref.current
+  return ref.current;
 }

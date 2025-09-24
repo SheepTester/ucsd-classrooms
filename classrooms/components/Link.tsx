@@ -3,8 +3,8 @@
 /// <reference lib="dom" />
 /// <reference lib="deno.ns" />
 
-import { JSX, ComponentChildren, Ref } from 'preact'
-import { useContext } from 'preact/hooks'
+import { JSX, ComponentChildren, Ref } from "preact";
+import { useContext } from "preact/hooks";
 import {
   BackHandler,
   OnView,
@@ -12,12 +12,12 @@ import {
   viewFromUrl,
   ViewHandler,
   viewToUrl,
-  ViewWithTerm
-} from '../View.ts'
-import { useMoment } from '../moment-context.ts'
+  ViewWithTerm,
+} from "../View.ts";
+import { useMoment } from "../moment-context.ts";
 
 export type NavigateOptions = {
-  view: ViewWithTerm
+  view: ViewWithTerm;
   /**
    * Determines whether the navigation should reuse prior history entries
    * instead of pushing new ones. This way, the back button can sometimes mimic
@@ -29,71 +29,71 @@ export type NavigateOptions = {
    * Returns `null` to push to the history stack. Returns a number `index` to go
    * back `index + 1` entries (i.e. jump to the entry in `previous`).
    */
-  back?: BackHandler
-}
+  back?: BackHandler;
+};
 
-export function navigate (
+export function navigate(
   onView: ViewHandler,
-  { view, back }: NavigateOptions
+  { view, back }: NavigateOptions,
 ): void {
-  const destination = viewToUrl(view)
+  const destination = viewToUrl(view);
   const previous: string[] = Array.isArray(window.history.state?.previous)
     ? window.history.state?.previous
-    : []
+    : [];
   if (back) {
-    const index = back(previous.map(url => viewFromUrl(url)))
+    const index = back(previous.map((url) => viewFromUrl(url)));
     if (index !== null) {
-      window.history.go(-(index + 1))
-      return
+      window.history.go(-(index + 1));
+      return;
     }
   }
-  onView(view)
+  onView(view);
   if (window.location.href === destination.href) {
-    return
+    return;
   }
-  const args: Parameters<History['pushState']> = [
+  const args: Parameters<History["pushState"]> = [
     { previous: [window.location.href, ...previous] },
-    '',
-    destination
-  ]
-  window.history.pushState(...args)
+    "",
+    destination,
+  ];
+  window.history.pushState(...args);
 }
 
 export type LinkProps = {
-  view: View | null
-  back?: BackHandler
-  class?: string
-  style?: JSX.CSSProperties | string
-  elemRef?: Ref<HTMLAnchorElement>
-  children?: ComponentChildren
-}
-export function Link ({
+  view: View | null;
+  back?: BackHandler;
+  class?: string;
+  style?: JSX.CSSProperties | string;
+  elemRef?: Ref<HTMLAnchorElement>;
+  children?: ComponentChildren;
+};
+export function Link({
   view,
   back,
-  class: className = '',
+  class: className = "",
   style,
   children,
-  elemRef
+  elemRef,
 }: LinkProps) {
-  const moment = useMoment()
-  const onView = useContext(OnView)
+  const moment = useMoment();
+  const onView = useContext(OnView);
   return (
     <a
-      href={view ? '?' : undefined}
+      href={view ? "?" : undefined}
       class={`internal-link ${className}`}
       style={style}
       ref={elemRef}
-      onClick={e => {
-        e.preventDefault()
+      onClick={(e) => {
+        e.preventDefault();
         if (view) {
           navigate(onView, {
             view: { ...view, term: moment.isLive ? null : moment },
-            back
-          })
+            back,
+          });
         }
       }}
     >
       {children}
     </a>
-  )
+  );
 }

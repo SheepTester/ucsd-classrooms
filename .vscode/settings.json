@@ -1,5 +1,4 @@
 {
-  "prettier.prettierPath": "./node_modules/prettierx",
   "deno.enable": true,
   "deno.lint": false,
   "deno.config": "./deno.jsonc",

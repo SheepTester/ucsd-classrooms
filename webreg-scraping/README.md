@@ -26,10 +26,10 @@ GET https://act.ucsd.edu/webreg2/svc/wradapter/secure/search-load-subject
 Responds with a JSON array of objects:
 
 ```ts
-function searchLoadSubject (): {
-  LONG_DESC: string
-  SUBJECT_CODE: string
-}[]
+function searchLoadSubject(): {
+  LONG_DESC: string;
+  SUBJECT_CODE: string;
+}[];
 ```
 
 | Field          | Example value     | Notes                                                                  |
@@ -50,10 +50,10 @@ GET https://act.ucsd.edu/webreg2/svc/wradapter/secure/search-load-department
 Responds with a JSON array of objects:
 
 ```ts
-function searchLoadDepartment (): {
-  DEP_CODE: string
-  DEP_DESC: string
-}[]
+function searchLoadDepartment(): {
+  DEP_CODE: string;
+  DEP_DESC: string;
+}[];
 ```
 
 | Field      | Example value               | Notes                                   |
@@ -87,14 +87,14 @@ Leaving most of the query parameters blank will list all the courses.
 Responds with a JSON array of objects:
 
 ```ts
-function searchByAll (): {
-  UNIT_TO: number
-  SUBJ_CODE: string
-  UNIT_INC: number
-  CRSE_TITLE: string
-  UNIT_FROM: number
-  CRSE_CODE: string
-}[]
+function searchByAll(): {
+  UNIT_TO: number;
+  SUBJ_CODE: string;
+  UNIT_INC: number;
+  CRSE_TITLE: string;
+  UNIT_FROM: number;
+  CRSE_CODE: string;
+}[];
 ```
 
 UCSD course units are quite bizarre and not what you'd expect. Some courses can
@@ -133,48 +133,48 @@ You can take the strings directly from `search-by-all`'s `SUBJ_CODE` and
 Responds with a JSON array of objects:
 
 ```ts
-function searchLoadGroupData (): {
-  END_MM_TIME: number
-  SCTN_CPCTY_QTY: number
-  LONG_DESC: string
-  SCTN_ENRLT_QTY: number
-  BEGIN_HH_TIME: number
-  SECTION_NUMBER: string
-  SECTION_START_DATE: string
-  STP_ENRLT_FLAG: 'Y' | 'N'
-  SECTION_END_DATE: string
-  COUNT_ON_WAITLIST: number
-  PRIMARY_INSTR_FLAG: 'Y' | ' '
-  BEFORE_DESC: ' ' | 'AC' | 'NC'
-  ROOM_CODE: string
-  END_HH_TIME: number
-  START_DATE: string
-  DAY_CODE: string
-  BEGIN_MM_TIME: number
-  PERSON_FULL_NAME: string
-  FK_SPM_SPCL_MTG_CD: '  ' | 'FI' | 'TBA' | 'MI' | 'MU' | 'RE' | 'PB' | 'OT'
-  PRINT_FLAG: ' ' | 'N' | 'Y' | '5'
-  BLDG_CODE: string
-  FK_SST_SCTN_STATCD: 'AC' | 'NC' | 'CA'
+function searchLoadGroupData(): {
+  END_MM_TIME: number;
+  SCTN_CPCTY_QTY: number;
+  LONG_DESC: string;
+  SCTN_ENRLT_QTY: number;
+  BEGIN_HH_TIME: number;
+  SECTION_NUMBER: string;
+  SECTION_START_DATE: string;
+  STP_ENRLT_FLAG: "Y" | "N";
+  SECTION_END_DATE: string;
+  COUNT_ON_WAITLIST: number;
+  PRIMARY_INSTR_FLAG: "Y" | " ";
+  BEFORE_DESC: " " | "AC" | "NC";
+  ROOM_CODE: string;
+  END_HH_TIME: number;
+  START_DATE: string;
+  DAY_CODE: string;
+  BEGIN_MM_TIME: number;
+  PERSON_FULL_NAME: string;
+  FK_SPM_SPCL_MTG_CD: "  " | "FI" | "TBA" | "MI" | "MU" | "RE" | "PB" | "OT";
+  PRINT_FLAG: " " | "N" | "Y" | "5";
+  BLDG_CODE: string;
+  FK_SST_SCTN_STATCD: "AC" | "NC" | "CA";
   FK_CDI_INSTR_TYPE:
-    | 'DI'
-    | 'LE'
-    | 'SE'
-    | 'PR'
-    | 'IN'
-    | 'IT'
-    | 'FW'
-    | 'LA'
-    | 'CL'
-    | 'TU'
-    | 'CO'
-    | 'ST'
-    | 'OP'
-    | 'OT'
-    | 'SA'
-  SECT_CODE: string
-  AVAIL_SEAT: number
-}[]
+    | "DI"
+    | "LE"
+    | "SE"
+    | "PR"
+    | "IN"
+    | "IT"
+    | "FW"
+    | "LA"
+    | "CL"
+    | "TU"
+    | "CO"
+    | "ST"
+    | "OP"
+    | "OT"
+    | "SA";
+  SECT_CODE: string;
+  AVAIL_SEAT: number;
+}[];
 ```
 
 | Field                | Example value                      | Notes                                                            |
@@ -369,53 +369,53 @@ GET https://act.ucsd.edu/webreg2/svc/wradapter/secure/get-class
 Responds with a JSON array of objects:
 
 ```ts
-function getClass (): {
-  END_MM_TIME: number
-  LONG_DESC: string
-  TERM_CODE: string
-  SECT_CREDIT_HRS: number
-  BEGIN_HH_TIME: number
-  SECTION_NUMBER: number
-  SUBJ_CODE: string
-  GRADE_OPTN_CD_PLUS: ' ' | '+'
-  WT_POS: string
-  PRIMARY_INSTR_FLAG: 'Y' | ' '
-  ROOM_CODE: string
-  FK_PCH_INTRL_REFID: number
-  CRSE_TITLE: string
-  END_HH_TIME: number
-  GRADE_OPTION: 'L' | 'P' | 'P/NP' | 'S' | 'S/U' | 'H' | ' '
-  START_DATE: string
-  CRSE_CODE: string
-  DAY_CODE: string
-  BEGIN_MM_TIME: number
-  NEED_HEADROW: boolean
-  PERSON_FULL_NAME: string
-  FK_SPM_SPCL_MTG_CD: '  ' | 'FI' | 'TBA' | 'MI' | 'MU' | 'RE' | 'PB' | 'OT'
-  PERSON_ID: string
-  BLDG_CODE: string
-  SECT_CREDIT_HRS_PL: ' ' | '+'
-  SECTION_HEAD: number
-  ENROLL_STATUS: 'EN' | 'WT' | 'PL'
+function getClass(): {
+  END_MM_TIME: number;
+  LONG_DESC: string;
+  TERM_CODE: string;
+  SECT_CREDIT_HRS: number;
+  BEGIN_HH_TIME: number;
+  SECTION_NUMBER: number;
+  SUBJ_CODE: string;
+  GRADE_OPTN_CD_PLUS: " " | "+";
+  WT_POS: string;
+  PRIMARY_INSTR_FLAG: "Y" | " ";
+  ROOM_CODE: string;
+  FK_PCH_INTRL_REFID: number;
+  CRSE_TITLE: string;
+  END_HH_TIME: number;
+  GRADE_OPTION: "L" | "P" | "P/NP" | "S" | "S/U" | "H" | " ";
+  START_DATE: string;
+  CRSE_CODE: string;
+  DAY_CODE: string;
+  BEGIN_MM_TIME: number;
+  NEED_HEADROW: boolean;
+  PERSON_FULL_NAME: string;
+  FK_SPM_SPCL_MTG_CD: "  " | "FI" | "TBA" | "MI" | "MU" | "RE" | "PB" | "OT";
+  PERSON_ID: string;
+  BLDG_CODE: string;
+  SECT_CREDIT_HRS_PL: " " | "+";
+  SECTION_HEAD: number;
+  ENROLL_STATUS: "EN" | "WT" | "PL";
   FK_CDI_INSTR_TYPE:
-    | 'DI'
-    | 'LE'
-    | 'SE'
-    | 'PR'
-    | 'IN'
-    | 'IT'
-    | 'FW'
-    | 'LA'
-    | 'CL'
-    | 'TU'
-    | 'CO'
-    | 'ST'
-    | 'OP'
-    | 'OT'
-    | 'SA'
-  SECT_CODE: string
-  FK_SEC_SCTN_NUM: number
-}[]
+    | "DI"
+    | "LE"
+    | "SE"
+    | "PR"
+    | "IN"
+    | "IT"
+    | "FW"
+    | "LA"
+    | "CL"
+    | "TU"
+    | "CO"
+    | "ST"
+    | "OP"
+    | "OT"
+    | "SA";
+  SECT_CODE: string;
+  FK_SEC_SCTN_NUM: number;
+}[];
 ```
 
 | Field                | Example value                    | Notes                                                               |

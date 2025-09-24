@@ -161,6 +161,6 @@ run) and run this in the console.
 
 ```js
 import(
-  'http://localhost:8080/webreg-scraping/bookmarklet/dist/bookmarklet.min.js'
-)
+  "http://localhost:8080/webreg-scraping/bookmarklet/dist/bookmarklet.min.js"
+);
 ```

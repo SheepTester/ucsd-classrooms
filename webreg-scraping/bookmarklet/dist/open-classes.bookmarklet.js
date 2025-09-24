@@ -1,7 +1,7 @@
 import(
-  'https://sheeptester.github.io/uxdy/bookmarklet/bookmarklet.min.js?' +
+  "https://sheeptester.github.io/uxdy/bookmarklet/bookmarklet.min.js?" +
     Date.now()
-)
+);
 
 // metadata for https://sheeptester.github.io/hello-world/bookmarklet.html
 // `@name Get open joinable classes on WebReg`

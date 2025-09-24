@@ -8,69 +8,69 @@ import {
   green,
   magenta,
   red,
-  yellow
-} from 'std/fmt/colors.ts'
-import { Day } from '../util/Day.ts'
-import { DAYS, getCourseIterator } from './scrape.ts'
+  yellow,
+} from "std/fmt/colors.ts";
+import { Day } from "../util/Day.ts";
+import { DAYS, getCourseIterator } from "./scrape.ts";
 
-const TERM = 'SP23'
+const TERM = "SP23";
 
 /**
  * Displays a time in minutes since midnight for the console. I use 24-hour so
  * this function does too.
  */
-function displayTime (minutes: number): string {
+function displayTime(minutes: number): string {
   return `${Math.floor(minutes / 60)
     .toString()
-    .padStart(2, '0')}:${(minutes % 60).toString().padStart(2, '0')}`
+    .padStart(2, "0")}:${(minutes % 60).toString().padStart(2, "0")}`;
 }
 
-const start = Deno.args.length === 1 ? +Deno.args[0] : undefined
-console.log(bold(TERM))
+const start = Deno.args.length === 1 ? +Deno.args[0] : undefined;
+console.log(bold(TERM));
 for await (const { item } of getCourseIterator(TERM, { start })) {
-  if ('subject' in item) {
+  if ("subject" in item) {
     const units =
       item.units.from === item.units.to
         ? item.units.from
         : item.units.inc !== 1
-        ? `${item.units.from}-${item.units.to} by ${item.units.inc}`
-        : `${item.units.from}-${item.units.to}`
-    console.log()
+          ? `${item.units.from}-${item.units.to} by ${item.units.inc}`
+          : `${item.units.from}-${item.units.to}`;
+    console.log();
     console.log(
-      `${item.subject} ${item.number}: ${gray(`${item.title} (${units})`)}`
-    )
+      `${item.subject} ${item.number}: ${gray(`${item.title} (${units})`)}`,
+    );
   } else {
     const time = item.time
-      ? `${item.time.days.map(day => DAYS[day]).join('')} ${displayTime(
-          item.time.start
+      ? `${item.time.days.map((day) => DAYS[day]).join("")} ${displayTime(
+          item.time.start,
         )}–${displayTime(item.time.end)}`
       : item.location
-      ? '[Time TBA]'
-      : '[Room/Time TBA]'
+        ? "[Time TBA]"
+        : "[Room/Time TBA]";
     const location = item.location
       ? ` at ${green(`${item.location.building} ${item.location.room}`)}`
       : item.time
-      ? green(' [Room TBA]')
-      : ''
+        ? green(" [Room TBA]")
+        : "";
     const info = item.selectable
       ? item.selectable.capacity === Infinity
-        ? yellow(' no limit')
+        ? yellow(" no limit")
         : ` ${red(
-            `${item.selectable.available}/${item.selectable.capacity}`
+            `${item.selectable.available}/${item.selectable.capacity}`,
           )} available`
       : item.section instanceof Day
-      ? ` on ${item.section}`
-      : ''
+        ? ` on ${item.section}`
+        : "";
     const instructor =
       item.instructors.length > 0
         ? item.instructors
             .map(([first, last]) => blue(`${first} ${bold(last)}`))
-            .join(', ')
-        : red('staff')
+            .join(", ")
+        : red("staff");
     console.log(
-      `${gray('|')} ${magenta(item.type)} ${
-        item.section instanceof Day ? red('exm') : yellow(item.section)
-      } ${cyan(time)}${location}${info} by ${instructor}`
-    )
+      `${gray("|")} ${magenta(item.type)} ${
+        item.section instanceof Day ? red("exm") : yellow(item.section)
+      } ${cyan(time)}${location}${info} by ${instructor}`,
+    );
   }
 }

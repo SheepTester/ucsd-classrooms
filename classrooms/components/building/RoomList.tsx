@@ -3,58 +3,59 @@
 /// <reference lib="dom" />
 /// <reference lib="deno.ns" />
 
-import { meetingTypes } from '../../../webreg-scraping/meeting-types.ts'
-import { compareRoomNums } from '../../lib/compareRoomNums.ts'
-import { RoomMeeting } from '../../lib/coursesToClassrooms.ts'
-import { isMeetingOngoing, useMoment } from '../../moment-context.ts'
-import { Link } from '../Link.tsx'
+import { meetingTypes } from "../../../webreg-scraping/meeting-types.ts";
+import { compareRoomNums } from "../../lib/compareRoomNums.ts";
+import { RoomMeeting } from "../../lib/coursesToClassrooms.ts";
+import { isMeetingOngoing, useMoment } from "../../moment-context.ts";
+import { Link } from "../Link.tsx";
 
 export type RoomListProps = {
-  building: string
-  rooms: Record<string, RoomMeeting[]>
-}
-export function RoomList ({ building, rooms }: RoomListProps) {
-  const moment = useMoment()
+  building: string;
+  rooms: Record<string, RoomMeeting[]>;
+};
+export function RoomList({ building, rooms }: RoomListProps) {
+  const moment = useMoment();
 
   if (Object.keys(rooms).length === 0) {
     return (
-      <div class='empty'>
+      <div class="empty">
         <p>
           This building isn't used for any classes this week, as far as WebReg
           is concerned.
         </p>
       </div>
-    )
+    );
   }
 
   return (
-    <div class='room-list'>
-      <div class='rooms'>
+    <div class="room-list">
+      <div class="rooms">
         {Object.entries(rooms)
           // Can't pre-sort the rooms object entries because JS sorts numerical
           // properties differently
           .sort(([a], [b]) => compareRoomNums(a, b))
           .map(([room, meetings]) => {
-            const activeMeeting = meetings.find(meeting =>
-              isMeetingOngoing(meeting, moment, 10)
-            )
-            const soon = activeMeeting && moment.time < activeMeeting.time.start
+            const activeMeeting = meetings.find((meeting) =>
+              isMeetingOngoing(meeting, moment, 10),
+            );
+            const soon =
+              activeMeeting && moment.time < activeMeeting.time.start;
             return (
               <Link
-                view={{ type: 'building', building, room }}
+                view={{ type: "building", building, room }}
                 class={`room ${
-                  activeMeeting ? (soon ? 'soon' : 'active') : 'inactive'
+                  activeMeeting ? (soon ? "soon" : "active") : "inactive"
                 }`}
               >
-                <div className='room-name'>
+                <div className="room-name">
                   {building} {room}
                 </div>
-                <div className='current-meeting'>
+                <div className="current-meeting">
                   {activeMeeting ? (
                     <>
-                      {activeMeeting.course}{' '}
+                      {activeMeeting.course}{" "}
                       {soon ? (
-                        'soon'
+                        "soon"
                       ) : (
                         <>
                           (
@@ -62,7 +63,7 @@ export function RoomList ({ building, rooms }: RoomListProps) {
                             title={`${
                               meetingTypes[activeMeeting.type]
                             } with up to ${activeMeeting.capacity} student${
-                              activeMeeting.capacity === 1 ? '' : 's'
+                              activeMeeting.capacity === 1 ? "" : "s"
                             }`}
                           >
                             {activeMeeting.type}
@@ -72,13 +73,13 @@ export function RoomList ({ building, rooms }: RoomListProps) {
                       )}
                     </>
                   ) : (
-                    'Not in use'
+                    "Not in use"
                   )}
                 </div>
               </Link>
-            )
+            );
           })}
       </div>
     </div>
-  )
+  );
 }

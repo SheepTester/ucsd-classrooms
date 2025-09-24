@@ -3,25 +3,25 @@
 /// <reference lib="dom" />
 /// <reference lib="deno.ns" />
 
-import { useState } from 'preact/hooks'
-import { Day } from '../../../util/Day.ts'
-import { Time } from '../../../util/Time.ts'
-import { inPT } from '../../lib/now.ts'
-import { Calendar, ScrollMode } from './Calendar.tsx'
+import { useState } from "preact/hooks";
+import { Day } from "../../../util/Day.ts";
+import { Time } from "../../../util/Time.ts";
+import { inPT } from "../../lib/now.ts";
+import { Calendar, ScrollMode } from "./Calendar.tsx";
 
 export type DateTimePanelProps = {
-  date: Day
-  onDate: (date: Day) => void
-  time: Time
-  onTime: (customTime: Time) => void
-  useNow: boolean
-  onUseNow: (useNow: boolean) => void
-  visible: boolean
-  closeable: boolean
-  class: string
-  onClose: () => void
-}
-export function DateTimePanel ({
+  date: Day;
+  onDate: (date: Day) => void;
+  time: Time;
+  onTime: (customTime: Time) => void;
+  useNow: boolean;
+  onUseNow: (useNow: boolean) => void;
+  visible: boolean;
+  closeable: boolean;
+  class: string;
+  onClose: () => void;
+};
+export function DateTimePanel({
   date,
   onDate,
   time,
@@ -31,97 +31,97 @@ export function DateTimePanel ({
   visible,
   closeable,
   class: className,
-  onClose
+  onClose,
 }: DateTimePanelProps) {
-  const [scrollMode, setScrollMode] = useState<ScrollMode>('init')
+  const [scrollMode, setScrollMode] = useState<ScrollMode>("init");
 
   return (
     <form
       class={`date-time-panel ${
-        visible ? '' : 'date-time-panel-hidden'
+        visible ? "" : "date-time-panel-hidden"
       } ${className} calendar-open`}
-      onSubmit={e => {
-        onClose()
-        e.preventDefault()
+      onSubmit={(e) => {
+        onClose();
+        e.preventDefault();
       }}
     >
-      <div class='date-time-flex'>
-        <label class='checkbox-label'>
+      <div class="date-time-flex">
+        <label class="checkbox-label">
           <input
-            type='checkbox'
+            type="checkbox"
             checked={useNow}
-            onInput={e => {
-              onUseNow(e.currentTarget.checked)
+            onInput={(e) => {
+              onUseNow(e.currentTarget.checked);
               if (e.currentTarget.checked) {
-                setScrollMode('date-edited')
+                setScrollMode("date-edited");
               }
             }}
           />
           <span>
             Use current time
-            {inPT() ? null : <span class='tz-note'>(in San Diego)</span>}
+            {inPT() ? null : <span class="tz-note">(in San Diego)</span>}
           </span>
         </label>
         {date.id !== Day.today().id && (
           <button
-            type='button'
-            class='today-btn'
+            type="button"
+            class="today-btn"
             onClick={() => {
-              onDate(Day.today())
-              setScrollMode('date-edited')
+              onDate(Day.today());
+              setScrollMode("date-edited");
             }}
           >
             Today
           </button>
         )}
         {closeable && (
-          <button class='filled-icon-btn close-date-btn'>Close</button>
+          <button class="filled-icon-btn close-date-btn">Close</button>
         )}
       </div>
-      <div class='date-time-flex'>
+      <div class="date-time-flex">
         <input
-          type='date'
-          name='date'
+          type="date"
+          name="date"
           value={date.toString()}
-          onInput={e => {
-            const date = Day.parse(e.currentTarget.value)
+          onInput={(e) => {
+            const date = Day.parse(e.currentTarget.value);
             if (date) {
               if (useNow) {
-                onUseNow(false)
+                onUseNow(false);
               }
-              onDate(date)
-              setScrollMode('date-edited')
+              onDate(date);
+              setScrollMode("date-edited");
             }
           }}
-          class='date-input'
+          class="date-input"
         />
         <input
-          type='time'
+          type="time"
           value={time.toString(true)}
-          onInput={e => {
-            const time = Time.parse24(e.currentTarget.value)
+          onInput={(e) => {
+            const time = Time.parse24(e.currentTarget.value);
             if (time) {
               if (useNow) {
-                onUseNow(false)
+                onUseNow(false);
               }
-              onTime(time)
+              onTime(time);
             }
           }}
-          class='time-input'
+          class="time-input"
         />
       </div>
       <Calendar
         date={date}
-        onDate={date => {
+        onDate={(date) => {
           if (useNow) {
-            onUseNow(false)
+            onUseNow(false);
           }
-          onDate(date)
-          setScrollMode('none')
+          onDate(date);
+          setScrollMode("none");
         }}
         scrollMode={scrollMode}
-        freeScroll={() => setScrollMode('none')}
+        freeScroll={() => setScrollMode("none")}
       />
     </form>
-  )
+  );
 }

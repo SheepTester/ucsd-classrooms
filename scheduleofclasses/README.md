@@ -15,7 +15,9 @@ Purpose: Determining if I can make any assumptions about when S3 courses start/e
 | SU18    | 2018-05-14     | 2018-09-28 | Mon x442          | Sun x345, Fri x97  |
 
 [^1]: Tue x10, Wed x2
+
 [^2]: Fri x39, Thu x9, Wed x3, Tue x1
+
 [^3]: Fri x7, Tue x2
 
 S323 (being for undergrads, I guess) doesn't overlap with SP23 or FA23, though it starts before S123. The other S3's don't overlap with summer and fall, either.

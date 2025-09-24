@@ -1,24 +1,24 @@
 // deno run --allow-read classrooms.ts
 
-import { Scraper } from './scrape.ts'
-import { displayProgress } from '../util/displayProgress.ts'
+import { Scraper } from "./scrape.ts";
+import { displayProgress } from "../util/displayProgress.ts";
 
-export async function main (quarter: string, cachePath: string) {
-  const getter = new Scraper(quarter, { cachePath })
-  const buildings: Record<string, Record<string, number>> = {}
-  await displayProgress(0)
+export async function main(quarter: string, cachePath: string) {
+  const getter = new Scraper(quarter, { cachePath });
+  const buildings: Record<string, Record<string, number>> = {};
+  await displayProgress(0);
   for await (const { course, progress } of getter.allCoursesWithProgress()) {
     for (const group of course.groups) {
       if (group.time?.location) {
-        const { building, room } = group.time.location
-        buildings[building] ??= {}
-        buildings[building][room] ??= 0
-        buildings[building][room]++
+        const { building, room } = group.time.location;
+        buildings[building] ??= {};
+        buildings[building][room] ??= 0;
+        buildings[building][room]++;
       }
     }
-    await displayProgress(progress, { label: course.code })
+    await displayProgress(progress, { label: course.code });
   }
-  console.log()
+  console.log();
 
   console.log(
     Object.fromEntries(
@@ -28,15 +28,15 @@ export async function main (quarter: string, cachePath: string) {
             [
               building,
               Object.fromEntries(
-                Object.entries(rooms).sort((a, b) => a[0].localeCompare(b[0]))
-              )
-            ] as const
+                Object.entries(rooms).sort((a, b) => a[0].localeCompare(b[0])),
+              ),
+            ] as const,
         )
-        .sort((a, b) => a[0].localeCompare(b[0]))
-    )
-  )
+        .sort((a, b) => a[0].localeCompare(b[0])),
+    ),
+  );
 }
 
 if (import.meta.main) {
-  await main('WI22', './cache-wi22/')
+  await main("WI22", "./cache-wi22/");
 }

@@ -12,7 +12,6 @@ examples, this doesn't mean they're the only example. They're just the first one
 that came up.
 
 - Subject codes:
-
   - Subject codes are usually 3 or 4 capital letters, but [SE (structural
     engineering)](https://catalog.ucsd.edu/courses/SE.html) is only 2 letters
     long.
@@ -21,7 +20,6 @@ that came up.
     "AAS/ANSC 185"; I'm making it ignore whatever subject code is after the
     slash because it's a cross listing. The entire page is under AASM.html, but
     the subject code is AAS.
-
     - [BENG/... 182](https://catalog.ucsd.edu/courses/BENG.html#beng182) is
       cross listed with more than two subjects.
 
@@ -35,30 +33,25 @@ that came up.
   - [LISL 1A](https://catalog.ucsd.edu/courses/LING.html#lisl1a) and a lot of
     the other linguistics courses wrap the subject code in parentheses preceded
     by "Linguistics/Capitalized Language Name."
-
     - [LIDS 19](https://catalog.ucsd.edu/courses/LING.html#lids19) is just
       "Linguistics (LIDS)," with no slash.
 
 - Course codes:
-
   - [AIP 197DC](https://catalog.ucsd.edu/courses/AIP.html#aip197dc) has two
     letters in its course code.
 
   - [CHIN 160/260](https://catalog.ucsd.edu/courses/CHIN.html#chin160) has a
     slash in its course code. I guess they're aliases or something.
-
     - [GSS 21-...-26](https://catalog.ucsd.edu/courses/GSS.html#tws21) uses
       hyphens instead.
 
     - [LISL 5A-C](https://catalog.ucsd.edu/courses/LING.html#lisl5a) uses commas
       instead. However, unlike the above two cases, these include letters.
-
       - [POLI 5 or 5D](https://catalog.ucsd.edu/courses/POLI.html#poli5) uses
         "or."
 
   - [BGGN 249A-B-C](https://catalog.ucsd.edu/courses/BIOL.html#bggn-249a) lists
     an entire sequence at once.
-
     - [SE 130A-B](https://catalog.ucsd.edu/courses/SE.html#se130a) uses an en
       dash instead of a hyphen.
 
@@ -69,7 +62,6 @@ that came up.
     between the course code's number and letter.
 
 - Characters in course names:
-
   - [SE 87](https://catalog.ucsd.edu/courses/SE.html#se87)'s course name has a
     hyphen in it.
 
@@ -108,10 +100,8 @@ that came up.
     allowlist of characters for the course title.
 
 - Units:
-
   - [AIP 197](https://catalog.ucsd.edu/courses/AIP.html#aip197) has units
     separated by commas.
-
     - [AAS 198](https://catalog.ucsd.edu/courses/AASM.html#aas198) has its units
       listed using "or" instead of a comma.
 
@@ -120,14 +110,12 @@ that came up.
 
   - [AAS 190](https://catalog.ucsd.edu/courses/AASM.html#aas190) has its units
     listed as a range with an en dash (–).
-
     - [BILD 98](https://catalog.ucsd.edu/courses/BIOL.html#bild98) has a range
       of units using "to" instead of an en dash.
 
   - [BGGN 249A-B-C](https://catalog.ucsd.edu/courses/BIOL.html#bggn-249a)'s
     units are also listed as (4-4-4). It seems all courses with A-B-C have n-n-n
     units.
-
     - [CLASSIC 399](https://catalog.ucsd.edu/courses/CLAS.html#clas399) also has
       4-4-4 units but it doesn't have the A-B-C course code.
 
@@ -136,13 +124,11 @@ that came up.
 
   - [ECON 202A-B-C](https://catalog.ucsd.edu/courses/ECON.html#econ202c) lists
     the units for its three quarters as 0–4/0–4/0–4.
-
     - [MUS 201A-F](https://catalog.ucsd.edu/courses/MUS.html#mus201a) instead
       uses commas (followed by a space).
 
   - [LISL 1A](https://catalog.ucsd.edu/courses/LING.html#lisl1a) and a lot of
     the other linguistics courses have 2.5 units.
-
     - [LIPO 15](https://catalog.ucsd.edu/courses/LING.html#lipo15) and a few
       other linguistics courses have 2.0 units. As a side note, this one in
       particular at least curiously also wraps its `anchor-parent` element
@@ -155,7 +141,6 @@ that came up.
     whatever that means. My best guess is "two to four, or zero."
 
 - Miscellaneous whitespace:
-
   - [ANAR 113](https://catalog.ucsd.edu/courses/ANTH.html#anar113) is very
     subtle: it has a non-breaking space (`&nbsp;`) after the period. Most of the
     others don't.
@@ -167,7 +152,6 @@ that came up.
 - [EDS 30](https://catalog.ucsd.edu/courses/EDS.html#eds30), like a lot of the
   other EDS courses, are cross-listed in the form `EDS 30/MATH 95`. I think it's
   safe to ignore whatever is after the slash.
-
   - [BENG 276](https://catalog.ucsd.edu/courses/BENG.html#beng276) has more than
     two subject-course code pairs, separated by slashes.
 
@@ -188,7 +172,6 @@ that came up.
 - [TDAC 103A](https://catalog.ucsd.edu/courses/THEA.html#tdac103a) is missing a
   space after its period. This is quite rare and seems to only happen on theatre
   course listings (TDGR 217, TDGR 243, and VIS 145B are the others).
-
   - [GPCO 468](https://catalog.ucsd.edu/courses/GPS.html#gpco468) has a colon
     instead of a period. The only other time this happens is with another GPS
     course.
@@ -203,7 +186,6 @@ This leaves the following:
 
 - Missing units. I don't really know how to deal with these, though I suppose I
   don't really need the units.
-
   - COMM 101A. Media Activism
   - HIEU 124. The Age of Alexander: Hellenistic History from Alexander the Great to Cleopatra
   - HILA 119. Central America: Popular Struggle, Political Change, and US Intervention
@@ -216,14 +198,12 @@ This leaves the following:
 
 - Missing a period (I can fix this easily, but I don't want there to be false
   positives at this stage).
-
   - COMM 114M CSI: Communication and the Law (4)
   - COMM 114T CSI: Science Communication (4)
   - HIUS 178/278 The Atlantic World, 1400–1800 (4)
   - SOCI 123 Japanese Culture Inside/Out: A Transnational Perspective (4)
 
 - Lists of course codes. The regex is quite large right now, so I plan on fixing these
-
   - Linguistics/American Sign Language (LISL) 5A, 5B, 5C. Fundamentals of American Sign Language (5)
   - Linguistics/French (LIFR) 5B, 5C, 5D. Fundamentals of French (5)
   - Linguistics/German (LIGM) 5A, 5B, 5C, 5D. Fundamentals of German (5)
@@ -237,13 +217,11 @@ This leaves the following:
   - POLI 30 or 30D. Political Inquiry (4)
 
 - `/0` in units. I think this means "or zero," but I'll first simplifiy the regex before adding this.
-
   - MUS 130. Chamber Music Performance (2–4/0)
   - MUS 131. Advanced Improvisation Performance (4/0)
 
 - I'm not sure if I will need to capture the subject-course code pair from the
   middle of the list.
-
   - ANTH 268, COGR 225A, HIGR 238, PHIL 209A, SOCG 255A. Introduction to Science Studies (4)
   - ANTH 272, COGR 225B, HIGR 239, PHIL 209B, SOCG 255B. Seminar in Science Studies (4)
   - ANTH 273, COGR 225C, HIGR 240, PHIL 209C, SOCG 255C. Colloquium in Science Studies (4)
@@ -306,7 +284,6 @@ assumption here is that every `p.course-name` is followed by exactly one
 
 - [LTWL 140](https://catalog.ucsd.edu/courses/LIT.html#ltwl140) has a typo; its
   description's class is `course-description` not `course-descriptions`.
-
   - [HDS 191](https://catalog.ucsd.edu/courses/HDS.html#hds191) uses an atypical
     `faculty-staff-listing` class for its description.
 
@@ -315,7 +292,6 @@ assumption here is that every `p.course-name` is followed by exactly one
 
 - [FPM 259B](https://catalog.ucsd.edu/courses/FMPH.html#fpm259b) has a second
   `course-descriptions` but it's for the anchor.
-
   - [COMM 101](https://catalog.ucsd.edu/courses/COMM.html#comm101) uses the
     `course-descriptions` class for headings as well.
 
@@ -324,7 +300,6 @@ assumption here is that every `p.course-name` is followed by exactly one
 
 - [VIS 23](https://catalog.ucsd.edu/courses/VIS.html#vis23) has a legitimate
   second description paragraph that just contains a note.
-
   - [MUS 95](https://catalog.ucsd.edu/courses/MUS.html#mus95) has various
     paragraphs in the form of a note as well.
 
@@ -341,7 +316,6 @@ Therefore, I can follow the following rule:
 
 - If the next element sibling is a `<p>` element, then it has the course
   description.
-
   - Otherwise, see if there's a non-empty adjacent text node.
 
 - If the next next element sibling starts with `Note:` (as with the two cases

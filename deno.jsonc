@@ -3,7 +3,7 @@
     "deno_dom/": "https://deno.land/x/deno_dom@v0.1.36-alpha/",
     "preact": "https://esm.sh/preact@10.17.1",
     "preact/": "https://esm.sh/preact@10.17.1/",
-    "std/": "https://deno.land/std@0.180.0/"
+    "std/": "https://deno.land/std@0.180.0/",
   },
   "tasks": {
     "bookmarklet:build": "deno bundle ./webreg-scraping/bookmarklet/index.tsx | npx terser --module > ./webreg-scraping/bookmarklet/dist/bookmarklet.min.js",
@@ -11,6 +11,6 @@
     "classrooms:build": "deno bundle ./classrooms/index.tsx | npx terser --module > ./classrooms/public/index.min.js",
     "classrooms:watch": "echo \"\n>>> http://localhost:8080/public/ <<<\n\" && http-server ./classrooms/ -c-1 -s & deno bundle --watch ./classrooms/index.tsx ./classrooms/public/index.min.js",
     "classrooms:to-file": "deno run --allow-read=./scheduleofclasses/terms/$TERM.json classrooms/scripts/coursesToFile.ts $TERM abridged > classrooms/data/classrooms-$TERM.txt && deno run --allow-read=./scheduleofclasses/terms/$TERM.json classrooms/scripts/coursesToFile.ts $TERM > classrooms/data/classrooms-$TERM-full.txt",
-    "classrooms:scrape-to-file": "deno task scheduleofclasses:scrape && deno task classrooms:to-file"
-  }
+    "classrooms:scrape-to-file": "deno task scheduleofclasses:scrape && deno task classrooms:to-file",
+  },
 }
