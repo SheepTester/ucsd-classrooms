@@ -125,13 +125,6 @@ export class Period {
   }
 
   /**
-   * Displays the time range.
-   */
-  displayTime() {
-    return `${this.start}–${this.end}`;
-  }
-
-  /**
    * Returns the name of the day the time period is on.
    */
   dayName(locales?: string | string[]) {
@@ -144,7 +137,7 @@ export class Period {
    * the formatting. Use `displayTime` and `dayName` instead.
    */
   toString() {
-    return `${this.displayTime()} on ${this.dayName()}`;
+    return `${this.start}–${this.end} on ${this.dayName()}`;
   }
 
   static readonly #MINUTES_PER_DAY = 24 * 60;
