@@ -71,19 +71,19 @@ export function Link({
 }: LinkProps) {
   const moment = useMoment();
   const onView = useContext(OnView);
+  const viewWithTerm: ViewWithTerm | null = view
+    ? { ...view, term: moment.isLive ? null : moment }
+    : null;
   return (
     <a
-      href={view ? "?" : undefined}
+      href={viewWithTerm ? viewToUrl(viewWithTerm).toString() : undefined}
       className={`internal-link ${className}`}
       style={style}
       ref={elemRef}
       onClick={(e) => {
         e.preventDefault();
-        if (view) {
-          navigate(onView, {
-            view: { ...view, term: moment.isLive ? null : moment },
-            back,
-          });
+        if (viewWithTerm) {
+          navigate(onView, { view: viewWithTerm, back });
         }
       }}
     >
