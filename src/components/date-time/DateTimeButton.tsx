@@ -18,7 +18,7 @@ export function DateTimeButton({ onClick, disabled }: DateTimeButtonProps) {
   } = useMoment();
   return (
     <button className="date-time-button" onClick={onClick} disabled={disabled}>
-      <p className="showing-schedule-wrapper">
+      <div className="showing-schedule-wrapper">
         <span className="showing-schedule-text">Showing schedule for</span>
         <div className="date-time">
           {dateFormat.format(date.toLocal(time.hour, time.minute))}
@@ -29,7 +29,7 @@ export function DateTimeButton({ onClick, disabled }: DateTimeButtonProps) {
             {date.dayName("short")}
           </span>
         )}
-      </p>
+      </div>
       <div className="filled-icon-btn edit-icon">Edit</div>
     </button>
   );

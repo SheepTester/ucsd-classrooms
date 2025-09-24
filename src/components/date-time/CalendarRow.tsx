@@ -26,7 +26,7 @@ export function CalendarHeaderRow() {
   return (
     <CalendarRow className="calendar-header-row" week={<span>Wk</span>}>
       {DAY_NUMS.map((day) => (
-        <div className={`calendar-item calendar-week-day`}>
+        <div key={day} className={`calendar-item calendar-week-day`}>
           {Day.dayName(day + 1, "short")}
         </div>
       ))}
@@ -103,10 +103,11 @@ export function CalendarWeekRow({
       {DAY_NUMS.map((i) => {
         const day = monday.add(i);
         if (day < start || day > end) {
-          return <div className="calendar-item" />;
+          return <div key={i} className="calendar-item" />;
         }
         return (
           <label
+            key={i}
             className={`calendar-item calendar-day ${
               day >= termDays.finals && day <= termDays.end
                 ? "calendar-finals-day"
@@ -133,7 +134,7 @@ export function CalendarWeekRow({
                   e.preventDefault();
                 }
               }}
-              onInput={() => onDate(day)}
+              onChange={() => onDate(day)}
               checked={day.id === date.id}
             />
             {day.date}

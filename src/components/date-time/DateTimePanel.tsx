@@ -45,7 +45,7 @@ export function DateTimePanel({
           <input
             type="checkbox"
             checked={useNow}
-            onInput={(e) => {
+            onChange={(e) => {
               onUseNow(e.currentTarget.checked);
               if (e.currentTarget.checked) {
                 setScrollMode("date-edited");
@@ -78,7 +78,7 @@ export function DateTimePanel({
           type="date"
           name="date"
           value={date.toString()}
-          onInput={(e) => {
+          onChange={(e) => {
             const date = Day.parse(e.currentTarget.value);
             if (date) {
               if (useNow) {
@@ -93,7 +93,7 @@ export function DateTimePanel({
         <input
           type="time"
           value={time.toString(true)}
-          onInput={(e) => {
+          onChange={(e) => {
             const time = Time.parse24(e.currentTarget.value);
             if (time) {
               if (useNow) {

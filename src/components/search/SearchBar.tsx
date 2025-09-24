@@ -90,7 +90,7 @@ export function SearchBar({
           placeholder="Search courses, people, buildings..."
           className="search-input"
           value={query}
-          onInput={(e) => {
+          onChange={(e) => {
             setQuery(e.currentTarget.value);
             setIndex(0);
             onSearch(e.currentTarget.value.length > 0);
@@ -160,7 +160,7 @@ export function SearchBar({
         <input
           type="checkbox"
           checked={ongoingOnly}
-          onInput={(e) => {
+          onChange={(e) => {
             setOngoingOnly(e.currentTarget.checked);
           }}
         />
