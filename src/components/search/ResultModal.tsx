@@ -7,6 +7,7 @@ import { CloseIcon } from "../icons/CloseIcon";
 import { navigate } from "../Link";
 import { CourseInfo } from "./CourseInfo";
 import { Professor, ProfInfo } from "./ProfInfo";
+import { momentsEqual } from "../../lib/now";
 
 export type ModalView =
   | { type: "course"; course: Course }
@@ -46,7 +47,8 @@ export function ResultModal({ view, open }: ResultModalProps) {
               if (
                 previous &&
                 previous.type !== "course" &&
-                previous.type !== "professor"
+                previous.type !== "professor" &&
+                momentsEqual(previous.term, moment.isLive ? null : moment)
               ) {
                 return 0;
               } else {

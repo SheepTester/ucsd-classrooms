@@ -5,7 +5,7 @@ import { Day } from "../lib/Day";
 import { getHolidays } from "../lib/holidays";
 import { mapPosition, northeast, PADDING, southwest } from "../lib/locations";
 import { fromMoment, MomentContext } from "../lib/moment-context";
-import { now } from "../lib/now";
+import { momentsEqual, now } from "../lib/now";
 import { Course } from "../lib/section-types";
 import { Term, TermCache, TermError } from "../lib/TermCache";
 import { CurrentTerm, getTerm, Season, termCode, termName } from "../lib/terms";
@@ -323,7 +323,8 @@ export function App({ title }: AppProps) {
                 if (
                   showResults ||
                   !previous ||
-                  previous.type !== currentView.type
+                  previous.type !== currentView.type ||
+                  !momentsEqual(previous.term, currentView.term)
                 ) {
                   return null;
                 }

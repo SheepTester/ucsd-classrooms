@@ -6,6 +6,17 @@ export type Moment = {
   time: Time;
 };
 
+export function momentsEqual(a: Moment | null, b: Moment | null): boolean {
+  if (a === b) {
+    return true;
+  }
+  // Both can't be null at this point
+  if (a === null || b === null) {
+    return false;
+  }
+  return a.date.id === b.date.id && a.time.valueOf() === b.time.valueOf();
+}
+
 // https://github.com/Orbiit/gunn-web-app/blob/master/js/utils.js
 const TIME_ZONE = "America/Los_Angeles";
 
