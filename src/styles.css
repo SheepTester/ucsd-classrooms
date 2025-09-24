@@ -68,7 +68,8 @@ html {
 body {
   margin: 0;
   height: 100%;
-  font-family: var(--narrow);
+  font-family: var(--normal);
+  font-size-adjust: cap-height from-font;
   background-color: var(--background);
   color: var(--text);
   overflow: hidden;
@@ -199,6 +200,7 @@ input[type="checkbox"]:checked:hover {
   image-rendering: crisp-edges;
 }
 .building-btn {
+  font-family: var(--narrow);
   position: absolute;
   transform: translate(-50%, -50%);
   padding: 5px 10px;
@@ -283,6 +285,7 @@ input[type="checkbox"]:checked:hover {
   line-height: 1;
 }
 .abbrev {
+  font-family: var(--narrow);
   white-space: nowrap;
   opacity: 0.15;
 }
@@ -294,10 +297,10 @@ input[type="checkbox"]:checked:hover {
 }
 .long {
   position: absolute;
-  bottom: 0.2em;
+  bottom: 0.6em;
   left: 0.4em;
   right: 0.2em;
-  font-size: 0.3em;
+  font-size: 0.25em;
   font-family: var(--normal);
   font-weight: bold;
   word-break: break-word;
@@ -357,6 +360,9 @@ input[type="checkbox"]:checked:hover {
   font-size: 0.8em;
   font-family: var(--normal);
   color: var(--secondary);
+}
+.date-time {
+  font-family: var(--narrow);
 }
 .quarter-week {
   font-size: 0.8em;
@@ -469,7 +475,6 @@ input[type="checkbox"]:checked:hover {
 }
 .calendar-week-num {
   width: 25px;
-  font-size: 0.8em;
   flex: none;
   align-self: stretch;
   display: flex;
@@ -478,6 +483,7 @@ input[type="checkbox"]:checked:hover {
   border-right: 1px solid var(--line);
   padding-right: 10px;
   color: var(--secondary);
+  font-family: var(--narrow);
 }
 .calendar-header-row .calendar-week-num span {
   display: block;
@@ -492,6 +498,9 @@ input[type="checkbox"]:checked:hover {
   align-items: center;
   position: relative;
   z-index: 0;
+}
+.calendar-week-day {
+  font-family: var(--narrow);
 }
 .calendar-day {
   cursor: pointer;
@@ -584,6 +593,7 @@ input[type="checkbox"]:checked:hover {
 }
 .date-input,
 .time-input {
+  font-family: var(--narrow);
   background-color: var(--field);
 }
 .today-btn {
@@ -608,6 +618,7 @@ input[type="checkbox"]:checked:hover {
   height: 40px;
   border-radius: 50%;
   font-size: 0;
+  font-size-adjust: none;
   background-size: 24px;
   background-position: center;
   background-repeat: no-repeat;
@@ -689,13 +700,14 @@ input[type="checkbox"]:checked:hover {
   bottom: 0;
   left: 0;
   right: 0;
-  font-size: 120px;
+  font-size: 140px;
   margin: 20px;
+  margin-bottom: 0;
   transition: transform 0.5s;
   transform-origin: bottom left;
 }
 .schedule-view .abbrev-heading {
-  transform: translate(28px, 8px) scale(0.2);
+  transform: translate(28px, -9px) scale(0.2);
 }
 .building-name .abbrev,
 .building-name .long {
@@ -712,6 +724,7 @@ input[type="checkbox"]:checked:hover {
   visibility: hidden;
 }
 .room-number {
+  font-family: var(--narrow);
   transition: opacity 0.5s;
 }
 .list-view .room-number {
@@ -738,6 +751,7 @@ input[type="checkbox"]:checked:hover {
 }
 .icon-btn {
   font-size: 0;
+  font-size-adjust: none;
   padding: 12px;
   position: relative;
   z-index: 1;
@@ -829,7 +843,11 @@ input[type="checkbox"]:checked:hover {
 .meeting:active {
   box-shadow: var(--card-shadow-active);
 }
+.room-name {
+  font-family: var(--narrow);
+}
 .current-meeting {
+  font-family: var(--narrow);
   color: var(--secondary);
   font-size: 0.8em;
 }
@@ -901,6 +919,7 @@ input[type="checkbox"]:checked:hover {
   transition: box-shadow 0.2s;
 }
 .special-summer {
+  font-family: var(--narrow);
   color: var(--exam);
   position: absolute;
   bottom: 5px;
@@ -911,6 +930,9 @@ input[type="checkbox"]:checked:hover {
 }
 .exam {
   border-color: var(--exam);
+}
+.meeting-name {
+  font-family: var(--narrow);
 }
 .meeting-time {
   font-size: 0.5em;
@@ -1118,6 +1140,9 @@ input[type="checkbox"]:checked:hover {
 .result-name {
   font-family: var(--normal);
 }
+.result-code {
+  font-family: var(--narrow);
+}
 .result-match {
   background-color: var(--button);
   color: white;
@@ -1209,7 +1234,8 @@ input[type="checkbox"]:checked:hover {
   font-weight: normal;
 }
 .modal-title-course-code {
-  font-size: 120px;
+  font-size: 140px;
+  line-height: 1;
 }
 .modal-title-professor {
   font-family: var(--normal);
@@ -1290,6 +1316,7 @@ input[type="checkbox"]:checked:hover {
   line-height: 20px;
 }
 .group-code {
+  font-family: var(--narrow);
   line-height: 20px;
   opacity: 0.15;
   font-size: 1.5em;
@@ -1348,6 +1375,7 @@ input[type="checkbox"]:checked:hover {
   font-family: var(--normal);
 }
 .meeting-date {
+  font-family: var(--narrow);
   width: 180px;
 }
 .live-marker {
