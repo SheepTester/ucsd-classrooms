@@ -48,6 +48,8 @@ Features to add:
 # Builds to dist/
 $ npm run build
 
+# Serves to http://localhost:8000/
+# Note: Imgur is blocked on 127.0.0.1. https://stackoverflow.com/a/43910367
 $ npm run dev
 ```
 

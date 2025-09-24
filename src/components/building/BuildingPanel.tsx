@@ -21,9 +21,7 @@ function BuildingPanelContent({
 }: BuildingPanelContentProps) {
   const lastRoom = useLast("", room);
 
-  // Make Imgur compress the image.
-  // https://thomas.vanhoutte.be/miniblog/imgur-thumbnail-trick/
-  const imageUrl = images[0]?.url.replace(/\.jpeg$/, "l.jpeg");
+  const imageUrl = images[0]?.url; // TODO: Compress
 
   return (
     <>
@@ -97,7 +95,7 @@ function BuildingPanelContent({
           {images.length > 0 ? (
             <div className="building-images">
               {images.map((image) => {
-                const imageUrl = image.url.replace(/\.jpeg$/, "l.jpeg");
+                const imageUrl = image.url; // TODO: Compress
                 return (
                   <a
                     href={image.url}
