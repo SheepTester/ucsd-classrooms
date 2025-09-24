@@ -1,14 +1,9 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { useMemo } from "preact/hooks";
-import { Course } from "../../../scheduleofclasses/group-sections.js";
-import { termName } from "../../../terms/index.js";
-import { buildings } from "../../lib/buildings.js";
-import { Term } from "../../lib/TermCache.js";
-import { SearchResult } from "./SearchResult.js";
+import { useMemo } from "react";
+import { Course } from "../../../scheduleofclasses/group-sections";
+import { termName } from "../../../terms/index";
+import { buildings } from "../../lib/buildings";
+import { Term } from "../../lib/TermCache";
+import { SearchResult } from "./SearchResult";
 
 export type SearchData = {
   courses: Course[];
@@ -162,7 +157,7 @@ export function SearchResults({
       return null;
     } else {
       return (
-        <p class="no-results">
+        <p className="no-results">
           {ongoingOnly
             ? "No courses with ongoing lectures match your search query."
             : `No results from ${terms
@@ -173,8 +168,10 @@ export function SearchResults({
     }
   }
   return (
-    <div class="results">
-      {results.courses.length > 0 && <h2 class="result-heading">Courses</h2>}
+    <div className="results">
+      {results.courses.length > 0 && (
+        <h2 className="result-heading">Courses</h2>
+      )}
       {results.courses.map((course, i) => (
         <SearchResult
           name={course.title}
@@ -187,7 +184,7 @@ export function SearchResults({
         />
       ))}
       {results.professors.length > 0 && (
-        <h2 class="result-heading">Professors</h2>
+        <h2 className="result-heading">Professors</h2>
       )}
       {results.professors.map((professor, i) => (
         <SearchResult
@@ -204,7 +201,7 @@ export function SearchResults({
         />
       ))}
       {results.buildings.length > 0 && (
-        <h2 class="result-heading">Buildings</h2>
+        <h2 className="result-heading">Buildings</h2>
       )}
       {results.buildings.map((building, i) => (
         <SearchResult

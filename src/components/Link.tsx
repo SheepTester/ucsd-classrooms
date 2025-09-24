@@ -1,10 +1,4 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { JSX, ComponentChildren, Ref } from "preact";
-import { useContext } from "preact/hooks";
+import { CSSProperties, ReactNode, Ref, useContext } from "react";
 import {
   BackHandler,
   OnView,
@@ -13,8 +7,8 @@ import {
   ViewHandler,
   viewToUrl,
   ViewWithTerm,
-} from "../View.js";
-import { useMoment } from "../moment-context.js";
+} from "../View";
+import { useMoment } from "../moment-context";
 
 export type NavigateOptions = {
   view: ViewWithTerm;
@@ -62,15 +56,15 @@ export function navigate(
 export type LinkProps = {
   view: View | null;
   back?: BackHandler;
-  class?: string;
-  style?: JSX.CSSProperties | string;
+  className?: string;
+  style?: CSSProperties;
   elemRef?: Ref<HTMLAnchorElement>;
-  children?: ComponentChildren;
+  children?: ReactNode;
 };
 export function Link({
   view,
   back,
-  class: className = "",
+  className = "",
   style,
   children,
   elemRef,
@@ -80,7 +74,7 @@ export function Link({
   return (
     <a
       href={view ? "?" : undefined}
-      class={`internal-link ${className}`}
+      className={`internal-link ${className}`}
       style={style}
       ref={elemRef}
       onClick={(e) => {

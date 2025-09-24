@@ -1,20 +1,15 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { useCallback } from "preact/hooks";
-import { Time } from "../../util/Time.js";
-import { BuildingDatum } from "../lib/buildings.js";
-import { RoomMeeting } from "../lib/coursesToClassrooms.js";
+import { useCallback } from "react";
+import { Time } from "../../util/Time";
+import { BuildingDatum } from "../lib/buildings";
+import { RoomMeeting } from "../lib/coursesToClassrooms";
 import {
   latLongToPixel,
   southwest,
   PADDING,
   northeast,
-} from "../lib/locations.js";
-import { Link } from "./Link.js";
-import { isMeetingOngoing, useMoment } from "../moment-context.js";
+} from "../lib/locations";
+import { Link } from "./Link";
+import { isMeetingOngoing, useMoment } from "../moment-context";
 
 type BuildingButtonProps = {
   building: BuildingDatum;
@@ -61,9 +56,9 @@ export function BuildingButton({
   return (
     <Link
       view={{ type: "building", building: building.code }}
-      class={`building-btn college-${college} ${selected ? "selected" : ""} ${
-        visible ? "" : "building-btn-hidden"
-      }`}
+      className={`building-btn college-${college} ${
+        selected ? "selected" : ""
+      } ${visible ? "" : "building-btn-hidden"}`}
       style={{
         left: `${x - southwest.x + PADDING.horizontal}px`,
         top: `${y - northeast.y + PADDING.top}px`,
@@ -71,8 +66,8 @@ export function BuildingButton({
       elemRef={ref}
     >
       {building.code}
-      <span class="room-count">
-        <span class="in-use">
+      <span className="room-count">
+        <span className="in-use">
           {
             rooms.filter((meetings) =>
               meetings.some((meeting) => isMeetingOngoing(meeting, moment))

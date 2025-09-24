@@ -1,4 +1,4 @@
-import { useRef } from "preact/hooks";
+import { useRef } from "react";
 
 /**
  * Stores and returns the last non-nullish value of `value`. This is mostly

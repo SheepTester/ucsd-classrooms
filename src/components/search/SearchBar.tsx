@@ -1,15 +1,10 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { useEffect, useRef, useState } from "preact/hooks";
-import { Meeting, Section } from "../../../scheduleofclasses/group-sections.js";
-import { Term } from "../../lib/TermCache.js";
-import { isMeetingOngoing, useMoment } from "../../moment-context.js";
-import { ClearIcon } from "../icons/CloseIcon.js";
-import { SearchIcon } from "../icons/SearchIcon.js";
-import { SearchData, SearchResults } from "./SearchResults.js";
+import { useEffect, useRef, useState } from "react";
+import { Meeting, Section } from "../../../scheduleofclasses/group-sections";
+import { Term } from "../../lib/TermCache";
+import { isMeetingOngoing, useMoment } from "../../moment-context";
+import { ClearIcon } from "../icons/CloseIcon";
+import { SearchIcon } from "../icons/SearchIcon";
+import { SearchData, SearchResults } from "./SearchResults";
 
 export type State =
   | { type: "unloaded" }
@@ -78,11 +73,11 @@ export function SearchBar({
           selected.click();
         }
       }}
-      class={`search-wrapper ${visible ? "" : "hide-search"} ${
+      className={`search-wrapper ${visible ? "" : "hide-search"} ${
         loaded && showResults && query !== "" ? "showing-results" : ""
       }`}
     >
-      <label class="search-bar">
+      <label className="search-bar">
         <SearchIcon />
         <input
           type="text"
@@ -93,7 +88,7 @@ export function SearchBar({
           aria-label="Search courses, people, and buildings."
           title="Press '/' to jump to the search box."
           placeholder="Search courses, people, buildings..."
-          class="search-input"
+          className="search-input"
           value={query}
           onInput={(e) => {
             setQuery(e.currentTarget.value);
@@ -122,7 +117,7 @@ export function SearchBar({
         />
         {query.length > 0 && (
           <button
-            class="icon-btn clear-btn"
+            className="icon-btn clear-btn"
             type="reset"
             onClick={() => {
               setQuery("");
@@ -159,7 +154,9 @@ export function SearchBar({
           ongoingOnly={ongoingOnly}
         />
       )}
-      <label class={`ongoing-only ${showResults ? "show-ongoing-only" : ""}`}>
+      <label
+        className={`ongoing-only ${showResults ? "show-ongoing-only" : ""}`}
+      >
         <input
           type="checkbox"
           checked={ongoingOnly}

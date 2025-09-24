@@ -1,13 +1,8 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { meetingTypes } from "../../../webreg-scraping/meeting-types.js";
-import { compareRoomNums } from "../../lib/compareRoomNums.js";
-import { RoomMeeting } from "../../lib/coursesToClassrooms.js";
-import { isMeetingOngoing, useMoment } from "../../moment-context.js";
-import { Link } from "../Link.js";
+import { meetingTypes } from "../../../webreg-scraping/meeting-types";
+import { compareRoomNums } from "../../lib/compareRoomNums";
+import { RoomMeeting } from "../../lib/coursesToClassrooms";
+import { isMeetingOngoing, useMoment } from "../../moment-context";
+import { Link } from "../Link";
 
 export type RoomListProps = {
   building: string;
@@ -18,7 +13,7 @@ export function RoomList({ building, rooms }: RoomListProps) {
 
   if (Object.keys(rooms).length === 0) {
     return (
-      <div class="empty">
+      <div className="empty">
         <p>
           This building isn't used for any classes this week, as far as WebReg
           is concerned.
@@ -28,8 +23,8 @@ export function RoomList({ building, rooms }: RoomListProps) {
   }
 
   return (
-    <div class="room-list">
-      <div class="rooms">
+    <div className="room-list">
+      <div className="rooms">
         {Object.entries(rooms)
           // Can't pre-sort the rooms object entries because JS sorts numerical
           // properties differently
@@ -43,7 +38,7 @@ export function RoomList({ building, rooms }: RoomListProps) {
             return (
               <Link
                 view={{ type: "building", building, room }}
-                class={`room ${
+                className={`room ${
                   activeMeeting ? (soon ? "soon" : "active") : "inactive"
                 }`}
               >

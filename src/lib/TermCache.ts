@@ -1,9 +1,9 @@
-import { Quarter, termCode } from "../../terms/index.js";
+import { Quarter, termCode } from "../../terms/index";
 import {
   coursesFromFile,
   CourseFormatError,
   TermCourses,
-} from "./coursesFromFile.js";
+} from "./coursesFromFile";
 
 export type Term = {
   year: number;

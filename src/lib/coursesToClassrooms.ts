@@ -4,7 +4,7 @@ import {
   Course,
   Section,
   MeetingTime,
-} from "../../scheduleofclasses/group-sections.js";
+} from "../../scheduleofclasses/group-sections";
 
 export type RoomMeeting = (
   | Omit<Section, "location">

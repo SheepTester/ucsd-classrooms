@@ -1,43 +1,30 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { useContext, useEffect, useMemo, useRef, useState } from "preact/hooks";
-import { Course } from "../../scheduleofclasses/group-sections.js";
-import { getHolidays } from "../../terms/holidays.js";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { Course } from "../../scheduleofclasses/group-sections";
+import { getHolidays } from "../../terms/holidays";
 import {
   CurrentTerm,
   getTerm,
   Season,
   termCode,
   termName,
-} from "../../terms/index.js";
-import { Day } from "../../util/Day.js";
-import { useLast } from "../../util/useLast.js";
-import { buildings } from "../lib/buildings.js";
-import {
-  TermBuildings,
-  coursesToClassrooms,
-} from "../lib/coursesToClassrooms.js";
-import {
-  northeast,
-  southwest,
-  PADDING,
-  mapPosition,
-} from "../lib/locations.js";
-import { now } from "../lib/now.js";
-import { Term, TermCache, TermError } from "../lib/TermCache.js";
-import { OnView, viewFromUrl, viewToUrl, ViewWithTerm } from "../View.js";
-import { BuildingPanel } from "./building/BuildingPanel.js";
-import { BuildingButton } from "./BuildingButton.js";
-import { DateTimeButton } from "./date-time/DateTimeButton.js";
-import { DateTimePanel } from "./date-time/DateTimePanel.js";
-import { navigate } from "./Link.js";
-import { ModalView, ResultModal } from "./search/ResultModal.js";
-import { SearchBar, State } from "./search/SearchBar.js";
-import { TermStatus } from "./TermStatus.js";
-import { fromMoment, MomentContext } from "../moment-context.js";
+} from "../../terms/index";
+import { Day } from "../../util/Day";
+import { useLast } from "../../util/useLast";
+import { buildings } from "../lib/buildings";
+import { TermBuildings, coursesToClassrooms } from "../lib/coursesToClassrooms";
+import { northeast, southwest, PADDING, mapPosition } from "../lib/locations";
+import { now } from "../lib/now";
+import { Term, TermCache, TermError } from "../lib/TermCache";
+import { OnView, viewFromUrl, viewToUrl, ViewWithTerm } from "../View";
+import { BuildingPanel } from "./building/BuildingPanel";
+import { BuildingButton } from "./BuildingButton";
+import { DateTimeButton } from "./date-time/DateTimeButton";
+import { DateTimePanel } from "./date-time/DateTimePanel";
+import { navigate } from "./Link";
+import { ModalView, ResultModal } from "./search/ResultModal";
+import { SearchBar, State } from "./search/SearchBar";
+import { TermStatus } from "./TermStatus";
+import { fromMoment, MomentContext } from "../moment-context";
 
 /**
  * Represents the state of the app:
@@ -364,7 +351,9 @@ export function App({ title }: AppProps) {
         />
         <ResultModal view={modalView} open={modal !== null} />
         <div
-          class={`corner ${buildingPanelVisible ? "bottom-panel-open" : ""}`}
+          className={`corner ${
+            buildingPanelVisible ? "bottom-panel-open" : ""
+          }`}
         >
           <DateTimeButton
             onClick={() => setShowDatePanel(true)}
@@ -402,22 +391,22 @@ export function App({ title }: AppProps) {
           }}
           visible={datePanelVisible}
           closeable={!noticeVisible || state === null}
-          class={`${
+          className={`${
             buildingPanelVisible ? "date-time-panel-bottom-panel" : ""
           } ${noticeVisible ? "date-time-panel-notice-visible" : ""}`}
           onClose={() => setShowDatePanel(false)}
         />
-        <div class="buildings-wrapper">
+        <div className="buildings-wrapper">
           <p
-            class={`notice ${noticeVisible ? "notice-visible" : ""} ${
+            className={`notice ${noticeVisible ? "notice-visible" : ""} ${
               datePanelVisible ? "notice-date-open" : ""
             }`}
           >
-            <span class="notice-text">{notice}</span>
+            <span className="notice-text">{notice}</span>
           </p>
-          <div class="buildings">
+          <div className="buildings">
             <div
-              class="scroll-area"
+              className="scroll-area"
               style={{
                 width: `${
                   northeast.x - southwest.x + PADDING.horizontal * 2

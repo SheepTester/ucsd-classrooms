@@ -1,13 +1,8 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { useState } from "preact/hooks";
-import { Day } from "../../../util/Day.js";
-import { Time } from "../../../util/Time.js";
-import { inPT } from "../../lib/now.js";
-import { Calendar, ScrollMode } from "./Calendar.js";
+import { useState } from "react";
+import { Day } from "../../../util/Day";
+import { Time } from "../../../util/Time";
+import { inPT } from "../../lib/now";
+import { Calendar, ScrollMode } from "./Calendar";
 
 export type DateTimePanelProps = {
   date: Day;
@@ -18,7 +13,7 @@ export type DateTimePanelProps = {
   onUseNow: (useNow: boolean) => void;
   visible: boolean;
   closeable: boolean;
-  class: string;
+  className: string;
   onClose: () => void;
 };
 export function DateTimePanel({
@@ -30,14 +25,14 @@ export function DateTimePanel({
   onUseNow,
   visible,
   closeable,
-  class: className,
+  className,
   onClose,
 }: DateTimePanelProps) {
   const [scrollMode, setScrollMode] = useState<ScrollMode>("init");
 
   return (
     <form
-      class={`date-time-panel ${
+      className={`date-time-panel ${
         visible ? "" : "date-time-panel-hidden"
       } ${className} calendar-open`}
       onSubmit={(e) => {
@@ -45,8 +40,8 @@ export function DateTimePanel({
         e.preventDefault();
       }}
     >
-      <div class="date-time-flex">
-        <label class="checkbox-label">
+      <div className="date-time-flex">
+        <label className="checkbox-label">
           <input
             type="checkbox"
             checked={useNow}
@@ -59,13 +54,13 @@ export function DateTimePanel({
           />
           <span>
             Use current time
-            {inPT() ? null : <span class="tz-note">(in San Diego)</span>}
+            {inPT() ? null : <span className="tz-note">(in San Diego)</span>}
           </span>
         </label>
         {date.id !== Day.today().id && (
           <button
             type="button"
-            class="today-btn"
+            className="today-btn"
             onClick={() => {
               onDate(Day.today());
               setScrollMode("date-edited");
@@ -75,10 +70,10 @@ export function DateTimePanel({
           </button>
         )}
         {closeable && (
-          <button class="filled-icon-btn close-date-btn">Close</button>
+          <button className="filled-icon-btn close-date-btn">Close</button>
         )}
       </div>
-      <div class="date-time-flex">
+      <div className="date-time-flex">
         <input
           type="date"
           name="date"
@@ -93,7 +88,7 @@ export function DateTimePanel({
               setScrollMode("date-edited");
             }
           }}
-          class="date-input"
+          className="date-input"
         />
         <input
           type="time"
@@ -107,7 +102,7 @@ export function DateTimePanel({
               onTime(time);
             }
           }}
-          class="time-input"
+          className="time-input"
         />
       </div>
       <Calendar

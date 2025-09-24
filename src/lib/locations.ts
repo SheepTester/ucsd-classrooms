@@ -1,4 +1,4 @@
-import { buildings } from "./buildings.js";
+import { buildings } from "./buildings";
 
 export type Location = [latitude: number, longitude: number];
 

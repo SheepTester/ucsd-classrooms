@@ -1,18 +1,13 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
 import {
   Course,
   Exam,
   Meeting,
   Section,
-} from "../../../scheduleofclasses/group-sections.js";
-import { Day } from "../../../util/Day.js";
-import { meetingTypes } from "../../../webreg-scraping/meeting-types.js";
-import { useMoment } from "../../moment-context.js";
-import { Link } from "../Link.js";
+} from "../../../scheduleofclasses/group-sections";
+import { Day } from "../../../util/Day";
+import { meetingTypes } from "../../../webreg-scraping/meeting-types";
+import { useMoment } from "../../moment-context";
+import { Link } from "../Link";
 
 const webregDays = ["Sun", "M", "Tu", "W", "Th", "F", "S", "Sun"];
 
@@ -26,18 +21,18 @@ export function MeetingCard({ meeting, code }: MeetingCardProps) {
     meeting.location && meeting.location.building !== "RCLAS";
 
   return (
-    <section class="meeting-card">
-      <p class="meeting-type">
+    <section className="meeting-card">
+      <p className="meeting-type">
         {meetingTypes[meeting.type] ?? meeting.type}
         {code && (
           <>
-            <span class="colon">: </span>
-            <span class="meeting-code">{code}</span>
+            <span className="colon">: </span>
+            <span className="meeting-code">{code}</span>
           </>
         )}
       </p>
       {meeting.kind === "section" && (
-        <p class="meeting-column section-capacity">
+        <p className="meeting-column section-capacity">
           {meeting.capacity === Infinity ? (
             "No limit"
           ) : (
@@ -47,8 +42,8 @@ export function MeetingCard({ meeting, code }: MeetingCardProps) {
           )}
         </p>
       )}
-      <div class="mobile-break" />
-      <p class="meeting-column meeting-date">
+      <div className="mobile-break" />
+      <p className="meeting-column meeting-date">
         {meeting.time && (
           <abbr
             title={meeting.time.days
@@ -85,7 +80,7 @@ export function MeetingCard({ meeting, code }: MeetingCardProps) {
               }
             : null
         }
-        class={`meeting-column location ${
+        className={`meeting-column location ${
           physicalRoom ? "" : "location-not-room"
         }`}
       >
@@ -104,26 +99,26 @@ export type CourseInfoProps = {
 };
 export function CourseInfo({ course }: CourseInfoProps) {
   return (
-    <div class="course-info">
+    <div className="course-info">
       {course.groups.map((group) => (
-        <article class="group" key={group.code}>
-          <header class="group-info">
-            <div class="group-code">{group.code}</div>
+        <article className="group" key={group.code}>
+          <header className="group-info">
+            <div className="group-code">{group.code}</div>
             {group.sectionTitle ? (
-              <h2 class="section-title">{group.sectionTitle}</h2>
+              <h2 className="section-title">{group.sectionTitle}</h2>
             ) : null}
-            <div class="instructors">
+            <div className="instructors">
               {group.instructors.map(({ first, last }) => (
                 <Link
                   view={{ type: "professor", name: `${last}, ${first}` }}
-                  class="instructor"
+                  className="instructor"
                   key={`${last}, ${first}`}
                 >
-                  {first} <span class="last-name">{last}</span>
+                  {first} <span className="last-name">{last}</span>
                 </Link>
               ))}
               {group.instructors.length === 0 && (
-                <span class="staff">Instructor TBA</span>
+                <span className="staff">Instructor TBA</span>
               )}
             </div>
           </header>
@@ -135,7 +130,7 @@ export function CourseInfo({ course }: CourseInfoProps) {
             />
           ))}
           {group.sections.length > 0 && group.meetings.length > 0 && (
-            <hr class="additional-meetings-divider" />
+            <hr className="additional-meetings-divider" />
           )}
           {group.sections.map((section) => (
             <MeetingCard
@@ -145,7 +140,7 @@ export function CourseInfo({ course }: CourseInfoProps) {
             />
           ))}
           {group.meetings.length > 0 && group.exams.length > 0 && (
-            <hr class="additional-meetings-divider" />
+            <hr className="additional-meetings-divider" />
           )}
           {group.exams.map((exam, i) => (
             <MeetingCard meeting={exam} key={i} />

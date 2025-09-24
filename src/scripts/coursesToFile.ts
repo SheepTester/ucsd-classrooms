@@ -4,8 +4,8 @@ import { writeAll } from "std/streams/write_all.ts";
 import {
   BaseMeeting,
   groupSections,
-} from "../../scheduleofclasses/group-sections.js";
-import { readCourses, ScrapedResult } from "../../scheduleofclasses/scrape.js";
+} from "../../scheduleofclasses/group-sections";
+import { readCourses, ScrapedResult } from "../../scheduleofclasses/scrape";
 
 const encoder = new TextEncoder();
 async function print(content: string) {

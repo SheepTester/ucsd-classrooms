@@ -1,6 +1,6 @@
-import { Course, BaseMeeting } from "../../scheduleofclasses/group-sections.js";
-import { Day } from "../../util/Day.js";
-import { Time } from "../../util/Time.js";
+import { Course, BaseMeeting } from "../../scheduleofclasses/group-sections";
+import { Day } from "../../util/Day";
+import { Time } from "../../util/Time";
 
 class StringTaker {
   #string: string;

@@ -1,11 +1,6 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { termCode } from "../../terms/index.js";
-import { useLast } from "../../util/useLast.js";
-import { Term } from "../lib/TermCache.js";
+import { termCode } from "../../terms/index";
+import { useLast } from "../../util/useLast";
+import { Term } from "../lib/TermCache";
 
 export type TermStatus = [Term, "unavailable" | "offline" | Date];
 
@@ -23,18 +18,18 @@ export function TermStatus({
   const credit = (
     <span>
       Made by{" "}
-      <a href="https://www.instagram.com/sheeptester/" class="link">
+      <a href="https://www.instagram.com/sheeptester/" className="link">
         @sheeptester
       </a>
       .
     </span>
   );
   return (
-    <div class={`term-statuses ${showStatus ? "" : "hide-status"}`}>
+    <div className={`term-statuses ${showStatus ? "" : "hide-status"}`}>
       {statuses.map(([term, status]) => (
         <p
           key={termCode(term.year, term.quarter)}
-          class={`term-updated ${
+          className={`term-updated ${
             status === "offline"
               ? "term-offline"
               : status === "unavailable"
@@ -44,14 +39,19 @@ export function TermStatus({
         >
           {!omitTerm && (
             <>
-              <span class="term-code">{termCode(term.year, term.quarter)}</span>
+              <span className="term-code">
+                {termCode(term.year, term.quarter)}
+              </span>
               &nbsp;
             </>
           )}
           {status instanceof Date ? (
             <>
               {omitTerm ? "Updated " : "last updated "}
-              <span class="updated-date">{status.toLocaleDateString()}</span>.
+              <span className="updated-date">
+                {status.toLocaleDateString()}
+              </span>
+              .
             </>
           ) : status === "offline" ? (
             "failed to load."

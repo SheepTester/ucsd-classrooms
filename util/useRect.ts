@@ -1,11 +1,6 @@
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
 // NOTE: Currently unused
 
-import { RefObject } from "preact";
-import { useEffect, useRef, useState } from "preact/hooks";
+import { RefObject, useEffect, useRef, useState } from "react";
 
 export type UseRectValue<E> = {
   width: number;

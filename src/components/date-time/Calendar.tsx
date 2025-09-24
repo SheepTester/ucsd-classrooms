@@ -1,24 +1,13 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { JSX } from "preact";
-import { useEffect, useRef, useState } from "preact/hooks";
-import {
-  getTerm,
-  getTermDays,
-  Season,
-  TermDays,
-} from "../../../terms/index.js";
-import { Day } from "../../../util/Day.js";
+import { ReactNode, useEffect, useRef, useState } from "react";
+import { getTerm, getTermDays, Season, TermDays } from "../../../terms/index";
+import { Day } from "../../../util/Day";
 import {
   CalendarHeaderRow,
   CalendarMonthHeadingRow,
   CalendarQuarterHeadingRow,
   CalendarRow,
   CalendarWeekRow,
-} from "./CalendarRow.js";
+} from "./CalendarRow";
 
 /**
  * - `none` means not to scroll to the date. This is if you're selecting the
@@ -48,7 +37,7 @@ function MonthCalendar({
 
   const monthStart = Day.max(start, Day.from(start.year, month, 1));
   const monthEnd = Day.min(end, Day.from(start.year, month + 1, 0));
-  const weeks: JSX.Element[] = [];
+  const weeks: ReactNode[] = [];
   for (
     let monday = monthStart.monday;
     monday <= monthEnd;
@@ -83,7 +72,7 @@ function MonthCalendar({
   }, [scrollMode, date.id, monthStart.id, monthEnd.id]);
 
   return (
-    <div class="calendar-month" ref={ref}>
+    <div className="calendar-month" ref={ref}>
       <CalendarMonthHeadingRow month={month} />
       {weeks}
     </div>
@@ -172,13 +161,13 @@ export function Calendar({ freeScroll, ...props }: CalendarProps) {
   }
 
   return (
-    <div class="calendar-scroll-area">
-      <div class="gradient gradient-sticky gradient-top" />
+    <div className="calendar-scroll-area">
+      <div className="gradient gradient-sticky gradient-top" />
       <CalendarHeaderRow />
-      <CalendarRow class="show-year-btn-top">
+      <CalendarRow className="show-year-btn-top">
         <button
           type="button"
-          class="show-year-btn"
+          className="show-year-btn"
           onClick={(e) => {
             setStart(start - 1);
             freeScroll();
@@ -204,7 +193,7 @@ export function Calendar({ freeScroll, ...props }: CalendarProps) {
       <CalendarRow>
         <button
           type="button"
-          class="show-year-btn"
+          className="show-year-btn"
           onClick={() => {
             setEnd(end + 1);
             freeScroll();
@@ -213,7 +202,7 @@ export function Calendar({ freeScroll, ...props }: CalendarProps) {
           Show {end + 1}
         </button>
       </CalendarRow>
-      <div class="gradient gradient-sticky gradient-bottom" />
+      <div className="gradient gradient-sticky gradient-bottom" />
     </div>
   );
 }

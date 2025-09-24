@@ -1,27 +1,22 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { ComponentChildren } from "preact";
-import { getHolidays } from "../../../terms/holidays.js";
-import { Season, termCode, TermDays, termName } from "../../../terms/index.js";
-import { Day, DAY_NUMS } from "../../../util/Day.js";
-import { AbbrevHeading } from "../AbbrevHeading.js";
+import { ReactNode } from "react";
+import { getHolidays } from "../../../terms/holidays";
+import { Season, termCode, TermDays, termName } from "../../../terms/index";
+import { Day, DAY_NUMS } from "../../../util/Day";
+import { AbbrevHeading } from "../AbbrevHeading";
 
 export type CalendarRowProps = {
-  children?: ComponentChildren;
-  week?: ComponentChildren;
-  class?: string;
+  children?: ReactNode;
+  week?: ReactNode;
+  className?: string;
 };
 export function CalendarRow({
   children,
   week,
-  class: className = "",
+  className = "",
 }: CalendarRowProps) {
   return (
-    <div class={`calendar-row ${className}`}>
-      <div class="calendar-week-num">{week}</div>
+    <div className={`calendar-row ${className}`}>
+      <div className="calendar-week-num">{week}</div>
       {children}
     </div>
   );
@@ -29,9 +24,9 @@ export function CalendarRow({
 
 export function CalendarHeaderRow() {
   return (
-    <CalendarRow class="calendar-header-row" week={<span>Wk</span>}>
+    <CalendarRow className="calendar-header-row" week={<span>Wk</span>}>
       {DAY_NUMS.map((day) => (
-        <div class={`calendar-item calendar-week-day`}>
+        <div className={`calendar-item calendar-week-day`}>
           {Day.dayName(day + 1, "short")}
         </div>
       ))}
@@ -48,12 +43,12 @@ export function CalendarQuarterHeadingRow({
   season,
 }: CalendarQuarterHeadingRowProps) {
   return (
-    <CalendarRow class="calendar-heading-row calendar-quarter-heading-row">
-      <div class="gradient gradient-bg gradient-bottom" />
+    <CalendarRow className="calendar-heading-row calendar-quarter-heading-row">
+      <div className="gradient gradient-bg gradient-bottom" />
       <AbbrevHeading
         heading="h2"
         abbrev={termCode(year, season)}
-        class="calendar-heading calendar-quarter-heading"
+        className="calendar-heading calendar-quarter-heading"
       >
         {termName(year, season)}
       </AbbrevHeading>
@@ -68,8 +63,8 @@ export function CalendarMonthHeadingRow({
   month,
 }: CalendarMonthHeadingRowProps) {
   return (
-    <CalendarRow class="calendar-heading-row calendar-month-heading-row">
-      <h3 class="calendar-heading calendar-month-heading">
+    <CalendarRow className="calendar-heading-row calendar-month-heading-row">
+      <h3 className="calendar-heading calendar-month-heading">
         {Day.monthName(month)}
       </h3>
     </CalendarRow>
@@ -97,8 +92,8 @@ export function CalendarWeekRow({
   const holidays = getHolidays(Math.max(monday.year, start.year));
 
   return (
-    <div class="calendar-row calendar-date-row">
-      <div class="calendar-week-num">
+    <div className="calendar-row calendar-date-row">
+      <div className="calendar-week-num">
         {week === 11
           ? "FI"
           : termDays.start < endDay && monday <= termDays.end
@@ -108,11 +103,11 @@ export function CalendarWeekRow({
       {DAY_NUMS.map((i) => {
         const day = monday.add(i);
         if (day < start || day > end) {
-          return <div class="calendar-item" />;
+          return <div className="calendar-item" />;
         }
         return (
           <label
-            class={`calendar-item calendar-day ${
+            className={`calendar-item calendar-day ${
               day >= termDays.finals && day <= termDays.end
                 ? "calendar-finals-day"
                 : ""
@@ -128,7 +123,7 @@ export function CalendarWeekRow({
           >
             <input
               type="radio"
-              class="visually-hidden"
+              className="visually-hidden"
               name="calendar-day"
               onKeyDown={(e) => {
                 if (e.key === "ArrowUp" || e.key === "ArrowDown") {

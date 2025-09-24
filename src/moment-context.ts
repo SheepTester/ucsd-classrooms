@@ -1,11 +1,10 @@
-import { createContext } from "preact";
-import { useContext } from "preact/hooks";
-import { Exam, Meeting, Section } from "../scheduleofclasses/group-sections.js";
-import { getHolidays } from "../terms/holidays.js";
-import { CurrentTerm, getTerm } from "../terms/index.js";
-import { Day } from "../util/Day.js";
-import { Time } from "../util/Time.js";
-import { Moment } from "./lib/now.js";
+import { createContext, useContext } from "react";
+import { Exam, Meeting, Section } from "../scheduleofclasses/group-sections";
+import { getHolidays } from "../terms/holidays";
+import { CurrentTerm, getTerm } from "../terms/index";
+import { Day } from "../util/Day";
+import { Time } from "../util/Time";
+import { Moment } from "./lib/now";
 
 export type TermMoment = Moment & {
   currentTerm: CurrentTerm;

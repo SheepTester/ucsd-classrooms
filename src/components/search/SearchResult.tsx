@@ -1,11 +1,6 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { useEffect, useRef } from "preact/hooks";
-import { View } from "../../View.js";
-import { Link } from "../Link.js";
+import { useEffect, useRef } from "react";
+import { View } from "../../View";
+import { Link } from "../Link";
 
 export type SearchResultProps = {
   name?: string;
@@ -40,17 +35,19 @@ export function SearchResult({
   return (
     <Link
       view={view}
-      class={`result ${selected ? "result-selected" : ""}`}
+      className={`result ${selected ? "result-selected" : ""}`}
       elemRef={ref}
     >
       {primary !== undefined && (
         <p
-          class={`result-primary ${nameFirst ? "result-name" : "result-code"}`}
+          className={`result-primary ${
+            nameFirst ? "result-name" : "result-code"
+          }`}
         >
           {match ? (
             <>
               {primary.slice(0, match.start)}
-              <span class="result-match">
+              <span className="result-match">
                 {primary.slice(match.start, match.end)}
               </span>
               {primary.slice(match.end)}
@@ -62,7 +59,7 @@ export function SearchResult({
       )}
       {secondary !== undefined && (
         <p
-          class={`result-secondary ${
+          className={`result-secondary ${
             nameFirst ? "result-code" : "result-name"
           }`}
         >

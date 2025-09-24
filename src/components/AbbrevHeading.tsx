@@ -1,27 +1,22 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { ComponentChildren } from "preact";
+import { ReactNode } from "react";
 
 export type AbbrevHeadingProps = {
   heading: "h1" | "h2" | "h3" | "span";
-  abbrev?: ComponentChildren;
-  children?: ComponentChildren;
-  class?: string;
+  abbrev?: ReactNode;
+  children?: ReactNode;
+  className?: string;
 };
 export function AbbrevHeading({
   heading: Heading,
   abbrev,
   children,
-  class: className = "",
+  className = "",
 }: AbbrevHeadingProps) {
   return (
-    <Heading class={`abbrev-heading ${className}`}>
-      <span class="abbrev">{abbrev}</span>
-      <span class="colon">: </span>
-      <span class="long">{children}</span>
+    <Heading className={`abbrev-heading ${className}`}>
+      <span className="abbrev">{abbrev}</span>
+      <span className="colon">: </span>
+      <span className="long">{children}</span>
     </Heading>
   );
 }

@@ -1,11 +1,6 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { Course } from "../../../scheduleofclasses/group-sections.js";
-import { Link } from "../Link.js";
-import { MeetingCard } from "./CourseInfo.js";
+import { Course } from "../../../scheduleofclasses/group-sections";
+import { Link } from "../Link";
+import { MeetingCard } from "./CourseInfo";
 
 export type Professor = {
   first: string;
@@ -18,20 +13,20 @@ export type ProfInfoProps = {
 };
 export function ProfInfo({ professor }: ProfInfoProps) {
   return (
-    <div class="course-info">
+    <div className="course-info">
       {professor.courses.flatMap((course) =>
         course.groups.map((group) => (
-          <article class="group" key={`${course.code}\n${group.code}`}>
-            <header class="group-info">
+          <article className="group" key={`${course.code}\n${group.code}`}>
+            <header className="group-info">
               <Link
                 view={{ type: "course", course: course.code }}
-                class="course-code"
+                className="course-code"
               >
                 {course.code}
               </Link>
-              <div class="group-code group-code-small">{group.code}</div>
+              <div className="group-code group-code-small">{group.code}</div>
               {group.sectionTitle ? (
-                <h2 class="section-title">{group.sectionTitle}</h2>
+                <h2 className="section-title">{group.sectionTitle}</h2>
               ) : null}
             </header>
             {(group.meetings.length > 0 ? group.meetings : group.sections).map(

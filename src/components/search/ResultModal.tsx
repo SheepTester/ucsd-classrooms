@@ -1,17 +1,12 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { useContext, useEffect, useRef } from "preact/hooks";
-import { Course } from "../../../scheduleofclasses/group-sections.js";
-import { OnView } from "../../View.js";
-import { AbbrevHeading } from "../AbbrevHeading.js";
-import { CloseIcon } from "../icons/CloseIcon.js";
-import { navigate } from "../Link.js";
-import { CourseInfo } from "./CourseInfo.js";
-import { Professor, ProfInfo } from "./ProfInfo.js";
-import { useMoment } from "../../moment-context.js";
+import { useContext, useEffect, useRef } from "react";
+import { Course } from "../../../scheduleofclasses/group-sections";
+import { OnView } from "../../View";
+import { AbbrevHeading } from "../AbbrevHeading";
+import { CloseIcon } from "../icons/CloseIcon";
+import { navigate } from "../Link";
+import { CourseInfo } from "./CourseInfo";
+import { Professor, ProfInfo } from "./ProfInfo";
+import { useMoment } from "../../moment-context";
 
 export type ModalView =
   | { type: "course"; course: Course }
@@ -36,7 +31,7 @@ export function ResultModal({ view, open }: ResultModalProps) {
 
   return (
     <dialog
-      class="modal"
+      className="modal"
       ref={ref}
       onClick={(e) => {
         if (e.target === e.currentTarget) {
@@ -62,23 +57,23 @@ export function ResultModal({ view, open }: ResultModalProps) {
         }
       }}
     >
-      <form method="dialog" class="modal-body">
-        <header class="modal-header">
+      <form method="dialog" className="modal-body">
+        <header className="modal-header">
           {view.type === "course" ? (
             <AbbrevHeading
               heading="h1"
               abbrev={view.course.code}
-              class="modal-title modal-title-course-code"
+              className="modal-title modal-title-course-code"
             >
               {view.course.title}
             </AbbrevHeading>
           ) : (
-            <h1 class="modal-title modal-title-professor">
+            <h1 className="modal-title modal-title-professor">
               {view.professor.first}{" "}
-              <span class="last-name">{view.professor.last}</span>
+              <span className="last-name">{view.professor.last}</span>
             </h1>
           )}
-          <button class="close icon-btn" type="submit" value="close-btn">
+          <button className="close icon-btn" type="submit" value="close-btn">
             <CloseIcon />
           </button>
         </header>

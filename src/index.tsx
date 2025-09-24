@@ -1,9 +1,10 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { App } from "./components/App";
+import "./styles.css";
 
-import { render } from "preact";
-import { App } from "./components/App.js";
-
-render(<App title={document.title} />, document.getElementById("root")!);
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <App title={document.title} />
+  </StrictMode>
+);

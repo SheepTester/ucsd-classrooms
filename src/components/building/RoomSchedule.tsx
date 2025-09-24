@@ -1,19 +1,14 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { useState } from "preact/hooks";
-import { Day } from "../../../util/Day.js";
-import { Time } from "../../../util/Time.js";
-import { meetingTypes } from "../../../webreg-scraping/meeting-types.js";
-import { RoomMeeting } from "../../lib/coursesToClassrooms.js";
-import { Link } from "../Link.js";
+import { useState } from "react";
+import { Day } from "../../../util/Day";
+import { Time } from "../../../util/Time";
+import { meetingTypes } from "../../../webreg-scraping/meeting-types";
+import { RoomMeeting } from "../../lib/coursesToClassrooms";
+import { Link } from "../Link";
 import {
   doesMeetingHappen,
   isMeetingOngoing,
   useMoment,
-} from "../../moment-context.js";
+} from "../../moment-context";
 
 const DAYS = [1, 2, 3, 4, 5, 6, 7];
 const WEEKDAYS = [1, 2, 3, 4, 5];
@@ -28,7 +23,7 @@ export function RoomSchedule({ meetings }: RoomScheduleProps) {
 
   if (meetings.length === 0) {
     return (
-      <div class="empty">
+      <div className="empty">
         <p>
           This room isn't used for any classes this week, as far as WebReg is
           concerned.
@@ -64,13 +59,15 @@ export function RoomSchedule({ meetings }: RoomScheduleProps) {
   );
 
   return (
-    <div class="schedule">
-      <div class="day-names-wrapper">
-        <div class="gradient gradient-bg gradient-top" />
-        <div class="day-names">
+    <div className="schedule">
+      <div className="day-names-wrapper">
+        <div className="gradient gradient-bg gradient-top" />
+        <div className="day-names">
           {(hasWeekend ? DAYS : WEEKDAYS).map((weekDay) => (
             <button
-              class={`day day-name ${weekDay === day ? "selected-day" : ""}`}
+              className={`day day-name ${
+                weekDay === day ? "selected-day" : ""
+              }`}
               key={weekDay}
               onClick={() =>
                 setDay((day) => (weekDay === day ? null : weekDay))
@@ -81,24 +78,24 @@ export function RoomSchedule({ meetings }: RoomScheduleProps) {
           ))}
         </div>
       </div>
-      <div class={`meetings-wrapper ${day === null ? "full-week" : ""}`}>
+      <div className={`meetings-wrapper ${day === null ? "full-week" : ""}`}>
         {(day !== null ? [day] : hasWeekend ? DAYS : WEEKDAYS).map((day) => {
           const holiday = moment.holidays[moment.date.monday.add(day - 1).id];
           return (
             <div
-              class={`day meetings ${holiday ? "has-holiday" : ""}`}
+              className={`day meetings ${holiday ? "has-holiday" : ""}`}
               key={day}
               style={{ height: `${(latest - earliest) / SCALE}px` }}
             >
               {holiday ? (
-                <p class="schedule-holiday-notice">{holiday}</p>
+                <p className="schedule-holiday-notice">{holiday}</p>
               ) : null}
               {actualMeetings[day]
                 .sort((a, b) => +a.time.start - +b.time.start)
                 .map((meeting) => (
                   <Link
                     view={{ type: "course", course: meeting.course }}
-                    class={`meeting ${
+                    className={`meeting ${
                       isMeetingOngoing(meeting, moment) ? "current" : ""
                     } ${meeting.kind === "exam" ? "exam" : ""}`}
                     style={{
@@ -108,7 +105,7 @@ export function RoomSchedule({ meetings }: RoomScheduleProps) {
                       }px`,
                     }}
                   >
-                    <div class="meeting-name">
+                    <div className="meeting-name">
                       {meeting.course} (
                       <abbr
                         title={`${meetingTypes[meeting.type]} with up to ${
@@ -119,12 +116,12 @@ export function RoomSchedule({ meetings }: RoomScheduleProps) {
                       </abbr>
                       )
                     </div>
-                    <div class="meeting-time">
+                    <div className="meeting-time">
                       {meeting.time.start.formatRange(meeting.time.end)}
                     </div>
                     {meeting.special && (
                       <abbr
-                        class="special-summer"
+                        className="special-summer"
                         title="This meeting is from a Special Summer Session course."
                       >
                         S3
@@ -136,7 +133,7 @@ export function RoomSchedule({ meetings }: RoomScheduleProps) {
                 earliest <= +moment.time &&
                 +moment.time < latest && (
                   <div
-                    class="now"
+                    className="now"
                     style={{
                       top: `${(+moment.time - earliest) / SCALE}px`,
                     }}
@@ -146,9 +143,11 @@ export function RoomSchedule({ meetings }: RoomScheduleProps) {
           );
         })}
       </div>
-      <footer class="disclaimer-wrapper">
-        <div class="gradient gradient-bg gradient-bottom" />
-        <p class="disclaimer">Note: some classes book rooms but don't meet.</p>
+      <footer className="disclaimer-wrapper">
+        <div className="gradient gradient-bg gradient-bottom" />
+        <p className="disclaimer">
+          Note: some classes book rooms but don't meet.
+        </p>
       </footer>
     </div>
   );

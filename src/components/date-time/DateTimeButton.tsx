@@ -1,12 +1,7 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { getTerm, termCode } from "../../../terms/index.js";
-import { Day } from "../../../util/Day.js";
-import { Time } from "../../../util/Time.js";
-import { useMoment } from "../../moment-context.js";
+import { getTerm, termCode } from "../../../terms/index";
+import { Day } from "../../../util/Day";
+import { Time } from "../../../util/Time";
+import { useMoment } from "../../moment-context";
 
 const dateFormat = new Intl.DateTimeFormat([], {
   dateStyle: "short",
@@ -24,20 +19,20 @@ export function DateTimeButton({ onClick, disabled }: DateTimeButtonProps) {
     currentTerm: { year, season, current, week },
   } = useMoment();
   return (
-    <button class="date-time-button" onClick={onClick} disabled={disabled}>
-      <p class="showing-schedule-wrapper">
-        <span class="showing-schedule-text">Showing schedule for</span>
-        <div class="date-time">
+    <button className="date-time-button" onClick={onClick} disabled={disabled}>
+      <p className="showing-schedule-wrapper">
+        <span className="showing-schedule-text">Showing schedule for</span>
+        <div className="date-time">
           {dateFormat.format(date.toLocal(time.hour, time.minute))}
         </div>
         {current && (
-          <span class="quarter-week">
+          <span className="quarter-week">
             {termCode(year, season)} {week < 10 ? `Week ${week}` : "Finals"}{" "}
             {date.dayName("short")}
           </span>
         )}
       </p>
-      <div class="filled-icon-btn edit-icon">Edit</div>
+      <div className="filled-icon-btn edit-icon">Edit</div>
     </button>
   );
 }

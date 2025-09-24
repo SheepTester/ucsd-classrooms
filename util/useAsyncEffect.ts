@@ -1,8 +1,8 @@
-import { useEffect } from "preact/hooks";
+import { useEffect } from "react";
 
 export function useAsyncEffect(
   effect: () => Promise<void | (() => void)>,
-  inputs?: ReadonlyArray<unknown>,
+  inputs?: ReadonlyArray<unknown>
 ): void {
   useEffect(() => {
     const promise = effect();

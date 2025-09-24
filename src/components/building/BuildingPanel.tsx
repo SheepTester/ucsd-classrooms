@@ -1,19 +1,14 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { useState } from "preact/hooks";
-import { useLast } from "../../../util/useLast.js";
-import { BuildingDatum, buildings } from "../../lib/buildings.js";
-import { RoomMeeting } from "../../lib/coursesToClassrooms.js";
-import { AbbrevHeading } from "../AbbrevHeading.js";
-import { BackIcon } from "../icons/BackIcon.js";
-import { CloseIcon } from "../icons/CloseIcon.js";
-import { Link } from "../Link.js";
-import { RoomList } from "./RoomList.js";
-import { RoomSchedule } from "./RoomSchedule.js";
-import { Image } from "../Image.js";
+import { useState } from "react";
+import { useLast } from "../../../util/useLast";
+import { BuildingDatum, buildings } from "../../lib/buildings";
+import { RoomMeeting } from "../../lib/coursesToClassrooms";
+import { AbbrevHeading } from "../AbbrevHeading";
+import { BackIcon } from "../icons/BackIcon";
+import { CloseIcon } from "../icons/CloseIcon";
+import { Link } from "../Link";
+import { RoomList } from "./RoomList";
+import { RoomSchedule } from "./RoomSchedule";
+import { Image } from "../Image";
 
 type BuildingPanelContentProps = {
   building: BuildingDatum;
@@ -34,16 +29,20 @@ function BuildingPanelContent({
   return (
     <>
       <header
-        class={`building-name ${
+        className={`building-name ${
           room ? "schedule-view" : "list-view"
         } college-${college}`}
       >
         {images.length > 0 && (
-          <Image class="building-header-image" src={imageUrl} key={imageUrl} />
+          <Image
+            className="building-header-image"
+            src={imageUrl}
+            key={imageUrl}
+          />
         )}
         <Link
           view={room ? { type: "building", building: code } : null}
-          class="icon-btn back"
+          className="icon-btn back"
           back={([previous]) => {
             // If the user just came from a room list then go back to it
             if (previous && previous.type === "building" && !previous.room) {
@@ -59,7 +58,7 @@ function BuildingPanelContent({
           heading="h2"
           abbrev={
             <span>
-              {code} <span class="room-number">{lastRoom}</span>
+              {code} <span className="room-number">{lastRoom}</span>
             </span>
           }
         >
@@ -67,7 +66,7 @@ function BuildingPanelContent({
         </AbbrevHeading>
         <Link
           view={{ type: "default" }}
-          class="icon-btn close"
+          className="icon-btn close"
           back={([previous, before]) => {
             if (!previous) {
               return null;
@@ -94,21 +93,21 @@ function BuildingPanelContent({
         <RoomSchedule meetings={rooms[room] ?? []} />
       ) : (
         <>
-          <div class="gradient gradient-sticky gradient-top" />
+          <div className="gradient gradient-sticky gradient-top" />
           <RoomList building={code} rooms={rooms} />
           {images.length > 0 ? (
-            <div class="building-images">
+            <div className="building-images">
               {images.map((image) => {
                 const imageUrl = image.url.replace(/\.jpeg$/, "l.jpeg");
                 return (
                   <a
                     href={image.url}
-                    class="building-image-link"
+                    className="building-image-link"
                     key={imageUrl}
                     target="_blank"
                   >
                     <Image
-                      class="building-image"
+                      className="building-image"
                       src={imageUrl}
                       loading="lazy"
                       width={image.size[0]}
@@ -119,7 +118,7 @@ function BuildingPanelContent({
               })}
             </div>
           ) : null}
-          <div class="gradient gradient-sticky gradient-bottom" />
+          <div className="gradient gradient-sticky gradient-bottom" />
         </>
       )}
     </>
@@ -137,7 +136,7 @@ export function BuildingPanel({
 }: BuildingPanelProps) {
   return (
     <div
-      class={`building-panel ${visible ? "" : "building-panel-invisible"} ${
+      className={`building-panel ${visible ? "" : "building-panel-invisible"} ${
         rightPanelOpen ? "right-panel-open" : ""
       }`}
     >

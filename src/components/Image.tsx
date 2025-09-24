@@ -1,10 +1,4 @@
-/** @jsxImportSource preact */
-/// <reference no-default-lib="true"/>
-/// <reference lib="dom" />
-/// <reference lib="deno.ns" />
-
-import { useState } from "preact/hooks";
-import { JSX } from "preact";
+import { HTMLAttributes, useState } from "react";
 
 /**
  * Fades in when the image loads.
@@ -13,15 +7,15 @@ import { JSX } from "preact";
  * changes.
  */
 export function Image({
-  class: className = "",
+  className = "",
   ...props
-}: JSX.HTMLAttributes<HTMLImageElement>) {
+}: HTMLAttributes<HTMLImageElement>) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <img
       {...props}
-      class={`${className} image ${imageLoaded ? "" : "image-loading"}`}
+      className={`${className} image ${imageLoaded ? "" : "image-loading"}`}
       onLoad={() => setImageLoaded(true)}
     />
   );
