@@ -47,7 +47,7 @@ export function TermStatus({
           )}
           {status instanceof Date ? (
             <>
-              {omitTerm ? "Updated " : "last updated "}
+              {omitTerm ? "Data updated " : "last updated "}
               <span className="updated-date">
                 {status.toLocaleDateString()}
               </span>

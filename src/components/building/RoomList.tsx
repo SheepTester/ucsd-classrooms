@@ -37,6 +37,7 @@ export function RoomList({ building, rooms }: RoomListProps) {
               activeMeeting && moment.time < activeMeeting.time.start;
             return (
               <Link
+                key={room}
                 view={{ type: "building", building, room }}
                 className={`room ${
                   activeMeeting ? (soon ? "soon" : "active") : "inactive"

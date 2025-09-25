@@ -93,6 +93,7 @@ export function RoomSchedule({ meetings }: RoomScheduleProps) {
                 .sort((a, b) => +a.time.start - +b.time.start)
                 .map((meeting) => (
                   <Link
+                    key={`${meeting.course} ${meeting.time.start}`}
                     view={{ type: "course", course: meeting.course }}
                     className={`meeting ${
                       isMeetingOngoing(meeting, moment) ? "current" : ""

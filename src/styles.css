@@ -204,7 +204,7 @@ input[type="checkbox"]:checked:hover {
   position: absolute;
   transform: translate(-50%, -50%);
   padding: 5px 10px;
-  border-radius: 5px;
+  border-radius: 10px;
   background-image: linear-gradient(120deg, #00629b, #182b49);
   color: #ffcd00;
   box-shadow: var(--card-shadow-hover);
@@ -556,6 +556,7 @@ input[type="checkbox"]:checked:hover {
   margin: 10px auto;
   padding: 5px 10px;
   background-color: var(--button);
+  color: white;
   border-radius: 5px;
   height: 100%;
 }
@@ -781,7 +782,7 @@ input[type="checkbox"]:checked:hover {
   column-fill: balance;
 }
 .building-image-link {
-  display: block;
+  display: flex;
   margin-bottom: 20px;
 }
 @media (max-width: 690px) {
@@ -1314,6 +1315,7 @@ input[type="checkbox"]:checked:hover {
 }
 .course-code {
   line-height: 20px;
+  font-family: var(--narrow);
 }
 .group-code {
   font-family: var(--narrow);
@@ -1407,6 +1409,7 @@ input[type="checkbox"]:checked:hover {
   }
 }
 .location {
+  font-family: var(--narrow);
   width: 80px;
   text-align: left;
 }

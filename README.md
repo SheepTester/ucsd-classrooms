@@ -2,6 +2,8 @@
 
 [Live](https://sheeptester.github.io/ucsd-classrooms/)
 
+![Screenshot of classrooms website](./static/open-graph.png)
+
 ## Features
 
 - **Checking when a classroom is available.** Does RWAC 0935 have classes in it? When are they?

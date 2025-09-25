@@ -27,7 +27,7 @@ export function CalendarHeaderRow() {
     <CalendarRow className="calendar-header-row" week={<span>Wk</span>}>
       {DAY_NUMS.map((day) => (
         <div key={day} className={`calendar-item calendar-week-day`}>
-          {Day.dayName(day + 1, "short")}
+          {Day.dayName(day, "short")}
         </div>
       ))}
     </CalendarRow>
@@ -87,21 +87,22 @@ export function CalendarWeekRow({
   date,
   onDate,
 }: CalendarWeekRowProps) {
-  const endDay = monday.add(7);
+  const startDay = monday.add(-1);
+  const endDay = monday.add(6);
   const week = Math.floor((monday.id - termDays.start.id) / 7) + 1;
-  const holidays = getHolidays(Math.max(monday.year, start.year));
+  const holidays = getHolidays(Math.max(startDay.year, start.year));
 
   return (
     <div className="calendar-row calendar-date-row">
       <div className="calendar-week-num">
         {week === 11
           ? "FI"
-          : termDays.start < endDay && monday <= termDays.end
+          : termDays.start < endDay && startDay <= termDays.end
           ? week
           : ""}
       </div>
       {DAY_NUMS.map((i) => {
-        const day = monday.add(i);
+        const day = startDay.add(i);
         if (day < start || day > end) {
           return <div key={i} className="calendar-item" />;
         }
