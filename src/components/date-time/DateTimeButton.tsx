@@ -20,7 +20,7 @@ export function DateTimeButton({ onClick, disabled }: DateTimeButtonProps) {
   return (
     <button className="date-time-button" onClick={onClick} disabled={disabled}>
       <div className="showing-schedule-wrapper">
-        <span className="showing-schedule-text">Showing schedule for</span>
+        <span className="showing-schedule-text">Showing schedules for</span>
         {type !== "term" ? (
           <>
             <div className="date-time">
