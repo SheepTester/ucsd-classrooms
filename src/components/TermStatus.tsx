@@ -5,27 +5,15 @@ import { useLast } from "../lib/useLast";
 export type TermStatus = [Term, "unavailable" | "offline" | Date];
 
 export type TermStatusProps = {
-  status?: TermStatus[];
-  visible: boolean;
+  statuses?: TermStatus[];
 };
-export function TermStatus({
-  status: currentStatus,
-  visible,
-}: TermStatusProps) {
-  const showStatus = visible && currentStatus && currentStatus.length > 0;
-  const statuses = useLast([], showStatus ? currentStatus : null);
+export function TermStatus({ statuses }: TermStatusProps) {
+  if (!statuses || statuses.length === 0) {
+    return null;
+  }
   const omitTerm = statuses.length === 1 && statuses[0][0].quarter !== "S3";
-  const credit = (
-    <span>
-      Made by{" "}
-      <a href="https://www.instagram.com/sheeptester/" className="link">
-        @sheeptester
-      </a>
-      .
-    </span>
-  );
   return (
-    <div className={`term-statuses ${showStatus ? "" : "hide-status"}`}>
+    <div className="term-statuses">
       {statuses.map(([term, status]) => (
         <p
           key={termCode(term.year, term.quarter)}
@@ -57,11 +45,9 @@ export function TermStatus({
             "failed to load."
           ) : (
             "is unavailable."
-          )}{" "}
-          {statuses.length === 1 ? credit : null}
+          )}
         </p>
       ))}
-      {statuses.length > 1 ? credit : null}
     </div>
   );
 }

@@ -319,11 +319,12 @@ input[type="checkbox"]:checked:hover {
   top: 0;
   right: 0;
   margin: 20px;
-  gap: 20px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  transition: opacity 0.2s, visibility 0.2s;
+  background-color: var(--modal);
+  box-shadow: var(--modal-shadow);
+  border-radius: 10px;
+  transition: opacity 0.2s, visibility 0.2s, box-shadow 0.2s, border-radius 0.2s;
 }
 @media (max-width: 690px) {
   .corner {
@@ -332,10 +333,13 @@ input[type="checkbox"]:checked:hover {
     bottom: 0;
     left: 0;
     margin: 10px;
-    gap: 10px;
     flex-direction: column-reverse;
-    align-items: flex-start;
   }
+}
+/* match border radius of date panel, which covers the corner panel */
+.date-panel-open {
+  box-shadow: none;
+  border-radius: 15px;
 }
 /* To prevent user from opening date panel while building panel is open */
 @media (max-width: 950px) {
@@ -348,20 +352,13 @@ input[type="checkbox"]:checked:hover {
   display: flex;
   gap: 15px;
   align-items: center;
-  background-color: var(--modal);
-  box-shadow: var(--modal-shadow);
-  border-radius: 10px;
   padding: 10px 15px;
-  transition: all 0.2s;
-}
-.date-time-button:disabled {
-  box-shadow: none;
-  border-radius: 15px;
 }
 .showing-schedule-wrapper {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: 2px;
 }
 .showing-schedule-text {
   font-size: 0.8em;
@@ -1012,28 +1009,15 @@ input[type="checkbox"]:checked:hover {
 }
 
 .term-statuses {
-  background-color: var(--modal);
-  box-shadow: var(--modal-shadow);
-  border-radius: 10px;
-  font-size: smaller;
+  border-top: 1px solid var(--line);
+  font-size: 0.8em;
   padding: 10px 15px;
   gap: 2px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
   font-family: var(--normal);
   color: var(--secondary);
   transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
-}
-.hide-status {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(10px);
-}
-@media (max-width: 690px) {
-  .hide-status {
-    transform: translateX(-10px);
-  }
 }
 .term-code {
   font-family: var(--narrow);
@@ -1047,6 +1031,20 @@ input[type="checkbox"]:checked:hover {
 }
 .term-unavailable {
   color: var(--soon);
+}
+.credit {
+  border-top: 1px solid var(--line);
+  padding: 10px 15px;
+  font-size: 0.8em;
+  font-family: var(--normal);
+  color: var(--secondary);
+}
+@media (max-width: 690px) {
+  .term-statuses,
+  .credit {
+    border-top: none;
+    border-bottom: 1px solid var(--line);
+  }
 }
 
 .search-wrapper {

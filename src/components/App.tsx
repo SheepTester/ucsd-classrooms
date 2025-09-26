@@ -355,13 +355,20 @@ export function App({ title }: AppProps) {
         <div
           className={`corner ${
             buildingPanelVisible ? "bottom-panel-open" : ""
-          }`}
+          } ${datePanelVisible ? "date-panel-open" : ""}`}
         >
           <DateTimeButton
             onClick={() => setShowDatePanel(true)}
             disabled={datePanelVisible}
           />
-          <TermStatus status={state?.status} visible={!noticeVisible} />
+          <TermStatus statuses={state?.status} />
+          <p className="credit">
+            Made by{" "}
+            <a href="https://www.instagram.com/sheeptester/" className="link">
+              @sheeptester
+            </a>
+            .
+          </p>
         </div>
         <DateTimePanel
           date={moment.date}
