@@ -79,15 +79,25 @@ export function RoomSchedule({ meetings }: RoomScheduleProps) {
       </div>
       <div className={`meetings-wrapper ${day === null ? "full-week" : ""}`}>
         {(day !== null ? [day] : hasWeekend ? DAYS : WEEKDAYS).map((day) => {
-          const holiday = moment.holidays[moment.date.monday.add(day - 1).id];
+          const date = moment.date.monday.add(day - 1);
+          const holiday = moment.holidays[date.id];
+          const dayBeforeQuarter =
+            date.id === moment.currentTerm.termDays.start.id - 1;
           return (
             <div
-              className={`day meetings ${holiday ? "has-holiday" : ""}`}
+              className={`day meetings ${
+                holiday || dayBeforeQuarter ? "has-holiday" : ""
+              }`}
               key={day}
               style={{ height: `${(latest - earliest) / SCALE}px` }}
             >
               {holiday ? (
                 <p className="schedule-holiday-notice">{holiday}</p>
+              ) : dayBeforeQuarter ? (
+                // For week 0
+                <p className="schedule-holiday-notice">
+                  Quarter begins tomorrow
+                </p>
               ) : null}
               {actualMeetings[day]
                 .sort((a, b) => +a.time.start - +b.time.start)

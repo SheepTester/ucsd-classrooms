@@ -70,7 +70,7 @@ export function RoomList({ building, rooms }: RoomListProps) {
                         )}
                       </>
                     ) : (
-                      "Not in use"
+                      "Available"
                     )}
                   </div>
                 ) : null}
