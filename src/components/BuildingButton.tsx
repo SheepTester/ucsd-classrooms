@@ -66,14 +66,20 @@ export function BuildingButton({
     >
       {building.code}
       <span className="room-count">
-        <span className="in-use">
-          {
-            rooms.filter((meetings) =>
-              meetings.some((meeting) => isMeetingOngoing(meeting, moment))
-            ).length
-          }
-        </span>
-        /{rooms.length}
+        {moment.type !== "term" ? (
+          <>
+            <span className="in-use">
+              {
+                rooms.filter((meetings) =>
+                  meetings.some((meeting) => isMeetingOngoing(meeting, moment))
+                ).length
+              }
+            </span>
+            /{rooms.length}
+          </>
+        ) : (
+          <span className="in-use">{rooms.length}</span>
+        )}
       </span>
     </Link>
   );

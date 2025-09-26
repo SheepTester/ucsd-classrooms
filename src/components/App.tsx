@@ -85,7 +85,8 @@ export function App({ title }: AppProps) {
           // Avoid unnecessary rerenders by returning original object if they have
           // the same values
           const newMoment = fromViewTerm(null);
-          return +moment.date !== +newMoment.date ||
+          return newMoment.type !== "now" ||
+            +moment.date !== +newMoment.date ||
             +moment.time !== +newMoment.time
             ? newMoment
             : moment;

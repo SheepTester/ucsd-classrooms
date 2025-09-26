@@ -46,32 +46,34 @@ export function RoomList({ building, rooms }: RoomListProps) {
                 <div className="room-name">
                   {building} {room}
                 </div>
-                <div className="current-meeting">
-                  {activeMeeting ? (
-                    <>
-                      {activeMeeting.course}{" "}
-                      {soon ? (
-                        "soon"
-                      ) : (
-                        <>
-                          (
-                          <abbr
-                            title={`${
-                              meetingTypes[activeMeeting.type]
-                            } with up to ${activeMeeting.capacity} student${
-                              activeMeeting.capacity === 1 ? "" : "s"
-                            }`}
-                          >
-                            {activeMeeting.type}
-                          </abbr>
-                          )
-                        </>
-                      )}
-                    </>
-                  ) : (
-                    "Not in use"
-                  )}
-                </div>
+                {moment.type !== "term" ? (
+                  <div className="current-meeting">
+                    {activeMeeting ? (
+                      <>
+                        {activeMeeting.course}{" "}
+                        {soon ? (
+                          "soon"
+                        ) : (
+                          <>
+                            (
+                            <abbr
+                              title={`${
+                                meetingTypes[activeMeeting.type]
+                              } with up to ${activeMeeting.capacity} student${
+                                activeMeeting.capacity === 1 ? "" : "s"
+                              }`}
+                            >
+                              {activeMeeting.type}
+                            </abbr>
+                            )
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      "Not in use"
+                    )}
+                  </div>
+                ) : null}
               </Link>
             );
           })}

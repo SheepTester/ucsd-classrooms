@@ -233,6 +233,10 @@ input[type="checkbox"]:checked:hover {
   padding: 2px 5px;
   box-shadow: var(--card-shadow-hover);
   font-family: var(--normal);
+  box-sizing: border-box;
+  height: 16px;
+  min-width: 16px;
+  text-align: center;
 }
 .in-use {
   color: var(--text);
@@ -366,6 +370,9 @@ input[type="checkbox"]:checked:hover {
 }
 .quarter-week {
   font-size: 0.8em;
+  font-family: var(--normal);
+}
+.selected-term {
   font-family: var(--normal);
 }
 .edit-icon {
