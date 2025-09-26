@@ -1,13 +1,12 @@
 import { useContext, useEffect, useRef } from "react";
-import { useMoment } from "../../lib/moment-context";
+import { toViewTerm, useMoment } from "../../lib/moment-context";
 import { Course } from "../../lib/section-types";
-import { OnView } from "../../lib/View";
+import { viewTermsEqual, OnView } from "../../lib/View";
 import { AbbrevHeading } from "../AbbrevHeading";
 import { CloseIcon } from "../icons/CloseIcon";
 import { navigate } from "../Link";
 import { CourseInfo } from "./CourseInfo";
 import { Professor, ProfInfo } from "./ProfInfo";
-import { momentsEqual } from "../../lib/now";
 
 export type ModalView =
   | { type: "course"; course: Course }
@@ -42,13 +41,13 @@ export function ResultModal({ view, open }: ResultModalProps) {
       onClose={(e) => {
         if (e.currentTarget.returnValue !== "force-closed") {
           navigate(onView, {
-            view: { type: "default", term: moment.isLive ? null : moment },
+            view: { type: "default", term: toViewTerm(moment) },
             back: ([previous]) => {
               if (
                 previous &&
                 previous.type !== "course" &&
                 previous.type !== "professor" &&
-                momentsEqual(previous.term, moment.isLive ? null : moment)
+                viewTermsEqual(previous.term, toViewTerm(moment))
               ) {
                 return 0;
               } else {

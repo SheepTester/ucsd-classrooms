@@ -2,20 +2,49 @@ import { createContext, useContext } from "react";
 import { Day } from "./Day";
 import { Time } from "./Time";
 import { getHolidays } from "./holidays";
-import { Moment } from "./now";
+import { now } from "./now";
 import { Exam, Meeting, Section } from "./section-types";
-import { CurrentTerm, getTerm } from "./terms";
+import { CurrentTerm, getTerm, getTermDays } from "./terms";
+import { ViewTerm } from "./View";
 
-export type TermMoment = Moment & {
+export type TermMoment = {
+  date: Day;
+  time: Time;
   currentTerm: CurrentTerm;
   holidays: Record<number, string>;
   isFinals: boolean;
   isHoliday: boolean;
-  isLive: boolean;
+  type: "now" | "date-time" | "term";
 };
 
-/** Add cached term information to a plain `Moment` object */
-export function fromMoment(moment: Moment, isLive: boolean): TermMoment {
+/**
+ * Add extra term metadata to a plain `Moment` object so components do not have
+ * to recompute them.
+ */
+export function fromViewTerm(viewTerm: ViewTerm): TermMoment {
+  if (viewTerm !== null && "year" in viewTerm) {
+    const termDays = getTermDays(viewTerm.year, viewTerm.season);
+    return {
+      // Needs to be a date in the real `termDays` because some parts of the app
+      // call `getTerm` on the date. Needs to be a week into the term so all
+      // days of the week around the date are also in the term.
+      date: termDays.start.add(7),
+      time: Time.from(0),
+      currentTerm: {
+        year: viewTerm.year,
+        season: viewTerm.season,
+        termDays: termDays,
+        current: true,
+        week: -1,
+        finals: false,
+      },
+      holidays: {},
+      isFinals: false,
+      isHoliday: false,
+      type: "term",
+    };
+  }
+  const moment = viewTerm ?? now();
   const currentTerm = getTerm(moment.date);
   const holidays = getHolidays(moment.date.year);
   return {
@@ -28,8 +57,16 @@ export function fromMoment(moment: Moment, isLive: boolean): TermMoment {
       currentTerm.season !== "S1" &&
       currentTerm.season !== "S2",
     isHoliday: !!holidays[moment.date.id],
-    isLive,
+    type: viewTerm === null ? "now" : "date-time",
   };
+}
+
+export function toViewTerm(moment: TermMoment): ViewTerm {
+  return moment.type === "now"
+    ? null
+    : moment.type === "date-time"
+    ? moment
+    : moment.currentTerm;
 }
 
 /**
@@ -44,10 +81,7 @@ export function isMeetingOngoing(
   now: TermMoment,
   includeBefore = 0
 ): boolean {
-  if (!meeting.time) {
-    return false;
-  }
-  if (now.isHoliday) {
+  if (!meeting.time || now.isHoliday || now.currentTerm.week === -1) {
     return false;
   }
   if (meeting.kind === "exam") {
@@ -94,7 +128,7 @@ export function doesMeetingHappen(
   }
   if (meeting.kind === "exam") {
     // Exam
-    if (+meeting.date !== +date) {
+    if (+meeting.date !== +date || now.currentTerm.week === -1) {
       return false;
     }
   } else if (
@@ -111,7 +145,6 @@ export function doesMeetingHappen(
 export const MomentContext = createContext<TermMoment>({
   date: Day.EPOCH,
   time: Time.from(0),
-  holidays: {},
   currentTerm: {
     current: false,
     finals: false,
@@ -120,9 +153,10 @@ export const MomentContext = createContext<TermMoment>({
     week: -1,
     year: 0,
   },
+  holidays: {},
   isFinals: false,
   isHoliday: false,
-  isLive: false,
+  type: "term",
 });
 
 export function useMoment(): TermMoment {

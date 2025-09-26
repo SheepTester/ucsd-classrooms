@@ -2,6 +2,7 @@ import { createContext } from "react";
 import { Day } from "./Day";
 import { Time } from "./Time";
 import { Moment } from "./now";
+import { parseTermCode, Season, termCode } from "./terms";
 
 export type View = {
   searching?: boolean;
@@ -25,9 +26,29 @@ export type View = {
     }
 );
 
+/**
+ * - `null` - current time
+ * - `Moment` - date and time
+ * - `year`/`season` - a generic week in the term, with no exams or holidays
+ */
+export type ViewTerm = Moment | { year: number; season: Season } | null;
 export type ViewWithTerm = View & {
-  term: Moment | null;
+  term: ViewTerm;
 };
+
+export function viewTermsEqual(a: ViewTerm, b: ViewTerm): boolean {
+  if (a === null && b === null) {
+    return true;
+  } else if (a === null || b === null) {
+    return false;
+  }
+  if ("date" in a && "date" in b) {
+    return a.date.id === b.date.id && a.time.valueOf() === b.time.valueOf();
+  } else if ("date" in a || "date" in b) {
+    return false;
+  }
+  return a.year === b.year && a.season === b.season;
+}
 
 export function viewFromUrl(url: string): ViewWithTerm {
   const { searchParams, hash } = new URL(url);
@@ -35,13 +56,19 @@ export function viewFromUrl(url: string): ViewWithTerm {
   const course = searchParams.get("course");
   const professor = searchParams.get("professor");
   const dateTime = searchParams.get("term");
-  let term: Moment | null = null;
+  let term: ViewTerm = null;
   if (dateTime?.includes("T")) {
     const [dateStr, timeStr] = dateTime.split("T");
     const date = Day.parse(dateStr);
     const time = Time.parse24(timeStr.replace(".", ":"));
     if (date && time) {
       term = { date, time };
+    }
+  } else if (dateTime) {
+    const maybeTerm = parseTermCode(dateTime);
+    const quarter = maybeTerm?.quarter;
+    if (quarter && quarter !== "SU" && quarter !== "S3") {
+      term = { year: maybeTerm.year, season: quarter };
     }
   }
   const searching = hash === "#search";
@@ -70,9 +97,11 @@ export function viewToUrl(view: ViewWithTerm): URL {
   if (view.term) {
     url.searchParams.append(
       "term",
-      `${view.term.date.toString()}T${view.term.time
-        .toString(true)
-        .replace(":", ".")}`
+      "date" in view.term
+        ? `${view.term.date.toString()}T${view.term.time
+            .toString(true)
+            .replace(":", ".")}`
+        : termCode(view.term.year, view.term.season)
     );
   }
   if (view.type === "building") {

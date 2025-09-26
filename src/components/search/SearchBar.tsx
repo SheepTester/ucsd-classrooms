@@ -62,8 +62,8 @@ export function SearchBar({
   return (
     <form
       role="search"
-      action="javascript:"
       onSubmit={(e) => {
+        e.preventDefault();
         // This sucks but I'm too lazy to think of a good React way to do
         // this
         const selected = e.currentTarget

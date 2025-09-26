@@ -107,9 +107,11 @@ export type CurrentTerm = {
   | {
       current: true;
       /**
-       * Week number of the given day. The first Monday of the quarter is in week 1;
-       * if there are days before it, then they are in week 0. Finals week for fall,
-       * winter, and spring quarter is mostly in week 11.
+       * Week number of the given day. The first Monday of the quarter is in
+       * week 1; if there are days before it, then they are in week 0. Finals
+       * week for fall, winter, and spring quarter is mostly in week 11.
+       *
+       * -1 if week is unknown/unspecified.
        */
       week: number;
       /** Whether finals are ongoing. */
@@ -159,6 +161,36 @@ export function getTerm(day: Day): CurrentTerm {
 
 export function termCode(year: number, quarter: Quarter): string {
   return quarter + (year % 100).toString().padStart(2, "0");
+}
+
+export function parseTermCode(code: string): {
+  year: number;
+  quarter: Quarter;
+} | null {
+  // UCSD's first quarter is FS64 (yes, semester) according to ISIS major codes
+  // sheet:
+  // https://blink.ucsd.edu/_files/instructors-tab/major-codes/isis_major_code_list.xlsx
+  const year = +code.slice(2);
+  const quarter = code.slice(0, 2);
+  if (
+    Number.isInteger(year) &&
+    0 <= year &&
+    year < 100 &&
+    (quarter === "FA" ||
+      quarter === "WI" ||
+      quarter === "SP" ||
+      quarter === "S1" ||
+      quarter === "S2" ||
+      quarter === "S3" ||
+      quarter === "SU")
+  ) {
+    return {
+      year: year + (year >= 64 ? 1900 : 2000),
+      quarter,
+    };
+  } else {
+    return null;
+  }
 }
 
 export function termName(year: number, quarter: Quarter): string {

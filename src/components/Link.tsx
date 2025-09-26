@@ -8,7 +8,7 @@ import {
   viewToUrl,
   ViewWithTerm,
 } from "../lib/View";
-import { useMoment } from "../lib/moment-context";
+import { toViewTerm, useMoment } from "../lib/moment-context";
 
 export type NavigateOptions = {
   view: ViewWithTerm;
@@ -72,7 +72,7 @@ export function Link({
   const moment = useMoment();
   const onView = useContext(OnView);
   const viewWithTerm: ViewWithTerm | null = view
-    ? { ...view, term: moment.isLive ? null : moment }
+    ? { ...view, term: toViewTerm(moment) }
     : null;
   return (
     <a

@@ -4,13 +4,18 @@ import { coursesToClassrooms, TermBuildings } from "../lib/coursesToClassrooms";
 import { Day } from "../lib/Day";
 import { getHolidays } from "../lib/holidays";
 import { mapPosition, northeast, PADDING, southwest } from "../lib/locations";
-import { fromMoment, MomentContext } from "../lib/moment-context";
-import { momentsEqual, now } from "../lib/now";
+import { fromViewTerm, MomentContext } from "../lib/moment-context";
 import { Course } from "../lib/section-types";
 import { Term, TermCache, TermError } from "../lib/TermCache";
 import { CurrentTerm, getTerm, Season, termCode, termName } from "../lib/terms";
 import { useLast } from "../lib/useLast";
-import { OnView, viewFromUrl, viewToUrl, ViewWithTerm } from "../lib/View";
+import {
+  viewTermsEqual,
+  OnView,
+  viewFromUrl,
+  viewToUrl,
+  ViewWithTerm,
+} from "../lib/View";
 import { BuildingPanel } from "./building/BuildingPanel";
 import { BuildingButton } from "./BuildingButton";
 import { DateTimeButton } from "./date-time/DateTimeButton";
@@ -72,18 +77,19 @@ export type AppProps = {
 };
 export function App({ title }: AppProps) {
   const [realTime, setRealTime] = useState(true);
-  const [moment, setMoment] = useState(() => fromMoment(now(), realTime));
+  const [moment, setMoment] = useState(() => fromViewTerm(null));
   useEffect(() => {
     if (realTime) {
       const intervalId = setInterval(() => {
-        const newMoment = now();
-        // Avoid unnecessary rerenders by returning original object if they have
-        // the same values
-        setMoment((moment) =>
-          +moment.date !== +newMoment.date || +moment.time !== +newMoment.time
-            ? fromMoment(newMoment, realTime)
-            : moment
-        );
+        setMoment((moment) => {
+          // Avoid unnecessary rerenders by returning original object if they have
+          // the same values
+          const newMoment = fromViewTerm(null);
+          return +moment.date !== +newMoment.date ||
+            +moment.time !== +newMoment.time
+            ? newMoment
+            : moment;
+        });
       }, 1000);
       return () => {
         clearInterval(intervalId);
@@ -221,7 +227,7 @@ export function App({ title }: AppProps) {
 
   async function handleView(view: ViewWithTerm) {
     setRealTime(view.term === null);
-    setMoment(fromMoment(view.term ?? now(), view.term === null));
+    setMoment(fromViewTerm(view.term));
     setShowResults(!!view.searching);
     if (view.type === "default") {
       setModal(null);
@@ -324,7 +330,7 @@ export function App({ title }: AppProps) {
                   showResults ||
                   !previous ||
                   previous.type !== currentView.type ||
-                  !momentsEqual(previous.term, currentView.term)
+                  !viewTermsEqual(previous.term, currentView.term)
                 ) {
                   return null;
                 }
