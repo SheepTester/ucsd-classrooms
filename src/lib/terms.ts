@@ -125,7 +125,7 @@ export type CurrentTerm = {
     }
 );
 
-const terms = ["WI", "SP", "S1", "S2", "FA"] as const;
+export const seasons: Season[] = ["WI", "SP", "S1", "S2", "FA"] as const;
 
 /**
  * Determines the quarter that the day is in, or the next term if the day is
@@ -135,7 +135,7 @@ export function getTerm(day: Day): CurrentTerm {
   let termDays: TermDays | null = null;
   let season: Season | null = null;
   let current = false;
-  for (const term of terms) {
+  for (const term of seasons) {
     termDays = getTermDays(day.year, term);
     if (day <= termDays.end) {
       season = term;
@@ -166,10 +166,10 @@ export function advanceTerm(
   quarter: Season,
   termCount: number
 ): { year: number; quarter: Season } {
-  const id = year * terms.length + terms.indexOf(quarter) + termCount;
+  const id = year * seasons.length + seasons.indexOf(quarter) + termCount;
   return {
-    year: Math.floor(id / terms.length),
-    quarter: terms[id % terms.length],
+    year: Math.floor(id / seasons.length),
+    quarter: seasons[id % seasons.length],
   };
 }
 

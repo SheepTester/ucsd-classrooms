@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { buildings } from "../lib/buildings";
 import { coursesToClassrooms, TermBuildings } from "../lib/coursesToClassrooms";
 import { Day } from "../lib/Day";
@@ -24,6 +24,7 @@ import { navigate } from "./Link";
 import { ModalView, ResultModal } from "./search/ResultModal";
 import { SearchBar, State } from "./search/SearchBar";
 import { TermStatus } from "./TermStatus";
+import { Time } from "../lib/Time";
 
 /**
  * Represents the state of the app:
@@ -134,7 +135,13 @@ export function App({ title }: AppProps) {
     modal
   );
 
-  const terms = getTerms(getTerm(moment.date));
+  const momentDateId = moment.date.id;
+  const momentTimeId = moment.time.valueOf();
+
+  const terms = useMemo(
+    () => getTerms(getTerm(Day.fromId(momentDateId))),
+    [momentDateId]
+  );
   const termId = terms
     .map((term) => termCode(term.year, term.quarter))
     .join(" ");
@@ -185,11 +192,16 @@ export function App({ title }: AppProps) {
       season,
     });
   }
-  useEffect(() => {
-    handleDate(moment.date);
-  }, [+moment.date]);
 
-  async function loadTerms(): Promise<Course[]> {
+  useEffect(() => {
+    handleDate(Day.fromId(momentDateId));
+  }, [momentDateId]);
+
+  /**
+   * Called whenever extra schedule data (e.g. remote classes) are needed, e.g.
+   * the search bar.
+   */
+  async function loadTerms(terms: Term[], termId: string): Promise<Course[]> {
     const maybePromise = termCache.current.requestTerms(terms, true);
     if (maybePromise instanceof Promise) {
       // Show "Loading..."
@@ -226,65 +238,68 @@ export function App({ title }: AppProps) {
     return courses;
   }
 
-  const handleView = useCallback(async (view: ViewWithTerm) => {
-    setRealTime(view.term === null);
-    setMoment(fromViewTerm(view.term));
-    setShowResults(!!view.searching);
-    if (view.type === "default") {
-      setModal(null);
-      setBuildingCode(null);
-      document.title = title;
-      return;
-    }
-    if (view.type === "building") {
-      setScrollTo({ building: view.building, init: false });
-      setBuildingCode(view.building);
-      setModal(null);
-      setRoom(view.room ?? null);
-      document.title = `${
-        view.room
-          ? `${view.building} ${view.room}`
-          : buildings[view.building]?.name ?? view.building
-      } · ${title}`;
-      return;
-    }
-    setBuildingCode(null);
-    const courses =
-      searchState.type === "loaded" && searchState.termId === termId
-        ? searchState.data.courses
-        : await loadTerms();
-    if (view.type === "course") {
-      const course = courses.find((course) => course.code === view.course);
-      if (course) {
-        setModal({ type: "course", course });
-        document.title = `${view.course} · ${title}`;
-      } else {
-        setModal({
-          type: "course",
-          course: { code: view.course, title: view.course, groups: [] },
-        });
-        document.title = `Course not found · ${title}`;
+  const handleView = useCallback(
+    async (view: ViewWithTerm) => {
+      setRealTime(view.term === null);
+      setMoment(fromViewTerm(view.term));
+      setShowResults(!!view.searching);
+      if (view.type === "default") {
+        setModal(null);
+        setBuildingCode(null);
+        document.title = title;
+        return;
       }
-    } else {
-      const [last, first] = view.name.split(", ");
-      setModal({
-        type: "professor",
-        professor: {
-          first,
-          last,
-          courses: courses.flatMap((course) => {
-            const groups = course.groups.filter((group) =>
-              group.instructors.some(
-                (prof) => prof.first === first && prof.last === last
-              )
-            );
-            return groups.length > 0 ? [{ ...course, groups }] : [];
-          }),
-        },
-      });
-      document.title = `${first} ${last} · ${title}`;
-    }
-  }, []);
+      if (view.type === "building") {
+        setScrollTo({ building: view.building, init: false });
+        setBuildingCode(view.building);
+        setModal(null);
+        setRoom(view.room ?? null);
+        document.title = `${
+          view.room
+            ? `${view.building} ${view.room}`
+            : buildings[view.building]?.name ?? view.building
+        } · ${title}`;
+        return;
+      }
+      setBuildingCode(null);
+      const courses =
+        searchState.type === "loaded" && searchState.termId === termId
+          ? searchState.data.courses
+          : await loadTerms(terms, termId);
+      if (view.type === "course") {
+        const course = courses.find((course) => course.code === view.course);
+        if (course) {
+          setModal({ type: "course", course });
+          document.title = `${view.course} · ${title}`;
+        } else {
+          setModal({
+            type: "course",
+            course: { code: view.course, title: view.course, groups: [] },
+          });
+          document.title = `Course not found · ${title}`;
+        }
+      } else {
+        const [last, first] = view.name.split(", ");
+        setModal({
+          type: "professor",
+          professor: {
+            first,
+            last,
+            courses: courses.flatMap((course) => {
+              const groups = course.groups.filter((group) =>
+                group.instructors.some(
+                  (prof) => prof.first === first && prof.last === last
+                )
+              );
+              return groups.length > 0 ? [{ ...course, groups }] : [];
+            }),
+          },
+        });
+        document.title = `${first} ${last} · ${title}`;
+      }
+    },
+    [searchState, termId, terms, title]
+  );
 
   useEffect(() => {
     const initView = viewFromUrl(window.location.href);
@@ -299,8 +314,7 @@ export function App({ title }: AppProps) {
   }, []);
 
   useEffect(() => {
-    const initView = viewFromUrl(window.location.href);
-    handleView(initView);
+    handleView(viewFromUrl(window.location.href));
     const handlePopstate = () => {
       handleView(viewFromUrl(window.location.href));
     };
@@ -310,18 +324,18 @@ export function App({ title }: AppProps) {
     };
     // Unintuitively, searchState is a dependency in handleView. Otherwise,
     // going back/forth will use courses from the wrong term
-  }, [searchState]);
+  }, [handleView]);
 
   const handleDateSelect = useCallback(
     (date: Day) => {
       navigate(handleView, {
         view: {
           ...viewFromUrl(window.location.href),
-          term: { ...moment, date },
+          term: { date, time: Time.from(momentTimeId) },
         },
       });
     },
-    [handleView, moment]
+    [handleView, momentTimeId]
   );
 
   const handleUseNow = useCallback(
@@ -373,7 +387,7 @@ export function App({ title }: AppProps) {
               searchState.type === "unloaded" ||
               (searchState.type === "loaded" && searchState.termId !== termId)
             ) {
-              loadTerms();
+              loadTerms(terms, termId);
             }
           }}
           visible={!noticeVisible}

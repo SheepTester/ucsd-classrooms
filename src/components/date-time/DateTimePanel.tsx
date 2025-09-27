@@ -36,7 +36,7 @@ export function DateTimePanel({
       onDate(date);
       setScrollMode("none");
     },
-    [onUseNow]
+    [onDate, onUseNow]
   );
 
   return (

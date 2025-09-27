@@ -10,6 +10,8 @@ export const MS_PER_DAY = 24 * 60 * 60 * 1000;
  */
 export const DAY_NUMS = [0, 1, 2, 3, 4, 5, 6];
 
+export type DayId = number;
+
 /**
  * A single, unified Day object representing a day (no time). Months are
  * 1-indexed.

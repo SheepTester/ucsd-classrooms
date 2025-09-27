@@ -1,6 +1,6 @@
 import { memo, ReactNode, useEffect, useRef, useState } from "react";
-import { Day } from "../../lib/Day";
-import { getTermDays, Season, TermDays } from "../../lib/terms";
+import { Day, DayId } from "../../lib/Day";
+import { getTermDays, Season, seasons, TermDays } from "../../lib/terms";
 import {
   CalendarHeaderRow,
   CalendarMonthHeadingRow,
@@ -23,35 +23,53 @@ export type ScrollMode = "none" | "init" | "date-edited";
 /** Height of the calendar header. */
 const HEADER_HEIGHT = 90;
 
-type MonthCalendarProps = Omit<TermCalendarProps, "date"> & {
+// Awkward transition to `DayId` because it helps useMemo
+type MonthCalendarProps = {
+  termDaysStart: DayId;
+  termDaysFinals: DayId;
+  termDaysEnd: DayId;
   /** Only specify if `date` is in the month */
-  date?: Day;
-  monthStart: Day;
-  monthEnd: Day;
+  date?: DayId;
+  onDate: (date: Day) => void;
+  monthStart: DayId;
+  monthEnd: DayId;
+  scrollMode: ScrollMode;
 };
 function MonthCalendar_({
-  start,
-  end,
-  scrollMode,
+  termDaysStart,
+  termDaysFinals,
+  termDaysEnd,
+  date,
+  onDate,
   monthStart,
   monthEnd,
-  ...props
+  scrollMode,
 }: MonthCalendarProps) {
-  const dateInMonth = props.date !== undefined;
+  const dateInMonth = date !== undefined;
+
+  const termDays = {
+    start: Day.fromId(termDaysStart),
+    finals: Day.fromId(termDaysFinals),
+    end: Day.fromId(termDaysEnd),
+  };
+  const monthStartDay = Day.fromId(monthStart);
+  const monthEndDay = Day.fromId(monthEnd);
 
   const weeks: ReactNode[] = [];
   for (
-    let monday = monthStart.monday;
-    monday <= monthEnd;
+    let monday = monthStartDay.monday;
+    monday <= monthEndDay;
     monday = monday.add(7)
   ) {
     weeks.push(
       <CalendarWeekRow
-        monday={monday}
-        start={monthStart}
-        end={monthEnd}
         key={monday.id}
-        {...props}
+        termDays={termDays}
+        start={monthStartDay}
+        end={monthEndDay}
+        monday={monday}
+        date={date !== undefined ? Day.fromId(date) : undefined}
+        onDate={onDate}
       />
     );
   }
@@ -66,29 +84,16 @@ function MonthCalendar_({
         behavior: scrollMode === "init" ? "auto" : "smooth",
       });
     }
-  }, [scrollMode, dateInMonth, monthStart.id, monthEnd.id]);
+  }, [scrollMode, dateInMonth, monthStart, monthEnd]);
 
   return (
     <div className="calendar-month" ref={ref}>
-      <CalendarMonthHeadingRow month={monthStart.month} />
+      <CalendarMonthHeadingRow month={monthStartDay.month} />
       {weeks}
     </div>
   );
 }
-const MonthCalendar = memo(
-  MonthCalendar_,
-  (prev, next) =>
-    prev.termDays.start.id === next.termDays.start.id &&
-    prev.termDays.finals.id === next.termDays.finals.id &&
-    prev.termDays.end.id === next.termDays.end.id &&
-    prev.start.id === next.start.id &&
-    prev.end.id === next.end.id &&
-    prev.date?.id === next.date?.id &&
-    prev.onDate === next.onDate &&
-    prev.scrollMode === next.scrollMode &&
-    prev.monthStart.id === next.monthStart.id &&
-    prev.monthEnd.id === next.monthEnd.id
-);
+const MonthCalendar = memo(MonthCalendar_);
 
 type TermCalendarProps = {
   termDays: TermDays;
@@ -98,8 +103,14 @@ type TermCalendarProps = {
   onDate: (date: Day) => void;
   scrollMode: ScrollMode;
 };
-function TermCalendar({ date, ...props }: TermCalendarProps) {
-  const { start, end } = props;
+function TermCalendar({
+  termDays,
+  start,
+  end,
+  date,
+  onDate,
+  scrollMode,
+}: TermCalendarProps) {
   const months: ReactNode[] = [];
   for (let month = start.month; month <= end.month; month++) {
     const monthStart = Day.max(start, Day.from(start.year, month, 1));
@@ -107,17 +118,19 @@ function TermCalendar({ date, ...props }: TermCalendarProps) {
     months.push(
       <MonthCalendar
         key={month}
-        monthStart={monthStart}
-        monthEnd={monthEnd}
-        date={monthStart <= date && date <= monthEnd ? date : undefined}
-        {...props}
+        termDaysStart={termDays.start.id}
+        termDaysFinals={termDays.finals.id}
+        termDaysEnd={termDays.end.id}
+        date={monthStart <= date && date <= monthEnd ? date.id : undefined}
+        onDate={onDate}
+        monthStart={monthStart.id}
+        monthEnd={monthEnd.id}
+        scrollMode={scrollMode}
       />
     );
   }
   return <>{months}</>;
 }
-
-const seasons: Season[] = ["WI", "SP", "S1", "S2", "FA"];
 
 export type CalendarProps = {
   date: Day;
