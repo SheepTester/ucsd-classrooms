@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useLayoutEffect, useRef } from "react";
+import { useCallback, useLayoutEffect, useRef } from "react";
 
 /**
  * Returns a stable function identity that wraps the given `callback`. However,
@@ -11,33 +11,15 @@ import { RefObject, useCallback, useLayoutEffect, useRef } from "react";
  */
 export function useStableCallback<F extends Function>(callback: F): F {
   const callbackRef = useRef(callback);
+
   // `useLayoutEffect` runs synchronously, and while allegedly "slow" should
   // probably be fine if it's just updating a ref
   useLayoutEffect(() => {
     callbackRef.current = callback;
   }, [callback]);
 
-  // Catch when callback is called during render
-  let isRenderingRef: RefObject<boolean> | undefined;
-  if (process.env.NODE_ENV !== "production") {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    isRenderingRef = useRef(false);
-    isRenderingRef.current = true;
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useLayoutEffect(() => {
-      if (isRenderingRef) {
-        isRenderingRef.current = false;
-      }
-    });
-  }
-
   return useCallback(
-    ((...args: unknown[]) => {
-      if (process.env.NODE_ENV !== "production" && isRenderingRef?.current) {
-        throw new Error("Stable callbacks cannot be called during render.");
-      }
-      return callbackRef.current(...args);
-    }) as Function as F,
-    [isRenderingRef]
+    ((...args: unknown[]) => callbackRef.current(...args)) as Function as F,
+    []
   );
 }
