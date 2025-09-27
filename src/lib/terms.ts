@@ -161,18 +161,6 @@ export function getTerm(day: Day): CurrentTerm {
   }
 }
 
-export function advanceTerm(
-  year: number,
-  quarter: Season,
-  termCount: number
-): { year: number; quarter: Season } {
-  const id = year * seasons.length + seasons.indexOf(quarter) + termCount;
-  return {
-    year: Math.floor(id / seasons.length),
-    quarter: seasons[id % seasons.length],
-  };
-}
-
 export function termCode(year: number, quarter: Quarter): string {
   return quarter + (year % 100).toString().padStart(2, "0");
 }
@@ -207,6 +195,22 @@ export function parseTermCode(code: string): {
   }
 }
 
-export function termName(year: number, quarter: Quarter): string {
-  return `${names[quarter]} ${year}`;
+export function termName(
+  year: number,
+  quarter: Quarter,
+  short = false
+): string {
+  return `${
+    short ? names[quarter].replace("Session ", "") : names[quarter]
+  } ${year}`;
+}
+
+export function getTermId(year: number, quarter: Season): number {
+  return year * seasons.length + seasons.indexOf(quarter);
+}
+export function fromTermId(id: number): { year: number; quarter: Season } {
+  return {
+    year: Math.floor(id / seasons.length),
+    quarter: seasons[id % seasons.length],
+  };
 }

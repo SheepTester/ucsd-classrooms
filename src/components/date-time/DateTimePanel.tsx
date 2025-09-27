@@ -31,7 +31,7 @@ export function DateTimePanel({
 }: DateTimePanelProps) {
   const [scrollMode, setScrollMode] = useState<ScrollMode>("init");
 
-  const handleCalendarDate$ = useStableCallback((date: Day) => {
+  const handleCalendarDate_s = useStableCallback((date: Day) => {
     onUseNow(false);
     onDate(date);
     setScrollMode("none");
@@ -114,7 +114,7 @@ export function DateTimePanel({
       </div>
       <Calendar
         date={date}
-        onDate_s={handleCalendarDate$}
+        onDate_s={handleCalendarDate_s}
         scrollMode={scrollMode}
         freeScroll={() => setScrollMode("none")}
       />

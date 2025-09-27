@@ -7,7 +7,15 @@ import { mapPosition, northeast, PADDING, southwest } from "../lib/locations";
 import { fromViewTerm, MomentContext } from "../lib/moment-context";
 import { Course } from "../lib/section-types";
 import { Term, TermCache, TermError } from "../lib/TermCache";
-import { CurrentTerm, getTerm, Season, termCode, termName } from "../lib/terms";
+import {
+  CurrentTerm,
+  fromTermId,
+  getTerm,
+  getTermId,
+  Season,
+  termCode,
+  termName,
+} from "../lib/terms";
 import { useLast } from "../lib/useLast";
 import {
   viewTermsEqual,
@@ -20,7 +28,7 @@ import { BuildingPanel } from "./building/BuildingPanel";
 import { BuildingButton } from "./BuildingButton";
 import { DateTimeButton } from "./date-time/DateTimeButton";
 import { DateTimePanel } from "./date-time/DateTimePanel";
-import { navigate } from "./Link";
+import { Link, navigate } from "./Link";
 import { ModalView, ResultModal } from "./search/ResultModal";
 import { SearchBar, State } from "./search/SearchBar";
 import { TermStatus } from "./TermStatus";
@@ -150,12 +158,12 @@ export function App({ title }: AppProps) {
   const buildingPanelVisible = buildingCode !== null && !noticeVisible;
 
   /** Only called by the `useEffect` below, whenever `moment.date` changes */
-  async function handleDate(date: Day) {
+  async function handleDate(date: Day, skipHolidayCheck: boolean) {
     const currentTerm = getTerm(date);
     const { season, finals } = currentTerm;
     const terms = getTerms(currentTerm);
     const holiday = getHolidays(date.year)[date.id];
-    if (holiday || terms.length === 0) {
+    if (!skipHolidayCheck && (holiday || terms.length === 0)) {
       // Have the date selector open for the user to select another day
       setState({ errors: [], status: [], season, holiday });
       return;
@@ -194,9 +202,10 @@ export function App({ title }: AppProps) {
     });
   }
 
+  const viewingGenericDay = moment.currentTerm.week === -1;
   useEffect(() => {
-    handleDate(Day.fromId(momentDateId));
-  }, [momentDateId]);
+    handleDate(Day.fromId(momentDateId), viewingGenericDay);
+  }, [momentDateId, viewingGenericDay]);
 
   /**
    * Called whenever extra schedule data (e.g. remote classes) are needed, e.g.
@@ -324,6 +333,11 @@ export function App({ title }: AppProps) {
     // going back/forth will use courses from the wrong term
   }, [handleView_s, searchState]);
 
+  const currentTermId = getTermId(
+    moment.currentTerm.year,
+    moment.currentTerm.season
+  );
+
   return (
     <OnView.Provider value={handleView_s}>
       <MomentContext.Provider value={moment}>
@@ -373,6 +387,43 @@ export function App({ title }: AppProps) {
             onClick={() => setShowDatePanel(true)}
             disabled={datePanelVisible}
           />
+          <div className="term-buttons">
+            {[-4, -3, -2, -1, 0, 1, 2, 3, 4].map((offset) => {
+              const id = currentTermId + offset;
+              const { year, quarter } = fromTermId(id);
+              // I don't remember how to get the View, but this should only be
+              // clickable for the building and default views
+              return (
+                <Link
+                  className={`term-button ${
+                    id === currentTermId && moment.currentTerm.current
+                      ? "term-button-selected"
+                      : ""
+                  }`}
+                  view={
+                    // The off-screen terms are just for the smooth animation,
+                    // so don't make them clickable
+                    Math.abs(offset) >= 3
+                      ? null
+                      : buildingCode !== null
+                      ? { type: "building", building: buildingCode, room: room }
+                      : { type: "default" }
+                  }
+                  aria-hidden={Math.abs(offset) >= 3 ? "true" : undefined}
+                  term={{ year, season: quarter }}
+                  key={id}
+                  style={{
+                    transform: `translateX(${
+                      -50 +
+                      (offset + (moment.currentTerm.current ? 0 : 0.5)) * 110
+                    }%)`,
+                  }}
+                >
+                  {termCode(year, quarter)}
+                </Link>
+              );
+            })}
+          </div>
           <TermStatus statuses={state?.status} />
           <p className="credit">
             Made by{" "}

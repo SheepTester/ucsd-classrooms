@@ -5,6 +5,7 @@ import {
   View,
   viewFromUrl,
   ViewHandler,
+  ViewTerm,
   viewToUrl,
   ViewWithTerm,
 } from "../lib/View";
@@ -55,6 +56,7 @@ export function navigate(
 
 export type LinkProps = {
   view: View | null;
+  term?: ViewTerm;
   back?: BackHandler;
   className?: string;
   style?: CSSProperties;
@@ -63,6 +65,7 @@ export type LinkProps = {
 };
 export function Link({
   view,
+  term,
   back,
   className = "",
   style,
@@ -72,7 +75,7 @@ export function Link({
   const moment = useMoment();
   const onView = useContext(OnView);
   const viewWithTerm: ViewWithTerm | null = view
-    ? { ...view, term: toViewTerm(moment) }
+    ? { ...view, term: term ?? toViewTerm(moment) }
     : null;
   return (
     <a

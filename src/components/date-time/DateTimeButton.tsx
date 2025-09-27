@@ -34,7 +34,7 @@ export function DateTimeButton({ onClick, disabled }: DateTimeButtonProps) {
             )}
           </>
         ) : (
-          <div className="selected-term">{termName(year, season)}</div>
+          <div className="selected-term">{termName(year, season, true)}</div>
         )}
       </div>
       <div className="filled-icon-btn edit-icon">Edit</div>

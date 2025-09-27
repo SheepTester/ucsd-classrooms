@@ -1010,6 +1010,51 @@ input[type="checkbox"]:checked:hover {
   font-family: var(--normal);
 }
 
+.term-buttons {
+  position: relative;
+  height: 45px;
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+}
+.term-buttons::before,
+.term-buttons::after {
+  content: "";
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  z-index: 5;
+  pointer-events: none;
+}
+.term-buttons::before {
+  left: 0;
+  background-image: linear-gradient(to left, transparent, var(--modal));
+}
+.term-buttons::after {
+  right: 0;
+  background-image: linear-gradient(to right, transparent, var(--modal));
+}
+.term-button {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--card-line);
+  width: 6ch;
+  height: 25px;
+  font-size: 0.8em;
+  border-radius: 5px;
+  box-sizing: border-box;
+  transition: transform 0.2s;
+}
+.term-button-selected {
+  border-color: transparent;
+  background-color: var(--button);
+  color: white;
+}
 .term-statuses {
   border-top: 1px solid var(--line);
   font-size: 0.8em;
@@ -1042,6 +1087,7 @@ input[type="checkbox"]:checked:hover {
   color: var(--secondary);
 }
 @media (max-width: 690px) {
+  .term-buttons,
   .term-statuses,
   .credit {
     border-top: none;
