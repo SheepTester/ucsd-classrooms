@@ -11,7 +11,8 @@
   "scripts": {
     "build": "cp -a static/. dist/ && esbuild --bundle src/index.tsx --loader:.webp=file --loader:.svg=file --outdir=dist --minify && find dist/ -type f | sed 's/dist\\//https:\\/\\/sheeptester.github.io\\/ucsd-classrooms\\//' > dist/sitemap.txt",
     "clean": "rm -rf dist/",
-    "dev": "esbuild --bundle src/index.tsx --loader:.webp=file --loader:.svg=file --outdir=static --servedir=static --sourcemap"
+    "dev": "esbuild --bundle src/index.tsx --loader:.webp=file --loader:.svg=file --outdir=static --servedir=static --sourcemap",
+    "lint": "eslint --flag unstable_native_nodejs_ts_config "
   },
   "dependencies": {
     "react": "^19.1.1",
