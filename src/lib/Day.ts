@@ -17,8 +17,16 @@ export const DAY_NUMS = [0, 1, 2, 3, 4, 5, 6];
 export class Day {
   #date: Date;
 
+  /**
+   * An arbitrary identifier for the date, the number of days between the Unix
+   * epoch and this date. It should be unique per date, so it can be used as an
+   * ID.
+   */
+  id: number;
+
   constructor(utcDate: Date) {
     this.#date = utcDate;
+    this.id = utcDate.getTime() / MS_PER_DAY;
   }
 
   get year(): number {
@@ -59,15 +67,6 @@ export class Day {
       timeZone: "UTC",
       weekday: length,
     }).format(this.#date);
-  }
-
-  /**
-   * Returns an arbitrary identifier for the date, the number of days between
-   * the Unix epoch and this date. It should be unique per date, so it can be
-   * used as an ID.
-   */
-  get id(): number {
-    return this.#date.getTime() / MS_PER_DAY;
   }
 
   /**

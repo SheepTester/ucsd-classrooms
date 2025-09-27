@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { buildings } from "../lib/buildings";
 import { coursesToClassrooms, TermBuildings } from "../lib/coursesToClassrooms";
 import { Day } from "../lib/Day";
@@ -226,7 +226,7 @@ export function App({ title }: AppProps) {
     return courses;
   }
 
-  async function handleView(view: ViewWithTerm) {
+  const handleView = useCallback(async (view: ViewWithTerm) => {
     setRealTime(view.term === null);
     setMoment(fromViewTerm(view.term));
     setShowResults(!!view.searching);
@@ -284,7 +284,7 @@ export function App({ title }: AppProps) {
       });
       document.title = `${first} ${last} · ${title}`;
     }
-  }
+  }, []);
 
   useEffect(() => {
     const initView = viewFromUrl(window.location.href);
@@ -311,6 +311,33 @@ export function App({ title }: AppProps) {
     // Unintuitively, searchState is a dependency in handleView. Otherwise,
     // going back/forth will use courses from the wrong term
   }, [searchState]);
+
+  const handleDateSelect = useCallback(
+    (date: Day) => {
+      navigate(handleView, {
+        view: {
+          ...viewFromUrl(window.location.href),
+          term: { ...moment, date },
+        },
+      });
+    },
+    [handleView, moment]
+  );
+
+  const handleUseNow = useCallback(
+    (useNow: boolean) => {
+      if (useNow === realTime) {
+        return;
+      }
+      navigate(handleView, {
+        view: {
+          ...viewFromUrl(window.location.href),
+          term: useNow ? null : moment,
+        },
+      });
+    },
+    [realTime, handleView, moment]
+  );
 
   return (
     <OnView.Provider value={handleView}>
@@ -372,14 +399,7 @@ export function App({ title }: AppProps) {
         </div>
         <DateTimePanel
           date={moment.date}
-          onDate={(date) => {
-            navigate(handleView, {
-              view: {
-                ...viewFromUrl(window.location.href),
-                term: { ...moment, date },
-              },
-            });
-          }}
+          onDate={handleDateSelect}
           time={moment.time}
           onTime={(time) => {
             navigate(handleView, {
@@ -390,14 +410,7 @@ export function App({ title }: AppProps) {
             });
           }}
           useNow={realTime}
-          onUseNow={(useNow) => {
-            navigate(handleView, {
-              view: {
-                ...viewFromUrl(window.location.href),
-                term: useNow ? null : moment,
-              },
-            });
-          }}
+          onUseNow={handleUseNow}
           visible={datePanelVisible}
           closeable={!noticeVisible || state === null}
           className={`${

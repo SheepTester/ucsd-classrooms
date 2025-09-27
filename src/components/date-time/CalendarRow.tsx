@@ -76,7 +76,9 @@ export type CalendarWeekRowProps = {
   start: Day;
   end: Day;
   monday: Day;
-  date: Day;
+  // As a performance optimization, `date` may be unspecified if it's not in the
+  // week
+  date?: Day;
   onDate: (date: Day) => void;
 };
 export function CalendarWeekRow({
@@ -113,7 +115,7 @@ export function CalendarWeekRow({
               day >= termDays.finals && day <= termDays.end
                 ? "calendar-finals-day"
                 : ""
-            } ${day.id === date.id ? "calendar-selected" : ""} ${
+            } ${day.id === date?.id ? "calendar-selected" : ""} ${
               day >= termDays.start &&
               day <= termDays.end &&
               !holidays[day.id] &&
@@ -128,7 +130,7 @@ export function CalendarWeekRow({
               className="visually-hidden"
               name="calendar-day"
               onKeyDown={(e) => {
-                if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                if (date && (e.key === "ArrowUp" || e.key === "ArrowDown")) {
                   // TODO: This is very finicky
                   const up = e.key === "ArrowUp";
                   onDate(date.add(up ? -7 : 7));
@@ -136,7 +138,7 @@ export function CalendarWeekRow({
                 }
               }}
               onChange={() => onDate(day)}
-              checked={day.id === date.id}
+              checked={day.id === date?.id}
             />
             {day.date}
           </label>

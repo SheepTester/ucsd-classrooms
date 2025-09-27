@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { memo, ReactNode, useEffect, useRef, useState } from "react";
 import { Day } from "../../lib/Day";
 import { getTermDays, Season, TermDays } from "../../lib/terms";
 import {
@@ -23,20 +23,22 @@ export type ScrollMode = "none" | "init" | "date-edited";
 /** Height of the calendar header. */
 const HEADER_HEIGHT = 90;
 
-type MonthCalendarProps = TermCalendarProps & {
-  month: number;
+type MonthCalendarProps = Omit<TermCalendarProps, "date"> & {
+  /** Only specify if `date` is in the month */
+  date?: Day;
+  monthStart: Day;
+  monthEnd: Day;
 };
-function MonthCalendar({
+function MonthCalendar_({
   start,
   end,
   scrollMode,
-  month,
+  monthStart,
+  monthEnd,
   ...props
 }: MonthCalendarProps) {
-  const { date } = props;
+  const dateInMonth = props.date !== undefined;
 
-  const monthStart = Day.max(start, Day.from(start.year, month, 1));
-  const monthEnd = Day.min(end, Day.from(start.year, month + 1, 0));
   const weeks: ReactNode[] = [];
   for (
     let monday = monthStart.monday;
@@ -57,27 +59,36 @@ function MonthCalendar({
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const div = ref.current;
-    if (
-      div?.parentElement &&
-      scrollMode !== "none" &&
-      date >= monthStart &&
-      date <= monthEnd
-    ) {
+    if (div?.parentElement && scrollMode !== "none" && dateInMonth) {
       div.parentElement.scrollTo({
         top: div.offsetTop - HEADER_HEIGHT,
         // `scrollToDate` is only 1 when the web page first loads
         behavior: scrollMode === "init" ? "auto" : "smooth",
       });
     }
-  }, [scrollMode, date.id, monthStart.id, monthEnd.id]);
+  }, [scrollMode, dateInMonth, monthStart.id, monthEnd.id]);
 
   return (
     <div className="calendar-month" ref={ref}>
-      <CalendarMonthHeadingRow month={month} />
+      <CalendarMonthHeadingRow month={monthStart.month} />
       {weeks}
     </div>
   );
 }
+const MonthCalendar = memo(
+  MonthCalendar_,
+  (prev, next) =>
+    prev.termDays.start.id === next.termDays.start.id &&
+    prev.termDays.finals.id === next.termDays.finals.id &&
+    prev.termDays.end.id === next.termDays.end.id &&
+    prev.start.id === next.start.id &&
+    prev.end.id === next.end.id &&
+    prev.date?.id === next.date?.id &&
+    prev.onDate === next.onDate &&
+    prev.scrollMode === next.scrollMode &&
+    prev.monthStart.id === next.monthStart.id &&
+    prev.monthEnd.id === next.monthEnd.id
+);
 
 type TermCalendarProps = {
   termDays: TermDays;
@@ -87,11 +98,21 @@ type TermCalendarProps = {
   onDate: (date: Day) => void;
   scrollMode: ScrollMode;
 };
-function TermCalendar(props: TermCalendarProps) {
+function TermCalendar({ date, ...props }: TermCalendarProps) {
   const { start, end } = props;
   const months: ReactNode[] = [];
   for (let month = start.month; month <= end.month; month++) {
-    months.push(<MonthCalendar month={month} key={month} {...props} />);
+    const monthStart = Day.max(start, Day.from(start.year, month, 1));
+    const monthEnd = Day.min(end, Day.from(start.year, month + 1, 0));
+    months.push(
+      <MonthCalendar
+        key={month}
+        monthStart={monthStart}
+        monthEnd={monthEnd}
+        date={monthStart <= date && date <= monthEnd ? date : undefined}
+        {...props}
+      />
+    );
   }
   return <>{months}</>;
 }
