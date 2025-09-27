@@ -64,7 +64,12 @@ For React `memo` and hook dependencies, it is often important that objects and f
 
 In this repo, I am experimenting with a new convention:
 
-- All values that have a stable identity should be suffixed with `$`. This includes the return value from `useStableCallback`, and setters and refs when react-hooks/exhaustive-deps can't figure out they're setters and refs.
-- All props that should have a stable identity should be suffixed with `$`.
+- All values that have a stable identity should be suffixed with `_s`. This includes the return value from `useStableCallback`, and setters and refs when react-hooks/exhaustive-deps can't figure out they're setters and refs.
+  - I believe placating react-hooks/exhaustive-deps is important to maximize compatibility with the React Compiler in the future.
+- All props that should have a stable identity should be suffixed with `_s`.
 
 These only apply to non-primitive types, like functions and objects, because primitives always have a stable identity.
+
+Known issues:
+
+- I originally was going to use `$` as the suffix, but in VS Code, `$` is not considered a word character and doesn't get selected by ctrl+D. I purposefully included an underscore so it's clear it comes from a naming convention and isn't really part of the variable name (e.g. `myDeltaS` vs `myDelta_s`).

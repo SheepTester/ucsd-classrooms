@@ -239,7 +239,7 @@ export function App({ title }: AppProps) {
     return courses;
   }
 
-  const handleView$ = useStableCallback(async (view: ViewWithTerm) => {
+  const handleView_s = useStableCallback(async (view: ViewWithTerm) => {
     setRealTime(view.term === null);
     setMoment(fromViewTerm(view.term));
     setShowResults(!!view.searching);
@@ -312,9 +312,9 @@ export function App({ title }: AppProps) {
   }, []);
 
   useEffect(() => {
-    handleView$(viewFromUrl(window.location.href));
+    handleView_s(viewFromUrl(window.location.href));
     const handlePopstate = () => {
-      handleView$(viewFromUrl(window.location.href));
+      handleView_s(viewFromUrl(window.location.href));
     };
     window.addEventListener("popstate", handlePopstate);
     return () => {
@@ -322,10 +322,10 @@ export function App({ title }: AppProps) {
     };
     // Unintuitively, searchState is a dependency in handleView. Otherwise,
     // going back/forth will use courses from the wrong term
-  }, [handleView$, searchState]);
+  }, [handleView_s, searchState]);
 
   return (
-    <OnView.Provider value={handleView$}>
+    <OnView.Provider value={handleView_s}>
       <MomentContext.Provider value={moment}>
         <SearchBar
           state={searchState}
@@ -336,7 +336,7 @@ export function App({ title }: AppProps) {
           onSearch={(showResults) => {
             setShowResults(showResults);
             const currentView = viewFromUrl(window.location.href);
-            navigate(handleView$, {
+            navigate(handleView_s, {
               view: { ...currentView, searching: showResults },
               back: ([previous]) => {
                 if (
@@ -385,7 +385,7 @@ export function App({ title }: AppProps) {
         <DateTimePanel
           date={moment.date}
           onDate={(date: Day) => {
-            navigate(handleView$, {
+            navigate(handleView_s, {
               view: {
                 ...viewFromUrl(window.location.href),
                 term: { ...moment, date },
@@ -394,7 +394,7 @@ export function App({ title }: AppProps) {
           }}
           time={moment.time}
           onTime={(time) => {
-            navigate(handleView$, {
+            navigate(handleView_s, {
               view: {
                 ...viewFromUrl(window.location.href),
                 term: { ...moment, time },
@@ -406,7 +406,7 @@ export function App({ title }: AppProps) {
             if (useNow === realTime) {
               return;
             }
-            navigate(handleView$, {
+            navigate(handleView_s, {
               view: {
                 ...viewFromUrl(window.location.href),
                 term: useNow ? null : moment,

@@ -30,7 +30,7 @@ type MonthCalendarProps = {
   termDaysEnd: DayId;
   /** Only specify if `date` is in the month */
   date?: DayId;
-  onDate$: (date: Day) => void;
+  onDate_s: (date: Day) => void;
   monthStart: DayId;
   monthEnd: DayId;
   scrollMode: ScrollMode;
@@ -40,7 +40,7 @@ function MonthCalendar_({
   termDaysFinals,
   termDaysEnd,
   date,
-  onDate$,
+  onDate_s,
   monthStart,
   monthEnd,
   scrollMode,
@@ -69,7 +69,7 @@ function MonthCalendar_({
         end={monthEndDay}
         monday={monday}
         date={date !== undefined ? Day.fromId(date) : undefined}
-        onDate={onDate$}
+        onDate={onDate_s}
       />
     );
   }
@@ -100,7 +100,7 @@ type TermCalendarProps = {
   start: Day;
   end: Day;
   date: Day;
-  onDate$: (date: Day) => void;
+  onDate_s: (date: Day) => void;
   scrollMode: ScrollMode;
 };
 function TermCalendar({
@@ -108,7 +108,7 @@ function TermCalendar({
   start,
   end,
   date,
-  onDate$,
+  onDate_s,
   scrollMode,
 }: TermCalendarProps) {
   const months: ReactNode[] = [];
@@ -122,7 +122,7 @@ function TermCalendar({
         termDaysFinals={termDays.finals.id}
         termDaysEnd={termDays.end.id}
         date={monthStart <= date && date <= monthEnd ? date.id : undefined}
-        onDate$={onDate$}
+        onDate_s={onDate_s}
         monthStart={monthStart.id}
         monthEnd={monthEnd.id}
         scrollMode={scrollMode}
@@ -134,7 +134,7 @@ function TermCalendar({
 
 export type CalendarProps = {
   date: Day;
-  onDate$: (date: Day, scrollToDate?: boolean) => void;
+  onDate_s: (date: Day, scrollToDate?: boolean) => void;
   scrollMode: ScrollMode;
   freeScroll: () => void;
 };

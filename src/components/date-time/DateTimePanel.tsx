@@ -114,7 +114,7 @@ export function DateTimePanel({
       </div>
       <Calendar
         date={date}
-        onDate$={handleCalendarDate$}
+        onDate_s={handleCalendarDate$}
         scrollMode={scrollMode}
         freeScroll={() => setScrollMode("none")}
       />
