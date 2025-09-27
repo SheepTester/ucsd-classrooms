@@ -1,8 +1,9 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { Day } from "../../lib/Day";
 import { Time } from "../../lib/Time";
 import { inPT } from "../../lib/now";
 import { Calendar, ScrollMode } from "./Calendar";
+import { useStableCallback } from "../../lib/useStable";
 
 export type DateTimePanelProps = {
   date: Day;
@@ -30,14 +31,11 @@ export function DateTimePanel({
 }: DateTimePanelProps) {
   const [scrollMode, setScrollMode] = useState<ScrollMode>("init");
 
-  const handleCalendarDate = useCallback(
-    (date: Day) => {
-      onUseNow(false);
-      onDate(date);
-      setScrollMode("none");
-    },
-    [onDate, onUseNow]
-  );
+  const handleCalendarDate$ = useStableCallback((date: Day) => {
+    onUseNow(false);
+    onDate(date);
+    setScrollMode("none");
+  });
 
   return (
     <form
@@ -116,7 +114,7 @@ export function DateTimePanel({
       </div>
       <Calendar
         date={date}
-        onDate={handleCalendarDate}
+        onDate$={handleCalendarDate$}
         scrollMode={scrollMode}
         freeScroll={() => setScrollMode("none")}
       />

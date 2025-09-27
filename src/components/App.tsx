@@ -25,6 +25,7 @@ import { ModalView, ResultModal } from "./search/ResultModal";
 import { SearchBar, State } from "./search/SearchBar";
 import { TermStatus } from "./TermStatus";
 import { Time } from "../lib/Time";
+import { useStableCallback } from "../lib/useStable";
 
 /**
  * Represents the state of the app:
@@ -136,7 +137,6 @@ export function App({ title }: AppProps) {
   );
 
   const momentDateId = moment.date.id;
-  const momentTimeId = moment.time.valueOf();
 
   const terms = useMemo(
     () => getTerms(getTerm(Day.fromId(momentDateId))),
@@ -149,6 +149,7 @@ export function App({ title }: AppProps) {
   const datePanelVisible = showDatePanel || (noticeVisible && state !== null);
   const buildingPanelVisible = buildingCode !== null && !noticeVisible;
 
+  /** Only called by the `useEffect` below, whenever `moment.date` changes */
   async function handleDate(date: Day) {
     const currentTerm = getTerm(date);
     const { season, finals } = currentTerm;
@@ -238,68 +239,65 @@ export function App({ title }: AppProps) {
     return courses;
   }
 
-  const handleView = useCallback(
-    async (view: ViewWithTerm) => {
-      setRealTime(view.term === null);
-      setMoment(fromViewTerm(view.term));
-      setShowResults(!!view.searching);
-      if (view.type === "default") {
-        setModal(null);
-        setBuildingCode(null);
-        document.title = title;
-        return;
-      }
-      if (view.type === "building") {
-        setScrollTo({ building: view.building, init: false });
-        setBuildingCode(view.building);
-        setModal(null);
-        setRoom(view.room ?? null);
-        document.title = `${
-          view.room
-            ? `${view.building} ${view.room}`
-            : buildings[view.building]?.name ?? view.building
-        } · ${title}`;
-        return;
-      }
+  const handleView$ = useStableCallback(async (view: ViewWithTerm) => {
+    setRealTime(view.term === null);
+    setMoment(fromViewTerm(view.term));
+    setShowResults(!!view.searching);
+    if (view.type === "default") {
+      setModal(null);
       setBuildingCode(null);
-      const courses =
-        searchState.type === "loaded" && searchState.termId === termId
-          ? searchState.data.courses
-          : await loadTerms(terms, termId);
-      if (view.type === "course") {
-        const course = courses.find((course) => course.code === view.course);
-        if (course) {
-          setModal({ type: "course", course });
-          document.title = `${view.course} · ${title}`;
-        } else {
-          setModal({
-            type: "course",
-            course: { code: view.course, title: view.course, groups: [] },
-          });
-          document.title = `Course not found · ${title}`;
-        }
+      document.title = title;
+      return;
+    }
+    if (view.type === "building") {
+      setScrollTo({ building: view.building, init: false });
+      setBuildingCode(view.building);
+      setModal(null);
+      setRoom(view.room ?? null);
+      document.title = `${
+        view.room
+          ? `${view.building} ${view.room}`
+          : buildings[view.building]?.name ?? view.building
+      } · ${title}`;
+      return;
+    }
+    setBuildingCode(null);
+    const courses =
+      searchState.type === "loaded" && searchState.termId === termId
+        ? searchState.data.courses
+        : await loadTerms(terms, termId);
+    if (view.type === "course") {
+      const course = courses.find((course) => course.code === view.course);
+      if (course) {
+        setModal({ type: "course", course });
+        document.title = `${view.course} · ${title}`;
       } else {
-        const [last, first] = view.name.split(", ");
         setModal({
-          type: "professor",
-          professor: {
-            first,
-            last,
-            courses: courses.flatMap((course) => {
-              const groups = course.groups.filter((group) =>
-                group.instructors.some(
-                  (prof) => prof.first === first && prof.last === last
-                )
-              );
-              return groups.length > 0 ? [{ ...course, groups }] : [];
-            }),
-          },
+          type: "course",
+          course: { code: view.course, title: view.course, groups: [] },
         });
-        document.title = `${first} ${last} · ${title}`;
+        document.title = `Course not found · ${title}`;
       }
-    },
-    [searchState, termId, terms, title]
-  );
+    } else {
+      const [last, first] = view.name.split(", ");
+      setModal({
+        type: "professor",
+        professor: {
+          first,
+          last,
+          courses: courses.flatMap((course) => {
+            const groups = course.groups.filter((group) =>
+              group.instructors.some(
+                (prof) => prof.first === first && prof.last === last
+              )
+            );
+            return groups.length > 0 ? [{ ...course, groups }] : [];
+          }),
+        },
+      });
+      document.title = `${first} ${last} · ${title}`;
+    }
+  });
 
   useEffect(() => {
     const initView = viewFromUrl(window.location.href);
@@ -314,9 +312,9 @@ export function App({ title }: AppProps) {
   }, []);
 
   useEffect(() => {
-    handleView(viewFromUrl(window.location.href));
+    handleView$(viewFromUrl(window.location.href));
     const handlePopstate = () => {
-      handleView(viewFromUrl(window.location.href));
+      handleView$(viewFromUrl(window.location.href));
     };
     window.addEventListener("popstate", handlePopstate);
     return () => {
@@ -324,37 +322,10 @@ export function App({ title }: AppProps) {
     };
     // Unintuitively, searchState is a dependency in handleView. Otherwise,
     // going back/forth will use courses from the wrong term
-  }, [handleView]);
-
-  const handleDateSelect = useCallback(
-    (date: Day) => {
-      navigate(handleView, {
-        view: {
-          ...viewFromUrl(window.location.href),
-          term: { date, time: Time.from(momentTimeId) },
-        },
-      });
-    },
-    [handleView, momentTimeId]
-  );
-
-  const handleUseNow = useCallback(
-    (useNow: boolean) => {
-      if (useNow === realTime) {
-        return;
-      }
-      navigate(handleView, {
-        view: {
-          ...viewFromUrl(window.location.href),
-          term: useNow ? null : moment,
-        },
-      });
-    },
-    [realTime, handleView, moment]
-  );
+  }, [handleView$, searchState]);
 
   return (
-    <OnView.Provider value={handleView}>
+    <OnView.Provider value={handleView$}>
       <MomentContext.Provider value={moment}>
         <SearchBar
           state={searchState}
@@ -365,7 +336,7 @@ export function App({ title }: AppProps) {
           onSearch={(showResults) => {
             setShowResults(showResults);
             const currentView = viewFromUrl(window.location.href);
-            navigate(handleView, {
+            navigate(handleView$, {
               view: { ...currentView, searching: showResults },
               back: ([previous]) => {
                 if (
@@ -413,10 +384,17 @@ export function App({ title }: AppProps) {
         </div>
         <DateTimePanel
           date={moment.date}
-          onDate={handleDateSelect}
+          onDate={(date: Day) => {
+            navigate(handleView$, {
+              view: {
+                ...viewFromUrl(window.location.href),
+                term: { ...moment, date },
+              },
+            });
+          }}
           time={moment.time}
           onTime={(time) => {
-            navigate(handleView, {
+            navigate(handleView$, {
               view: {
                 ...viewFromUrl(window.location.href),
                 term: { ...moment, time },
@@ -424,7 +402,17 @@ export function App({ title }: AppProps) {
             });
           }}
           useNow={realTime}
-          onUseNow={handleUseNow}
+          onUseNow={(useNow) => {
+            if (useNow === realTime) {
+              return;
+            }
+            navigate(handleView$, {
+              view: {
+                ...viewFromUrl(window.location.href),
+                term: useNow ? null : moment,
+              },
+            });
+          }}
           visible={datePanelVisible}
           closeable={!noticeVisible || state === null}
           className={`${
