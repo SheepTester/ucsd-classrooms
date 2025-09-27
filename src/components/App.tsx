@@ -403,13 +403,13 @@ export function App({ title }: AppProps) {
                   view={
                     // The off-screen terms are just for the smooth animation,
                     // so don't make them clickable
-                    Math.abs(offset) >= 3
+                    Math.abs(offset) > 2
                       ? null
                       : buildingCode !== null
                       ? { type: "building", building: buildingCode, room: room }
                       : { type: "default" }
                   }
-                  aria-hidden={Math.abs(offset) >= 3 ? "true" : undefined}
+                  aria-hidden={Math.abs(offset) > 2 ? "true" : undefined}
                   term={{ year, season: quarter }}
                   key={id}
                   style={{
