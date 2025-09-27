@@ -7,6 +7,7 @@
     "type": "git",
     "url": "git+https://github.com/SheepTester/ucsd-classrooms.git"
   },
+  "type": "module",
   "scripts": {
     "build": "cp -a static/. dist/ && esbuild --bundle src/index.tsx --loader:.webp=file --loader:.svg=file --outdir=dist --minify && find dist/ -type f | sed 's/dist\\//https:\\/\\/sheeptester.github.io\\/ucsd-classrooms\\//' > dist/sitemap.txt",
     "clean": "rm -rf dist/",

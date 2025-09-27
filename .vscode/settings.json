@@ -1,0 +1,5 @@
+{
+  "eslint.options": {
+    "flags": ["unstable_native_nodejs_ts_config"]
+  }
+}
