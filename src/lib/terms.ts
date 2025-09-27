@@ -125,6 +125,8 @@ export type CurrentTerm = {
     }
 );
 
+const terms = ["WI", "SP", "S1", "S2", "FA"] as const;
+
 /**
  * Determines the quarter that the day is in, or the next term if the day is
  * during a break.
@@ -133,7 +135,7 @@ export function getTerm(day: Day): CurrentTerm {
   let termDays: TermDays | null = null;
   let season: Season | null = null;
   let current = false;
-  for (const term of ["WI", "SP", "S1", "S2", "FA"] as const) {
+  for (const term of terms) {
     termDays = getTermDays(day.year, term);
     if (day <= termDays.end) {
       season = term;
@@ -157,6 +159,18 @@ export function getTerm(day: Day): CurrentTerm {
   } else {
     return { year, season, current, termDays, week: -1, finals: false };
   }
+}
+
+export function advanceTerm(
+  year: number,
+  quarter: Season,
+  termCount: number
+): { year: number; quarter: Season } {
+  const id = year * terms.length + terms.indexOf(quarter) + termCount;
+  return {
+    year: Math.floor(id / terms.length),
+    quarter: terms[id % terms.length],
+  };
 }
 
 export function termCode(year: number, quarter: Quarter): string {

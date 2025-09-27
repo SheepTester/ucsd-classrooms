@@ -358,7 +358,7 @@ input[type="checkbox"]:checked:hover {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2px;
+  gap: 4px;
 }
 .showing-schedule-text {
   font-size: 0.8em;
@@ -366,7 +366,8 @@ input[type="checkbox"]:checked:hover {
   color: var(--secondary);
 }
 .date-time {
-  font-family: var(--narrow);
+  font-family: var(--normal);
+  font-weight: bold;
 }
 .quarter-week {
   font-size: 0.8em;
@@ -374,6 +375,7 @@ input[type="checkbox"]:checked:hover {
 }
 .selected-term {
   font-family: var(--normal);
+  font-weight: bold;
 }
 .edit-icon {
   background-image: url("./assets/material-edit-white.svg");
