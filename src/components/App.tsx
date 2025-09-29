@@ -430,7 +430,13 @@ export function App({ title }: AppProps) {
             <a href="https://www.instagram.com/sheeptester/" className="link">
               @sheeptester
             </a>
-            .
+            .{" "}
+            <a
+              href="https://github.com/SheepTester/ucsd-classrooms"
+              className="link"
+            >
+              GitHub
+            </a>
           </p>
         </div>
         <DateTimePanel

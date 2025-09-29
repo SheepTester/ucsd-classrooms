@@ -4,6 +4,9 @@
 
 ![Screenshot of classrooms website](./static/open-graph.png)
 
+> [!NOTE]
+> The classrooms website was originally developed in [SheepTester/uxdy/classrooms](https://github.com/SheepTester/uxdy/tree/main/classrooms); refer to the old repo for its commit history.
+
 ## Features
 
 - **Checking when a classroom is available.** Does RWAC 0935 have classes in it? When are they?
