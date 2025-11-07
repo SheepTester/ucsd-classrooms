@@ -124,6 +124,11 @@
       }
     },
     "marshall": {
+      "COA": {
+        "location": [32.8820765, -117.2399491],
+        "name": "Coalition",
+        "images": []
+      },
       "CSB": {
         "location": [32.880517237245954, -117.23939317415764],
         "name": "Cognitive Science Building",
