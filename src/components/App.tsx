@@ -12,6 +12,8 @@ import {
   fromTermId,
   getTerm,
   getTermId,
+  MAX_TERM_ID,
+  MIN_TERM_ID,
   Season,
   termCode,
   termName,
@@ -399,6 +401,10 @@ export function App({ title }: AppProps) {
                     id === currentTermId && moment.currentTerm.current
                       ? "term-button-selected"
                       : ""
+                  } ${
+                    MIN_TERM_ID <= id && id <= MAX_TERM_ID
+                      ? ""
+                      : "term-button-hidden"
                   }`}
                   view={
                     // The off-screen terms are just for the smooth animation,

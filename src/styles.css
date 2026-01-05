@@ -1061,6 +1061,9 @@ input[type="checkbox"]:checked:hover {
   background-color: var(--button-hover);
   box-shadow: none;
 }
+.term-button-hidden {
+  display: none;
+}
 .term-statuses {
   border-top: 1px solid var(--line);
   font-size: 0.8em;

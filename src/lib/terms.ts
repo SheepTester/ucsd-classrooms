@@ -214,3 +214,5 @@ export function fromTermId(id: number): { year: number; quarter: Season } {
     quarter: seasons[id % seasons.length],
   };
 }
+export const MIN_TERM_ID = getTermId(1995, "WI");
+export const MAX_TERM_ID = getTermId(2026, "S2");
