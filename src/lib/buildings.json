@@ -165,6 +165,11 @@
           { "url": "https://i.imgur.com/YY7YmrA.jpeg", "size": [4032, 3024] }
         ]
       },
+      "MALK": {
+        "location": [32.88300588485133, -117.2403910183869],
+        "name": "Brian C. Malk Hall",
+        "images": []
+      },
       "PETER": {
         "location": [32.879984046654364, -117.2402525268966],
         "name": "Peterson Hall",
