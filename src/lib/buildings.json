@@ -659,6 +659,11 @@
       }
     },
     "universityCenter": {
+      "CCC": {
+        "location": [32.87965945558607, -117.23562616534126],
+        "name": "Cross-Cultural Center",
+        "images": []
+      },
       "CENTR": {
         "location": [32.87797399985619, -117.237243418587],
         "name": "Center Hall",
