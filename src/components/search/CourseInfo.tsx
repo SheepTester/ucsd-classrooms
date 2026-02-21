@@ -9,11 +9,18 @@ const webregDays = ["Sun", "M", "Tu", "W", "Th", "F", "S", "Sun"];
 type MeetingCardProps = {
   meeting: Section | Meeting | Exam;
   code?: string | null;
+  totalCapacity?: number;
 };
-export function MeetingCard({ meeting, code }: MeetingCardProps) {
+export function MeetingCard({
+  meeting,
+  code,
+  totalCapacity,
+}: MeetingCardProps) {
   const moment = useMoment();
   const physicalRoom =
     meeting.location && meeting.location.building !== "RCLAS";
+  const capacity =
+    meeting.kind === "section" ? meeting.capacity : totalCapacity;
 
   return (
     <section className="meeting-card">
@@ -26,13 +33,13 @@ export function MeetingCard({ meeting, code }: MeetingCardProps) {
           </>
         )}
       </p>
-      {meeting.kind === "section" && (
+      {capacity !== undefined && (
         <p className="meeting-column section-capacity">
-          {meeting.capacity === Infinity ? (
+          {capacity === Infinity ? (
             "No limit"
           ) : (
             <>
-              Capacity: <strong>{meeting.capacity}</strong>
+              Capacity: <strong>{capacity}</strong>
             </>
           )}
         </p>
@@ -95,53 +102,60 @@ export type CourseInfoProps = {
 export function CourseInfo({ course }: CourseInfoProps) {
   return (
     <div className="course-info">
-      {course.groups.map((group) => (
-        <article className="group" key={group.code}>
-          <header className="group-info">
-            <div className="group-code">{group.code}</div>
-            {group.sectionTitle ? (
-              <h2 className="section-title">{group.sectionTitle}</h2>
-            ) : null}
-            <div className="instructors">
-              {group.instructors.map(({ first, last }) => (
-                <Link
-                  view={{ type: "professor", name: `${last}, ${first}` }}
-                  className="instructor"
-                  key={`${last}, ${first}`}
-                >
-                  {first} <span className="last-name">{last}</span>
-                </Link>
-              ))}
-              {group.instructors.length === 0 && (
-                <span className="staff">Instructor TBA</span>
-              )}
-            </div>
-          </header>
-          {group.meetings.map((meeting, i) => (
-            <MeetingCard
-              meeting={meeting}
-              code={meeting.code !== group.code ? meeting.code : null}
-              key={i}
-            />
-          ))}
-          {group.sections.length > 0 && group.meetings.length > 0 && (
-            <hr className="additional-meetings-divider" />
-          )}
-          {group.sections.map((section) => (
-            <MeetingCard
-              meeting={section}
-              code={section.code !== group.code ? section.code : null}
-              key={section.code}
-            />
-          ))}
-          {group.meetings.length > 0 && group.exams.length > 0 && (
-            <hr className="additional-meetings-divider" />
-          )}
-          {group.exams.map((exam, i) => (
-            <MeetingCard meeting={exam} key={i} />
-          ))}
-        </article>
-      ))}
+      {course.groups.map((group) => {
+        const totalCapacity = group.sections.reduce(
+          (cum, curr) => cum + curr.capacity,
+          0
+        );
+        return (
+          <article className="group" key={group.code}>
+            <header className="group-info">
+              <div className="group-code">{group.code}</div>
+              {group.sectionTitle ? (
+                <h2 className="section-title">{group.sectionTitle}</h2>
+              ) : null}
+              <div className="instructors">
+                {group.instructors.map(({ first, last }) => (
+                  <Link
+                    view={{ type: "professor", name: `${last}, ${first}` }}
+                    className="instructor"
+                    key={`${last}, ${first}`}
+                  >
+                    {first} <span className="last-name">{last}</span>
+                  </Link>
+                ))}
+                {group.instructors.length === 0 && (
+                  <span className="staff">Instructor TBA</span>
+                )}
+              </div>
+            </header>
+            {group.meetings.map((meeting, i) => (
+              <MeetingCard
+                meeting={meeting}
+                code={meeting.code !== group.code ? meeting.code : null}
+                totalCapacity={totalCapacity}
+                key={i}
+              />
+            ))}
+            {group.sections.length > 0 && group.meetings.length > 0 && (
+              <hr className="additional-meetings-divider" />
+            )}
+            {group.sections.map((section) => (
+              <MeetingCard
+                meeting={section}
+                code={section.code !== group.code ? section.code : null}
+                key={section.code}
+              />
+            ))}
+            {group.meetings.length > 0 && group.exams.length > 0 && (
+              <hr className="additional-meetings-divider" />
+            )}
+            {group.exams.map((exam, i) => (
+              <MeetingCard meeting={exam} key={i} />
+            ))}
+          </article>
+        );
+      })}
     </div>
   );
 }
