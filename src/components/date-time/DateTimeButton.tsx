@@ -28,8 +28,8 @@ export function DateTimeButton({ onClick, disabled }: DateTimeButtonProps) {
             </div>
             {current && (
               <span className="quarter-week">
-                {termCode(year, season)} {week < 10 ? `Week ${week}` : "Finals"}{" "}
-                {date.dayName("short")}
+                {termCode(year, season)}{" "}
+                {week <= 10 ? `Week ${week}` : "Finals"} {date.dayName("short")}
               </span>
             )}
           </>
