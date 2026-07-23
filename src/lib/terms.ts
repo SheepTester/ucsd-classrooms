@@ -92,9 +92,9 @@ export function getTermDays(year: number, season: Season): TermDays {
         (year <= 1995 && season === "SP"
           ? 1
           : // Summer session in the 20th century ended on a Friday
-          year < 2000 && (season === "S1" || season === "S2")
-          ? -1
-          : 0)
+            year < 2000 && (season === "S1" || season === "S2")
+            ? -1
+            : 0),
     ),
   };
 }
@@ -198,7 +198,7 @@ export function parseTermCode(code: string): {
 export function termName(
   year: number,
   quarter: Quarter,
-  short = false
+  short = false,
 ): string {
   return `${
     short ? names[quarter].replace("Session ", "") : names[quarter]
@@ -215,4 +215,4 @@ export function fromTermId(id: number): { year: number; quarter: Season } {
   };
 }
 export const MIN_TERM_ID = getTermId(1995, "WI");
-export const MAX_TERM_ID = getTermId(2026, "S2");
+export const MAX_TERM_ID = getTermId(2026, "FA");
