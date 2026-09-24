@@ -168,7 +168,20 @@
       "MALK": {
         "location": [32.88300588485133, -117.2403910183869],
         "name": "Brian C. Malk Hall",
-        "images": []
+        "images": [
+          { "url": "https://i.imgur.com/FxosvvD.jpeg", "size": [4032, 3024] },
+          { "url": "https://i.imgur.com/fa3fiaK.jpeg", "size": [4032, 3024] },
+          { "url": "https://i.imgur.com/Q3I9JcY.jpeg", "size": [4032, 3024] },
+          { "url": "https://i.imgur.com/ZIuSIny.jpeg", "size": [4032, 3024] },
+          { "url": "https://i.imgur.com/KNDv679.jpeg", "size": [4032, 3024] },
+          { "url": "https://i.imgur.com/yw8txx4.jpeg", "size": [4032, 3024] },
+          { "url": "https://i.imgur.com/4UCW91b.jpeg", "size": [4032, 3024] },
+          { "url": "https://i.imgur.com/GI44A8e.jpeg", "size": [3024, 4032] },
+          { "url": "https://i.imgur.com/cPwr1es.jpeg", "size": [3024, 4032] },
+          { "url": "https://i.imgur.com/UrZGBaw.jpeg", "size": [4032, 3024] },
+          { "url": "https://i.imgur.com/3vsXk5i.jpeg", "size": [3024, 4032] },
+          { "url": "https://i.imgur.com/AB7VKGW.jpeg", "size": [3024, 4032] }
+        ]
       },
       "PETER": {
         "location": [32.879984046654364, -117.2402525268966],
@@ -694,6 +707,14 @@
         "location": [32.87969838069206, -117.23507094146997],
         "name": "Science & Engineering Research Facility",
         "images": []
+      },
+      "TASB": {
+        "location": [32.87742268461285, -117.23586429896054],
+        "name": "Triton Administrative Services Building",
+        "images": [
+          { "url": "https://i.imgur.com/kFNHvhS.jpeg", "size": [4032, 3024] },
+          { "url": "https://i.imgur.com/GX2E6b1.jpeg", "size": [4032, 3024] }
+        ]
       },
       "U201": {
         "location": [32.87750663014029, -117.23672981527089],
